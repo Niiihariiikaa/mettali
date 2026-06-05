@@ -87,9 +87,7 @@ const sideImages = [
 
 export function TechnologySection() {
   const sectionRef = useRef<HTMLElement>(null);
-  const textSectionRef = useRef<HTMLDivElement>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
-  const [textProgress, setTextProgress] = useState(0);
   
   const descriptionText = "At Mettali, raw aluminium is the starting point — not the shortcut. Every piece passes through precision forming, expert powder coating, and careful hand-finishing before it earns its place in your home. Durable enough to outlast trends, refined enough to define them.";
 
@@ -104,20 +102,6 @@ export function TechnologySection() {
       
       setScrollProgress(progress);
 
-      // Text scroll progress
-      if (textSectionRef.current) {
-        const textRect = textSectionRef.current.getBoundingClientRect();
-        const windowHeight = window.innerHeight;
-        
-        const startOffset = windowHeight * 0.9;
-        const endOffset = windowHeight * 0.1;
-        
-        const totalDistance = startOffset - endOffset;
-        const currentPosition = startOffset - textRect.top;
-        
-        const newTextProgress = Math.max(0, Math.min(1, currentPosition / totalDistance));
-        setTextProgress(newTextProgress);
-      }
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
@@ -128,15 +112,11 @@ export function TechnologySection() {
     };
   }, []);
 
-  // Title fades out first (0 to 0.2)
-  const titleOpacity = Math.max(0, 1 - (scrollProgress / 0.2));
-  
   // Image transforms start after title fades (0.2 to 1)
   const imageProgress = Math.max(0, Math.min(1, (scrollProgress - 0.2) / 0.8));
-  
+
   // Smooth interpolations
   const centerWidth = 100 - (imageProgress * 58); // 100% to 42%
-  const centerHeight = 100 - (imageProgress * 30); // 100% to 70%
   const sideWidth = imageProgress * 22; // 0% to 22%
   const sideOpacity = imageProgress;
   const sideTranslateLeft = -100 + (imageProgress * 100); // -100% to 0%
@@ -144,8 +124,6 @@ export function TechnologySection() {
   const borderRadius = imageProgress * 24; // 0px to 24px
   const gap = imageProgress * 16; // 0px to 16px
 
-  // Calculate grayscale for text section based on textProgress
-  const grayscaleAmount = Math.round((1 - textProgress) * 100);
 
   return (
     <section ref={sectionRef} className="relative bg-foreground">
@@ -197,13 +175,15 @@ export function TechnologySection() {
                 borderRadius: `${borderRadius}px`,
               }}
             >
-              <Image
-                src="/images/strengthmeetsbeauty.png"
-                alt="Mettali strength meets beauty"
-                fill
-                className="object-cover"
-              />
-              <div className="absolute inset-0 bg-foreground/40" />
+              <video
+                autoPlay
+                muted
+                loop
+                playsInline
+                className="absolute inset-0 h-full w-full object-cover object-top-left"
+              >
+                <source src="/images/strengthmeetsbeauty.mp4" type="video/mp4" />
+              </video>
               
               {/* Title Text - Fades out word by word with blur */}
               <div 
@@ -276,7 +256,6 @@ export function TechnologySection() {
 
       {/* Description Section with Background Image and Scroll Reveal */}
       <div 
-        ref={textSectionRef}
         className="relative overflow-hidden bg-background px-6 py-24 md:px-12 md:py-32 lg:px-20 lg:py-40"
       >
         {/* Background Image with Grayscale Filter */}

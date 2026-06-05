@@ -32,26 +32,33 @@ const sideImages = [
 
 export function HeroSection() {
   const sectionRef = useRef<HTMLElement>(null);
+  const taglineRef = useRef<HTMLDivElement>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [taglineVisible, setTaglineVisible] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
       if (!sectionRef.current) return;
-      
       const rect = sectionRef.current.getBoundingClientRect();
-      const scrollableHeight = window.innerHeight * 2;
+      const scrollableHeight = window.innerHeight;
       const scrolled = -rect.top;
       const progress = Math.max(0, Math.min(1, scrolled / scrollableHeight));
-      
       setScrollProgress(progress);
     };
-
     window.addEventListener("scroll", handleScroll, { passive: true });
     handleScroll();
-    
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const el = taglineRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) { setTaglineVisible(true); observer.disconnect(); } },
+      { threshold: 0.1 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
   }, []);
 
   // Text fades out first (0 to 0.2)
@@ -179,14 +186,20 @@ export function HeroSection() {
 
           </div>
         </div>
+
       </div>
 
       {/* Scroll space to enable animation */}
-      <div className="h-[200vh]" />
+      <div className="h-screen" />
 
-      {/* Tagline Section */}
-      <div className="px-6 py-24 md:px-12 md:py-32 lg:px-20 lg:py-40">
-        <p className="mx-auto max-w-2xl text-center text-xl leading-tight text-slate-moss md:text-2xl lg:text-3xl font-horizon uppercase tracking-wide">
+      {/* Tagline — slides up when it enters the viewport */}
+      <div
+        ref={taglineRef}
+        className={`px-6 pb-16 pt-2 text-center transition-all duration-700 ease-out ${
+          taglineVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+        }`}
+      >
+        <p className="mx-auto max-w-2xl text-xl leading-tight text-slate-moss md:text-2xl lg:text-3xl font-horizon uppercase tracking-wide">
           Metal that belongs
           <br />
           in every home.

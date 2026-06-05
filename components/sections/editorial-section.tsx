@@ -38,16 +38,7 @@ export function EditorialSection() {
         ))}
       </div>
 
-      {/* Full-width Image */}
-      <div className="relative aspect-[16/9] w-full md:aspect-[21/9]">
-        <Image
-          src="/images/hero3.png"
-          alt="Mettali aluminium — strength meets beauty"
-          fill
-          className="object-cover"
-          style={{ objectPosition: '50% 70%' }}
-        />
-      </div>
+
     </section>
   );
 }
