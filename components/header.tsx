@@ -29,7 +29,7 @@ export function Header() {
         {/* Logo */}
         <Link href="#" className="flex items-center">
           <Image
-            src="/images/logo.png"
+            src="/logo.png"
             alt="Mettali"
             width={120}
             height={32}

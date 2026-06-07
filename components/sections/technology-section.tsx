@@ -1,7 +1,10 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+
+// ─── Scroll-reveal text ──────────────────────────────────────────────────────
 
 function ScrollRevealText({ text }: { text: string }) {
   const containerRef = useRef<HTMLParagraphElement>(null);
@@ -10,259 +13,147 @@ function ScrollRevealText({ text }: { text: string }) {
   useEffect(() => {
     const handleScroll = () => {
       if (!containerRef.current) return;
-      
       const rect = containerRef.current.getBoundingClientRect();
       const windowHeight = window.innerHeight;
-      
-      // Slower animation - more viewport range
       const startOffset = windowHeight * 0.9;
       const endOffset = windowHeight * 0.1;
-      
       const totalDistance = startOffset - endOffset;
       const currentPosition = startOffset - rect.top;
-      
-      const newProgress = Math.max(0, Math.min(1, currentPosition / totalDistance));
-      setProgress(newProgress);
+      setProgress(Math.max(0, Math.min(1, currentPosition / totalDistance)));
     };
-
     window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll(); // Initial check
-    
+    handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const words = text.split(" ");
-  
   return (
-    <p
-      ref={containerRef}
-      className="text-md  leading-snug md:text-lg lg:text-3xl"
-    >
-      {words.map((word, index) => {
-        const wordProgress = index / words.length;
-        const isRevealed = progress > wordProgress;
-        
-        return (
-          <span
-            key={index}
-            className="transition-colors duration-150"
-            style={{
-              color: isRevealed ? "var(--mulled-iron)" : "var(--sandcast)",
-            }}
-          >
-            {word}{index < words.length - 1 ? " " : ""}
-          </span>
-        );
-      })}
+    <p ref={containerRef} className="text-md leading-snug md:text-lg lg:text-2xl">
+      {words.map((word, index) => (
+        <span
+          key={index}
+          className="transition-colors duration-150"
+          style={{ color: progress > index / words.length ? "var(--mulled-iron)" : "var(--sandcast)" }}
+        >
+          {word}{index < words.length - 1 ? " " : ""}
+        </span>
+      ))}
     </p>
   );
 }
 
-const sideImages = [
-  {
-    src: "/images/ourcraft1.png",
-    alt: "Mettali aluminium craftsmanship",
-    position: "left",
-    span: 1,
-  },
-  {
-    src: "/images/ourcraft2.png",
-    alt: "Precision aluminium engineering",
-    position: "left",
-    span: 1,
-  },
-  {
-    src: "/images/ourcraft3.png",
-    alt: "Mettali quality finishing",
-    position: "right",
-    span: 1,
-  },
-  {
-    src: "/images/ourcraft1.png",
-    alt: "Mettali manufacturing process",
-    position: "right",
-    span: 1,
-  },
+// ─── Hover product card ───────────────────────────────────────────────────────
+
+const B = "/images/products-home";
+
+const products = [
+  { name: "Wine Stand",     category: "Kitchen & Bar", images: [`${B}/winestand1.png`, `${B}/winestand2.png`] },
+  { name: "Minimal Vase",   category: "Décor",         images: [`${B}/vase1.png`, `${B}/vase2.png`, `${B}/vase3.png`] },
+  { name: "Wine Vase",      category: "Décor",         images: [`${B}/wine-vase1.png`, `${B}/wine-vase2.png`, `${B}/wine-vase3.png`] },
+  { name: "Triple Vase Set",category: "Décor",         images: [`${B}/3vase1.png`, `${B}/3vase2.png`, `${B}/3vase3.png`] },
+  { name: "Signature Vase", category: "Décor",         images: [`${B}/signvase1.png`, `${B}/signvase2.png`, `${B}/signvase3.png`] },
+  { name: "Duo Vase",       category: "Décor",         images: [`${B}/2vase1.png`, `${B}/2vase2.png`] },
 ];
 
-export function TechnologySection() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const [scrollProgress, setScrollProgress] = useState(0);
-  
-  const descriptionText = "At Mettali, raw aluminium is the starting point — not the shortcut. Every piece passes through precision forming, expert powder coating, and careful hand-finishing before it earns its place in your home. Durable enough to outlast trends, refined enough to define them.";
+function HoverProductCard({ name, category, images }: { name: string; category: string; images: string[] }) {
+  const [currentIdx, setCurrentIdx] = useState(0);
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      if (!sectionRef.current) return;
-      
-      const rect = sectionRef.current.getBoundingClientRect();
-      const scrollableHeight = window.innerHeight * 2;
-      const scrolled = -rect.top;
-      const progress = Math.max(0, Math.min(1, scrolled / scrollableHeight));
-      
-      setScrollProgress(progress);
+  const handleMouseEnter = () => {
+    if (images.length <= 1) return;
+    let idx = 1;
+    setCurrentIdx(idx);
+    intervalRef.current = setInterval(() => {
+      idx = idx >= images.length - 1 ? 1 : idx + 1;
+      setCurrentIdx(idx);
+    }, 1200);
+  };
 
-    };
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll();
-    
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
-
-  // Image transforms start after title fades (0.2 to 1)
-  const imageProgress = Math.max(0, Math.min(1, (scrollProgress - 0.2) / 0.8));
-
-  // Smooth interpolations
-  const centerWidth = 100 - (imageProgress * 58); // 100% to 42%
-  const sideWidth = imageProgress * 22; // 0% to 22%
-  const sideOpacity = imageProgress;
-  const sideTranslateLeft = -100 + (imageProgress * 100); // -100% to 0%
-  const sideTranslateRight = 100 - (imageProgress * 100); // 100% to 0%
-  const borderRadius = imageProgress * 24; // 0px to 24px
-  const gap = imageProgress * 16; // 0px to 16px
-
+  const handleMouseLeave = () => {
+    if (intervalRef.current) clearInterval(intervalRef.current);
+    setCurrentIdx(0);
+  };
 
   return (
-    <section ref={sectionRef} className="relative bg-foreground">
-      {/* Sticky container for scroll animation */}
-      <div className="sticky top-0 h-screen overflow-hidden">
-        <div className="flex h-full w-full items-center justify-center">
-          {/* Bento Grid Container */}
-          <div 
-            className="relative flex h-full w-full items-stretch justify-center"
-            style={{ gap: `${gap}px`, padding: `${imageProgress * 16}px` }}
-          >
-            
-            {/* Left Column */}
-            <div 
-              className="flex flex-col will-change-transform"
-              style={{
-                width: `${sideWidth}%`,
-                gap: `${gap}px`,
-                transform: `translateX(${sideTranslateLeft}%)`,
-                opacity: sideOpacity,
-              }}
-            >
-              {sideImages.filter(img => img.position === "left").map((img, idx) => (
-                <div 
-                  key={idx} 
-                  className="relative overflow-hidden will-change-transform"
-                  style={{
-                    flex: img.span,
-                    borderRadius: `${borderRadius}px`,
-                  }}
-                >
-                  <Image
-                    src={img.src || "/placeholder.svg"}
-                    alt={img.alt}
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-              ))}
-            </div>
-
-            {/* Main Center Image */}
-            <div 
-              className="relative overflow-hidden will-change-transform"
-              style={{
-                width: `${centerWidth}%`,
-                height: "100%",
-                flex: "0 0 auto",
-                borderRadius: `${borderRadius}px`,
-              }}
-            >
-              <video
-                autoPlay
-                muted
-                loop
-                playsInline
-                className="absolute inset-0 h-full w-full object-cover object-top-left"
-              >
-                <source src="/images/strengthmeetsbeauty.mp4" type="video/mp4" />
-              </video>
-              
-              {/* Title Text - Fades out word by word with blur */}
-              <div 
-                className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center"
-              >
-                <h2 className="max-w-3xl leading-tight tracking-wide text-white md:text-3xl lg:text-4xl text-3xl font-horizon uppercase">
-                  {["Strength", "Meets", "Beauty."].map((word, index) => {
-                    // Each word fades out sequentially based on scrollProgress
-                    const wordFadeStart = index * 0.07; // Artistry: 0, Meets: 0.07, Function: 0.14
-                    const wordFadeEnd = wordFadeStart + 0.07;
-                    const wordProgress = Math.max(0, Math.min(1, (scrollProgress - wordFadeStart) / (wordFadeEnd - wordFadeStart)));
-                    const wordOpacity = 1 - wordProgress;
-                    const wordBlur = wordProgress * 10; // 0px to 10px blur
-                    
-                    return (
-                      <span
-                        key={index}
-                        className="inline-block"
-                        style={{
-                          opacity: wordOpacity,
-                          filter: `blur(${wordBlur}px)`,
-                          transition: 'opacity 0.1s linear, filter 0.1s linear',
-                          marginRight: index < 2 ? '0.3em' : '0',
-                        }}
-                      >
-                        {word}
-                        {index === 1 && <br />}
-                      </span>
-                    );
-                  })}
-                </h2>
-              </div>
-            </div>
-
-            {/* Right Column */}
-            <div 
-              className="flex flex-col will-change-transform"
-              style={{
-                width: `${sideWidth}%`,
-                gap: `${gap}px`,
-                transform: `translateX(${sideTranslateRight}%)`,
-                opacity: sideOpacity,
-              }}
-            >
-              {sideImages.filter(img => img.position === "right").map((img, idx) => (
-                <div 
-                  key={idx} 
-                  className="relative overflow-hidden will-change-transform"
-                  style={{
-                    flex: img.span,
-                    borderRadius: `${borderRadius}px`,
-                  }}
-                >
-                  <Image
-                    src={img.src || "/placeholder.svg"}
-                    alt={img.alt}
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-              ))}
-            </div>
-
+    <div className="group bg-card cursor-pointer" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+      <div className="relative aspect-3/4 bg-white overflow-hidden">
+        <div className="absolute inset-6">
+          <div className="relative w-full h-full">
+            {images.map((src, i) => (
+              <Image
+                key={src}
+                src={src}
+                alt={`${name} view ${i + 1}`}
+                fill
+                className={`object-contain transition-opacity duration-500 ${
+                  i === currentIdx ? "opacity-100" : "opacity-0"
+                } ${i > 0 ? "scale-[1.45]" : "scale-100"}`}
+              />
+            ))}
           </div>
         </div>
       </div>
+      <div className="px-5 py-5">
+        <p className="mb-1 text-xs uppercase tracking-widest text-sandcast font-space-mono">{category}</p>
+        <h3 className="text-smoked-bronze text-sm font-space-mono uppercase tracking-wide">{name}</h3>
+      </div>
+    </div>
+  );
+}
 
-      {/* Scroll space to enable animation */}
-      <div className="h-[200vh]" />
+// ─── Main section ─────────────────────────────────────────────────────────────
 
-      {/* Description Section with Background Image and Scroll Reveal */}
-      <div 
-        className="relative overflow-hidden bg-background px-6 py-24 md:px-12 md:py-32 lg:px-20 lg:py-40"
-      >
-        {/* Background Image with Grayscale Filter */}
-        
+export function TechnologySection() {
+  const descriptionText =
+    "At Mettali, raw aluminium is the starting point — not the shortcut. Every piece passes through precision forming, expert powder coating, and careful hand-finishing before it earns its place in your home. Durable enough to outlast trends, refined enough to define them.";
 
-        {/* Text Content */}
-        <div className="relative z-10 mx-auto max-w-4xl">
+  return (
+    <section>
+      {/* 1. Video panel */}
+      <div className="relative h-screen overflow-hidden">
+        <video autoPlay muted loop playsInline className="absolute inset-0 h-full w-full object-cover">
+          <source src="/images/strengthmeetsbeauty.mp4" type="video/mp4" />
+        </video>
+        <div className="absolute inset-0" style={{ background: "rgba(88,71,56,0.35)" }} />
+        <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center">
+          <p className="mb-5 text-[11px] uppercase tracking-[0.3em] text-white/70 font-space-mono">
+            Limited Time Offer
+          </p>
+          <h2 className="font-horizon text-6xl uppercase text-white md:text-8xl">10% Off</h2>
+          <p className="mt-4 text-sm uppercase tracking-widest text-white/70 font-space-mono">
+            On All Signature Pieces
+          </p>
+          <Link
+            href="#reserve"
+            className="mt-10 border border-white/60 px-8 py-3 text-xs uppercase tracking-widest text-white font-space-mono hover:bg-white hover:text-smoked-bronze transition-colors duration-200"
+          >
+            Shop Now
+          </Link>
+        </div>
+      </div>
+
+      {/* 2. Signature products */}
+      <div className="bg-background">
+        <div className="px-6 py-16 text-center md:px-12 md:py-20 lg:px-20 lg:py-24 lg:pb-16">
+          <h2 className="text-xl tracking-wide text-mulled-iron md:text-2xl lg:text-3xl font-horizon uppercase">
+            The Mettali Standard.
+            <br />
+            Built for Every Room.
+          </h2>
+          <p className="mx-auto mt-6 max-w-md text-xs uppercase tracking-widest text-slate-moss font-space-mono">
+            Signature Products
+          </p>
+        </div>
+        <div className="grid grid-cols-1 gap-6 px-6 pb-20 md:grid-cols-3 md:px-12 lg:px-20">
+          {products.map((product) => (
+            <HoverProductCard key={product.name} {...product} />
+          ))}
+        </div>
+      </div>
+
+      {/* 3. At Mettali description */}
+      <div className="bg-background px-6 py-20 md:px-12 md:py-28 lg:px-20 lg:py-36">
+        <div className="mx-auto max-w-4xl">
           <ScrollRevealText text={descriptionText} />
         </div>
       </div>

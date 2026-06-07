@@ -4,12 +4,11 @@ import Image from "next/image";
 import Link from "next/link";
 
 const categories = [
-  { name: "Vases",       src: "/images/vase.png",              href: "/vases"      },
-  { name: "Organisers",  src: "/images/organisers.png",        href: "/organisers" },
-  { name: "Shelves",     src: "/images/shelves.png",           href: "/shelves"    },
-  { name: "Wine Rack",   src: "/images/wine%20holder.png",     href: "/shoe-racks" },
-  { name: "Shoe Rack",   src: "/images/shoe%20rack.png",       href: "/shoe-racks" },
-  { name: "Cup Holder",  src: "/images/cup%20holder.png",      href: "/organisers" },
+  { name: "Shelves",    src: "/images/categories/shelves.jpeg",    href: "/shelves"    },
+  { name: "Organisers", src: "/images/categories/organisers.png",  href: "/organisers" },
+  { name: "Shoe Racks", src: "/images/categories/shoe-racks.jpeg", href: "/shoe-racks" },
+  { name: "Vases",      src: "/images/categories/vases.jpeg",      href: "/vases"      },
+  { name: "Wine Racks", src: "/images/categories/wine-racks.jpeg", href: "/shoe-racks" },
 ];
 
 export function CategoriesSection() {
@@ -35,7 +34,7 @@ export function CategoriesSection() {
       </div>
 
       {/* Grid */}
-      <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-6">
+      <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-5">
         {categories.map((cat) => (
           <Link key={cat.name} href={cat.href} className="group cursor-pointer">
             <div className="relative mb-3 overflow-hidden rounded-xl" style={{ aspectRatio: "3/4" }}>

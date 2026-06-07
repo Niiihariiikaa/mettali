@@ -1,12 +1,12 @@
 export function PhilosophySection() {
   return (
     <section id="products" className="bg-background">
-      <div className="px-6 py-10 md:px-12 md:py-14 lg:px-20 lg:py-16 lg:pb-10">
+      <div className="px-6 py-6 md:px-12 md:py-10 lg:px-20 lg:py-12 lg:pb-8">
         <div className="text-center">
           <p className="text-xs uppercase tracking-widest text-sandcast">
             Signature Collection
           </p>
-          <p className="mt-8 leading-relaxed text-slate-moss text-3xl text-center">
+          <p className="mt-6 leading-relaxed text-slate-moss text-lg md:text-xl text-center max-w-3xl mx-auto">
             Every Mettali piece is precision-cast from aircraft-grade aluminium and hand-finished to perfection —
             furniture built to outlast every trend and elevate every room it enters.
           </p>

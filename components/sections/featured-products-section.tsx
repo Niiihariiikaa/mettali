@@ -114,7 +114,7 @@ export function FeaturedProductsSection() {
           Built for Every Room.
         </h2>
         <p className="mx-auto mt-6 max-w-md text-xs uppercase tracking-widest text-slate-moss font-space-mono">
-          Our Products
+          Signature Products
         </p>
       </div>
 

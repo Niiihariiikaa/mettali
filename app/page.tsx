@@ -3,7 +3,6 @@ import { HeroSection } from "@/components/sections/hero-section";
 import { PhilosophySection } from "@/components/sections/philosophy-section";
 import { MarqueeSection } from "@/components/sections/marquee-section";
 import { CategoriesSection } from "@/components/sections/categories-section";
-import { FeaturedProductsSection } from "@/components/sections/featured-products-section";
 import { TechnologySection } from "@/components/sections/technology-section";
 import { QuickBuySection } from "@/components/sections/quick-buy-section";
 import { EditorialSection } from "@/components/sections/editorial-section";
@@ -17,7 +16,6 @@ export default function Home() {
       <PhilosophySection />
       <MarqueeSection />
       <CategoriesSection />
-      <FeaturedProductsSection />
       <TechnologySection />
       <QuickBuySection />
       <EditorialSection />

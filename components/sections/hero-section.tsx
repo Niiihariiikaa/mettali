@@ -145,7 +145,7 @@ export function HeroSection() {
                 style={{ opacity: textOpacity }}
               >
                 <Image
-                  src="/images/logo.png"
+                  src="/logo.png"
                   alt="Mettali"
                   width={700}
                   height={180}
@@ -195,7 +195,7 @@ export function HeroSection() {
       {/* Tagline — slides up when it enters the viewport */}
       <div
         ref={taglineRef}
-        className={`px-6 pb-16 pt-2 text-center transition-all duration-700 ease-out ${
+        className={`px-6 pb-8 pt-2 text-center transition-all duration-700 ease-out ${
           taglineVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
         }`}
       >
