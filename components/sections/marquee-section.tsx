@@ -19,7 +19,7 @@ export function MarqueeSection() {
         .marquee-track:hover { animation-play-state: paused; }
       `}</style>
 
-      <div className="py-5">
+      <div className="py-7">
         <div className="marquee-track">
           {[...track, ...track].map((phrase, i) => (
             <span

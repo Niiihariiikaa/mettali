@@ -1,7 +1,7 @@
 export function PhilosophySection() {
   return (
     <section id="products" className="bg-background">
-      <div className="px-6 py-6 md:px-12 md:py-10 lg:px-20 lg:py-12 lg:pb-8">
+      <div className="px-6 py-6 md:px-12 md:py-10 lg:px-20 lg:py-12 lg:pb-32">
         <div className="text-center">
           <p className="text-xs uppercase tracking-widest text-sandcast">
             Signature Collection

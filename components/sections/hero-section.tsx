@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react";
 
 const sideImages = [
   {
-    src: "/images/Heromain3.png",
+    src: "/images/Heromain4.png",
     alt: "Mettali aluminium furniture in a modern space",
     position: "left",
     span: 1,
@@ -131,7 +131,7 @@ export function HeroSection() {
               }}
             >
               <Image
-                src="/images/Heromain4.png"
+                src="/images/Heromain3.png"
                 alt="Mettali aluminium furniture in a sleek modern living space"
                 fill
                 className="object-cover"
@@ -141,17 +141,34 @@ export function HeroSection() {
               
               {/* Overlay Text - Fades out first */}
               <div
-                className="absolute inset-0 flex items-end justify-center overflow-hidden pb-14"
-                style={{ opacity: textOpacity }}
+                className="absolute inset-0 flex flex-col items-center justify-center overflow-hidden"
+                style={{ opacity: textOpacity, paddingLeft: '40%', paddingTop: '8%' }}
               >
-                <Image
-                  src="/logo.png"
-                  alt="Mettali"
-                  width={700}
-                  height={180}
-                  className="w-[58%] h-auto animate-[slideUp_0.8s_ease-out_forwards] opacity-0 brightness-0 invert"
-                  style={{ animationDelay: '0.1s' }}
-                />
+                <p
+                  className="text-[10px] uppercase tracking-[0.4em] text-white/55 font-space-mono mb-4 animate-[slideUp_0.5s_ease-out_forwards] opacity-0"
+                  style={{ animationDelay: '0.05s' }}
+                >
+                  Premium Aluminium Décor
+                </p>
+                <p
+                  className="font-horizon uppercase text-white leading-[1.08] text-5xl md:text-6xl animate-[slideUp_0.65s_ease-out_forwards] opacity-0 text-center"
+                  style={{ animationDelay: '0.18s' }}
+                >
+                  Defined<br />by Detail.
+                </p>
+                <p
+                  className="mt-4 text-[11px] text-white/65 font-space-mono tracking-widest uppercase animate-[slideUp_0.72s_ease-out_forwards] opacity-0 text-center"
+                  style={{ animationDelay: '0.3s' }}
+                >
+                  Crafted to outlast. Built to inspire.
+                </p>
+                <a
+                  href="#products"
+                  className="mt-7 bg-white text-smoked-bronze text-[11px] uppercase tracking-widest font-space-mono px-8 py-3 hover:bg-white/90 transition-colors duration-200 animate-[slideUp_0.8s_ease-out_forwards] opacity-0"
+                  style={{ animationDelay: '0.42s' }}
+                >
+                  Explore Our Collection
+                </a>
               </div>
             </div>
 
