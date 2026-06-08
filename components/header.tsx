@@ -28,13 +28,15 @@ export function Header() {
       <div className="flex items-center justify-between transition-all duration-300 px-2 pl-5 py-2">
         {/* Logo */}
         <Link href="#" className="flex items-center">
-          <Image
-            src="/logo.png"
-            alt="Mettali"
-            width={120}
-            height={32}
-            className={`h-6 w-auto transition-all duration-300 ${isScrolled ? "" : "brightness-0 invert"}`}
-          />
+          <div className="relative w-36 h-8 overflow-hidden">
+            <Image
+              src="/images/logo2.svg"
+              alt="Mettali"
+              fill
+              style={{ objectFit: "cover", objectPosition: "center 40%" }}
+              className={`transition-all duration-300 ${isScrolled ? "" : "brightness-0 invert"}`}
+            />
+          </div>
         </Link>
 
         {/* Desktop Navigation */}

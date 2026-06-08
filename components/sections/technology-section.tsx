@@ -47,15 +47,13 @@ function ScrollRevealText({ text }: { text: string }) {
 const B = "/images/products-home";
 
 const products = [
-  { name: "Wine Stand",     category: "Kitchen & Bar", images: [`${B}/winestand1.png`, `${B}/winestand2.png`] },
-  { name: "Minimal Vase",   category: "Décor",         images: [`${B}/vase1.png`, `${B}/vase2.png`, `${B}/vase3.png`] },
-  { name: "Wine Vase",      category: "Décor",         images: [`${B}/wine-vase1.png`, `${B}/wine-vase2.png`, `${B}/wine-vase3.png`] },
-  { name: "Triple Vase Set",category: "Décor",         images: [`${B}/3vase1.png`, `${B}/3vase2.png`, `${B}/3vase3.png`] },
-  { name: "Signature Vase", category: "Décor",         images: [`${B}/signvase1.png`, `${B}/signvase2.png`, `${B}/signvase3.png`] },
-  { name: "Duo Vase",       category: "Décor",         images: [`${B}/2vase1.png`, `${B}/2vase2.png`] },
+  { name: "Wine Stand",     category: "Kitchen & Bar", fit: "contain", images: [`${B}/winestand1.png`, `${B}/winestand2.png`] },
+  { name: "Wine Vase",      category: "Décor",         fit: "contain", images: [`${B}/wine-vase1.png`, `${B}/wine-vase2.png`, `${B}/wine-vase3.png`] },
+  { name: "Triple Vase Set",category: "Décor",         fit: "contain", images: [`${B}/3vase1.png`, `${B}/3vase2.png`, `${B}/3vase3.png`] },
+  { name: "Shoe Rack",      category: "Storage",       fit: "contain", images: [`${B}/shoerack1.png`, `${B}/shoerack2.png`, `${B}/shoerack3.png`] },
 ];
 
-function HoverProductCard({ name, category, images }: { name: string; category: string; images: string[] }) {
+function HoverProductCard({ name, category, images, fit }: { name: string; category: string; images: string[]; fit: string }) {
   const [currentIdx, setCurrentIdx] = useState(0);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
@@ -77,21 +75,17 @@ function HoverProductCard({ name, category, images }: { name: string; category: 
   return (
     <div className="group bg-card cursor-pointer" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
       <div className="relative aspect-3/4 bg-white overflow-hidden">
-        <div className="absolute inset-6">
-          <div className="relative w-full h-full">
-            {images.map((src, i) => (
-              <Image
-                key={src}
-                src={src}
-                alt={`${name} view ${i + 1}`}
-                fill
-                className={`object-contain transition-opacity duration-500 ${
-                  i === currentIdx ? "opacity-100" : "opacity-0"
-                } ${i > 0 ? "scale-[1.45]" : "scale-100"}`}
-              />
-            ))}
-          </div>
-        </div>
+        {images.map((src, i) => (
+          <Image
+            key={src}
+            src={src}
+            alt={`${name} view ${i + 1}`}
+            fill
+            className={`transition-opacity duration-500 ${fit === "cover" ? "object-cover" : "object-contain p-6"} ${
+              i === currentIdx ? "opacity-100" : "opacity-0"
+            }`}
+          />
+        ))}
       </div>
       <div className="px-5 py-5">
         <p className="mb-1 text-xs uppercase tracking-widest text-sandcast font-space-mono">{category}</p>
@@ -116,12 +110,9 @@ export function TechnologySection() {
         </video>
         <div className="absolute inset-0" style={{ background: "rgba(88,71,56,0.35)" }} />
         <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center">
-          <p className="mb-5 text-[11px] uppercase tracking-[0.3em] text-white/70 font-space-mono">
-            Limited Time Offer
-          </p>
-          <h2 className="font-horizon text-6xl uppercase text-white md:text-8xl">10% Off</h2>
-          <p className="mt-4 text-sm uppercase tracking-widest text-white/70 font-space-mono">
-            On All Signature Pieces
+          <h2 className="font-horizon text-5xl uppercase text-white md:text-7xl">10% Off</h2>
+          <p className="mt-5 text-sm uppercase tracking-[0.25em] text-white/75 font-space-mono">
+            On Your First Purchase
           </p>
           <Link
             href="#reserve"
@@ -144,9 +135,9 @@ export function TechnologySection() {
             Signature Products
           </p>
         </div>
-        <div className="grid grid-cols-1 gap-6 px-6 pb-20 md:grid-cols-3 md:px-12 lg:px-20">
+        <div className="grid grid-cols-2 gap-6 px-6 pb-20 md:grid-cols-4 md:px-12 lg:px-20">
           {products.map((product) => (
-            <HoverProductCard key={product.name} {...product} />
+            <HoverProductCard key={product.name} name={product.name} category={product.category} images={product.images} fit={product.fit} />
           ))}
         </div>
       </div>

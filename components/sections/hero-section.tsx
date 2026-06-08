@@ -5,25 +5,25 @@ import { useEffect, useRef, useState } from "react";
 
 const sideImages = [
   {
-    src: "/images/hero1.png",
+    src: "/images/Heromain3.png",
     alt: "Mettali aluminium furniture in a modern space",
     position: "left",
     span: 1,
   },
   {
-    src: "/images/hero3.png",
+    src: "/images/herob.png",
     alt: "Mettali product showcase",
     position: "left",
     span: 1,
   },
   {
-    src: "/images/hero4.png",
+    src: "/images/heroc.png",
     alt: "Mettali aluminium home decor",
     position: "right",
     span: 1,
   },
   {
-    src: "/images/hero2.png",
+    src: "/images/herod.png",
     alt: "Mettali aluminium collection",
     position: "right",
     span: 1,
@@ -131,7 +131,7 @@ export function HeroSection() {
               }}
             >
               <Image
-                src="/images/Heromain2.png"
+                src="/images/Heromain4.png"
                 alt="Mettali aluminium furniture in a sleek modern living space"
                 fill
                 className="object-cover"
