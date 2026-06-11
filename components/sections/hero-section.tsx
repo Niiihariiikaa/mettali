@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react";
 
 const sideImages = [
   {
-    src: "/images/Heromain4.png",
+    src: "/images/heroa.png",
     alt: "Mettali aluminium furniture in a modern space",
     position: "left",
     span: 1,
@@ -141,34 +141,32 @@ export function HeroSection() {
               
               {/* Overlay Text - Fades out first */}
               <div
-                className="absolute inset-0 flex flex-col items-center justify-center overflow-hidden"
-                style={{ opacity: textOpacity, paddingLeft: '40%', paddingTop: '8%' }}
+                className="absolute inset-0 flex items-end justify-between overflow-hidden px-10 pb-32"
+                style={{ opacity: textOpacity }}
               >
+                {/* Left — big headline */}
                 <p
-                  className="text-[10px] uppercase tracking-[0.4em] text-white/55 font-space-mono mb-4 animate-[slideUp_0.5s_ease-out_forwards] opacity-0"
-                  style={{ animationDelay: '0.05s' }}
+                  className="font-horizon uppercase text-white leading-[1.05] text-4xl md:text-5xl animate-[slideUp_0.65s_ease-out_forwards] opacity-0 max-w-[45%]"
+                  style={{ animationDelay: '0.15s' }}
                 >
-                  Premium Aluminium Décor
+                  Metal That<br />Belongs in<br />Every Home.
                 </p>
-                <p
-                  className="font-horizon uppercase text-white leading-[1.08] text-5xl md:text-6xl animate-[slideUp_0.65s_ease-out_forwards] opacity-0 text-center"
-                  style={{ animationDelay: '0.18s' }}
-                >
-                  Defined<br />by Detail.
-                </p>
-                <p
-                  className="mt-4 text-[11px] text-white/65 font-space-mono tracking-widest uppercase animate-[slideUp_0.72s_ease-out_forwards] opacity-0 text-center"
+
+                {/* Right — description + button */}
+                <div
+                  className="flex flex-col items-end text-right max-w-[40%] animate-[slideUp_0.75s_ease-out_forwards] opacity-0"
                   style={{ animationDelay: '0.3s' }}
                 >
-                  Crafted to outlast. Built to inspire.
-                </p>
-                <a
-                  href="#products"
-                  className="mt-7 bg-white text-smoked-bronze text-[11px] uppercase tracking-widest font-space-mono px-8 py-3 hover:bg-white/90 transition-colors duration-200 animate-[slideUp_0.8s_ease-out_forwards] opacity-0"
-                  style={{ animationDelay: '0.42s' }}
-                >
-                  Explore Our Collection
-                </a>
+                  <p className="text-2xl text-white/75 font-space-mono tracking-wide mb-7 mr-4">
+                    Discover premium aluminium décor,<br />furniture, and organizers crafted<br />for modern living.
+                  </p>
+                  <a
+                    href="#products"
+                    className="border border-white/70 px-8 py-3 text-xxl uppercase tracking-widest text-white font-space-mono hover:bg-white hover:text-smoked-bronze transition-colors duration-200 mr-7"
+                  >
+                    Shop Collection
+                  </a>
+                </div>
               </div>
             </div>
 

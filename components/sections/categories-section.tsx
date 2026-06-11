@@ -4,10 +4,10 @@ import Image from "next/image";
 import Link from "next/link";
 
 const categories = [
-  { name: "Organizers",   src: "/images/categories/organisers.png", href: "/organisers" },
+  { name: "Organizers",   src: "/images/categories/shelves.png", href: "/organisers" },
   { name: "Flower Vases", src: "/images/categories/vases.png",      href: "/vases"      },
   { name: "Wine Holders", src: "/images/categories/wine-racks.png", href: "/shoe-racks" },
-  { name: "Bookshelves",  src: "/images/categories/shelves.png",    href: "/shelves"    },
+  { name: "Bookshelves",  src: "/images/categories/organisers.png",    href: "/shelves"    },
   { name: "Shoe Racks",   src: "/images/categories/shoe-racks.png", href: "/shoe-racks" },
 ];
 
