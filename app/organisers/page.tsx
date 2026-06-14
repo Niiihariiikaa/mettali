@@ -6,23 +6,24 @@ const B = "/images/WHITE%20BACKGROUND-20260529T063507Z-3-001/WHITE%20BACKGROUND"
 
 const organisers = [
   {
-    name: "Desk Organiser I",
-    category: "Organisers",
-    images: [`${B}/organiser3.png`, `${B}/organiser2.png`, `${B}/organiser1.png`],
-  },
-  {
-    name: "Desk Organiser II",
-    category: "Organisers",
-    images: [`${B}/organiserb2.png`, `${B}/organiserb1.png`],
-  },
-  {
-    name: "Desk Organiser III",
+    name: "Linea Organiser",
     category: "Organisers",
     images: [
-      `${B}/organiserc4.png`,
-      `${B}/organiserc3.png`,
-      `${B}/organiserc2.png`,
-      `${B}/organiserc1.png`,
+      `${B}/Linea-organiser-green.JPG`,
+      `${B}/Linea%20organiser-green2.JPG`,
+      `${B}/Linea%20organiser%20light%20green%20.JPG`,
+      `${B}/Linea-organiser-white.JPG`,
+      `${B}/Linea-organiser-white-2.JPG`,
+      `${B}/Linea-organiser-white3.JPG`,
+    ],
+  },
+  {
+    name: "Perch",
+    category: "Organisers",
+    images: [
+      `${B}/Perch-wineholder1.JPG`,
+      `${B}/Perchwineholder2.JPG`,
+      `${B}/Perchwineholder3.JPG`,
     ],
   },
 ];
@@ -32,7 +33,6 @@ export default function OrganisersPage() {
     <main className="min-h-screen bg-background">
       <Header />
 
-      {/* Page Hero */}
       <div className="pt-36 pb-16 text-center px-6">
         <p className="text-xs uppercase tracking-widest text-sandcast font-space-mono mb-4">
           Mettali Collection
@@ -45,7 +45,6 @@ export default function OrganisersPage() {
         </p>
       </div>
 
-      {/* Grid */}
       <div className="grid grid-cols-1 gap-6 px-6 pb-28 md:grid-cols-3 md:px-12 lg:px-20">
         {organisers.map((product) => (
           <ProductSliderCard key={product.name} {...product} />

@@ -121,7 +121,7 @@ export function HeroSection() {
             </div>
 
             {/* Main Hero Image - Center */}
-            <div 
+            <div
               className="relative overflow-hidden will-change-transform"
               style={{
                 width: `${centerWidth}%`,
@@ -131,41 +131,78 @@ export function HeroSection() {
               }}
             >
               <Image
-                src="/images/Heromain3.png"
+                src="/images/Heromain5.png"
                 alt="Mettali aluminium furniture in a sleek modern living space"
                 fill
                 className="object-cover"
-                style={{ objectPosition: '50% 60%' }}
+                style={{ objectPosition: `${50 + imageProgress * 15}% 60%` }}
                 priority
               />
-              
-              {/* Overlay Text - Fades out first */}
-              <div
-                className="absolute inset-0 flex items-end justify-between overflow-hidden px-10 pb-32"
-                style={{ opacity: textOpacity }}
-              >
-                {/* Left — big headline */}
-                <p
-                  className="font-horizon uppercase text-white leading-[1.05] text-4xl md:text-5xl animate-[slideUp_0.65s_ease-out_forwards] opacity-0 max-w-[45%]"
-                  style={{ animationDelay: '0.15s' }}
+            </div>
+
+            {/* Full-screen text + grid overlay — fades out on scroll */}
+            <div
+              className="absolute inset-0 z-10 flex flex-col justify-between px-12 md:px-16 pt-28 pb-16 pointer-events-none"
+              style={{
+                opacity: textOpacity,
+                background: "linear-gradient(to right, rgba(0,0,0,0.52) 0%, rgba(0,0,0,0.28) 15%, transparent 100%)",
+              }}
+            >
+              {/* Left text block */}
+              <div className="flex flex-col justify-center flex-1">
+                <h1
+                  className="font-space-mono text-white leading-none text-[clamp(2.8rem,5vw,4rem)] mb-8 animate-[slideUp_0.65s_ease-out_forwards] opacity-0"
+                  style={{ animationDelay: "0.12s" }}
                 >
-                  Metal That<br />Belongs in<br />Every Home.
+                  Metal<br />Crafted for<br />the Home.
+                </h1>
+
+                <p
+                  className="text-sm text-white/55 font-space-mono leading-[1.9] mb-10 max-w-[280px] animate-[slideUp_0.72s_ease-out_forwards] opacity-0"
+                  style={{ animationDelay: "0.26s" }}
+                >
+                  Aluminium decor that brings<br />
+                  calm, balance and character<br />
+                  to your space.
                 </p>
 
-                {/* Right — description + button */}
-                <div
-                  className="flex flex-col items-end text-right max-w-[40%] animate-[slideUp_0.75s_ease-out_forwards] opacity-0"
-                  style={{ animationDelay: '0.3s' }}
+                <a
+                  href="#products"
+                  className="pointer-events-auto flex items-center gap-4 w-fit text-[11px] uppercase tracking-[0.35em] text-white font-space-mono border-b border-white/35 pb-1.5 hover:border-white transition-colors duration-200 group animate-[slideUp_0.78s_ease-out_forwards] opacity-0"
+                  style={{ animationDelay: "0.4s" }}
                 >
-                  <p className="text-2xl text-white/75 font-space-mono tracking-wide mb-7 mr-4">
-                    Discover premium aluminium décor,<br />furniture, and organizers crafted<br />for modern living.
+                  Explore Collection
+                  <span className="group-hover:translate-x-1 transition-transform duration-200">→</span>
+                </a>
+              </div>
+
+              {/* Bottom spec grid */}
+              <div className="border-t border-white/80 grid grid-cols-3">
+                <div className="border-r border-white/80 py-5 pr-10">
+                  <p className="text-[9px] uppercase tracking-[0.32em] text-white/35 font-space-mono mb-2">
+                    Material
                   </p>
-                  <a
-                    href="#products"
-                    className="border border-white/70 px-8 py-3 text-xxl uppercase tracking-widest text-white font-space-mono hover:bg-white hover:text-smoked-bronze transition-colors duration-200 mr-7"
-                  >
-                    Shop Collection
-                  </a>
+                  <p className="text-[11px] uppercase text-white/85 font-space-mono leading-[1.75]">
+                    Premium Aluminium.<br />100% Recyclable.
+                  </p>
+                </div>
+
+                <div className="border-r border-white/80 py-5 px-10">
+                  <p className="text-[11px] uppercase tracking-widest text-white/35 font-space-mono mb-2">
+                    Thoughtful Design
+                  </p>
+                  <p className="text-[10px] text-white/85 font-space-mono leading-[1.75]">
+                    Clean forms.<br />Purposeful details.
+                  </p>
+                </div>
+
+                <div className="py-5 pl-10">
+                  <p className="text-[9px] uppercase tracking-[0.32em] text-white/35 font-space-mono mb-2">
+                    Finish
+                  </p>
+                  <p className="text-[11px] uppercase text-white/85 font-space-mono leading-[1.75]">
+                    Powder Coated for<br />Durability & Elegance.
+                  </p>
                 </div>
               </div>
             </div>

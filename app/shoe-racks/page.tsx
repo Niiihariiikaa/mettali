@@ -6,19 +6,49 @@ const B = "/images/WHITE%20BACKGROUND-20260529T063507Z-3-001/WHITE%20BACKGROUND"
 
 const racks = [
   {
-    name: "Shoe Rack I",
+    name: "Align Shoe Rack",
     category: "Shoe Racks",
-    images: [`${B}/shoerack3.JPG`, `${B}/shoerack2.JPG`, `${B}/shoerack1.JPG`],
+    images: [
+      `${B}/Alignshoerack.JPG`,
+      `${B}/Alignshoerack2.JPG`,
+      `${B}/alignshoerack3.JPG`,
+    ],
   },
   {
-    name: "Shoe Rack II",
+    name: "Penta Shoe Rack",
     category: "Shoe Racks",
-    images: [`${B}/shoerackb2.JPG`, `${B}/shoerackb1.JPG`],
+    images: [
+      `${B}/pentashoerack.JPG`,
+      `${B}/pentashoerack2.JPG`,
+    ],
   },
   {
-    name: "Wire Rack",
+    name: "Step Shoe Rack",
     category: "Shoe Racks",
-    images: [`${B}/rack2.png`, `${B}/rack1.png`],
+    images: [
+      `${B}/step-shoerack1.JPG`,
+      `${B}/step-shoerack2.JPG`,
+      `${B}/stepshoerack3.JPG`,
+      `${B}/stepshoerackb2.JPG`,
+    ],
+  },
+  {
+    name: "Orbit Shoe Rack",
+    category: "Shoe Racks",
+    images: [
+      `${B}/Orbit-shoerack1.JPG`,
+      `${B}/Orbitshoerack2.JPG`,
+      `${B}/Orbitshoerack3.JPG`,
+    ],
+  },
+  {
+    name: "Vault Shoe Rack",
+    category: "Shoe Racks",
+    images: [
+      `${B}/Vaultshoerack1.JPG`,
+      `${B}/Vaultshoerack2.JPG`,
+      `${B}/vaultshoerack3.JPG`,
+    ],
   },
 ];
 
@@ -27,7 +57,6 @@ export default function ShoeRacksPage() {
     <main className="min-h-screen bg-background">
       <Header />
 
-      {/* Page Hero */}
       <div className="pt-36 pb-16 text-center px-6">
         <p className="text-xs uppercase tracking-widest text-sandcast font-space-mono mb-4">
           Mettali Collection
@@ -40,8 +69,7 @@ export default function ShoeRacksPage() {
         </p>
       </div>
 
-      {/* Grid */}
-      <div className="grid grid-cols-1 gap-6 px-6 pb-28 md:grid-cols-3 md:px-12 lg:px-20">
+      <div className="grid grid-cols-1 gap-6 px-6 pb-28 md:grid-cols-3 md:px-12 lg:grid-cols-3 lg:px-20">
         {racks.map((product) => (
           <ProductSliderCard key={product.name} {...product} />
         ))}
