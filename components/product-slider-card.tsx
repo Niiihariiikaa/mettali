@@ -8,9 +8,13 @@ interface ProductSliderCardProps {
   name: string;
   category: string;
   images: string[];
+  description?: string;
+  price?: number;
+  dimensions?: string;
+  type?: string;
 }
 
-export function ProductSliderCard({ name, category, images }: ProductSliderCardProps) {
+export function ProductSliderCard({ name, category, images, description, price, dimensions, type }: ProductSliderCardProps) {
   const [current, setCurrent] = useState(0);
 
   const prev = (e: React.MouseEvent) => {
@@ -87,6 +91,28 @@ export function ProductSliderCard({ name, category, images }: ProductSliderCardP
         <h3 className="text-smoked-bronze text-sm font-space-mono uppercase tracking-wide">
           {name}
         </h3>
+        {type && (
+          <span className="inline-block mt-1.5 text-[9px] uppercase tracking-widest text-sandcast border border-sandcast/40 px-1.5 py-0.5 rounded font-space-mono">
+            {type}
+          </span>
+        )}
+        {description && (
+          <p className="mt-2 text-[11px] text-slate-moss font-space-mono leading-relaxed line-clamp-3">
+            {description}
+          </p>
+        )}
+        <div className="mt-3 flex items-center justify-between">
+          {price && (
+            <p className="text-smoked-bronze font-space-mono text-sm font-semibold">
+              ₹{price.toLocaleString("en-IN")}
+            </p>
+          )}
+          {dimensions && (
+            <p className="text-[10px] text-sandcast font-space-mono tracking-wide">
+              {dimensions}
+            </p>
+          )}
+        </div>
       </div>
     </div>
   );
