@@ -5,13 +5,13 @@ import { useEffect, useRef, useState } from "react";
 
 const sideImages = [
   {
-    src: "/images/hero1.png",
+    src: "/images/hero2.png",
     alt: "Mettali aluminium furniture in a modern space",
     position: "left",
     span: 1,
   },
   {
-    src: "/images/hero2.png",
+    src: "/images/hero1.png",
     alt: "Mettali product showcase",
     position: "left",
     span: 1,
