@@ -47,10 +47,10 @@ function ScrollRevealText({ text }: { text: string }) {
 const B = "/images/products-home";
 
 const products = [
-  { name: "Wine Stand",     category: "Kitchen & Bar", fit: "contain", images: [`${B}/winestand1.png`, `${B}/winestand2.png`] },
-  { name: "Wine Vase",      category: "Décor",         fit: "contain", images: [`${B}/wine-vase1.png`, `${B}/wine-vase2.png`, `${B}/wine-vase3.png`] },
-  { name: "Triple Vase Set",category: "Décor",         fit: "contain", images: [`${B}/3vase1.png`, `${B}/3vase2.png`, `${B}/3vase3.png`] },
-  { name: "Shoe Rack",      category: "Storage",       fit: "contain", images: [`${B}/shoerack1.png`, `${B}/shoerack2.png`, `${B}/shoerack3.png`] },
+  { name: "Maison",     category: "Wine holder", fit: "contain", images: [`${B}/winestand1.png`, `${B}/winestand2.png`] },
+  { name: "Cala",      category: "Vase",         fit: "contain", images: [`${B}/wine-vase1.png`, `${B}/wine-vase2.png`, `${B}/wine-vase3.png`] },
+  { name: "Aura",category: "Vase",         fit: "contain", images: [`${B}/3vase1.png`, `${B}/3vase2.png`, `${B}/3vase3.png`] },
+  { name: "Align",      category: "Shoe rack",       fit: "contain", images: [`${B}/shoerack1.png`, `${B}/shoerack2.png`, `${B}/shoerack3.png`] },
 ];
 
 function HoverProductCard({ name, category, images, fit }: { name: string; category: string; images: string[]; fit: string }) {
@@ -73,19 +73,27 @@ function HoverProductCard({ name, category, images, fit }: { name: string; categ
   };
 
   return (
-    <div className="group bg-card cursor-pointer" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-      <div className="relative aspect-3/4 bg-white overflow-hidden">
-        {images.map((src, i) => (
-          <Image
-            key={src}
-            src={src}
-            alt={`${name} view ${i + 1}`}
-            fill
-            className={`transition-opacity duration-500 ${fit === "cover" ? "object-cover" : "object-contain p-6"} ${
-              i === currentIdx ? "opacity-100" : "opacity-0"
-            }`}
-          />
-        ))}
+    <div className="group bg-card cursor-pointer overflow-hidden" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+      <div className="relative aspect-3/4 bg-white overflow-hidden isolate">
+        {fit === "cover" ? (
+          images.map((src, i) => (
+            <Image
+              key={src}
+              src={src}
+              alt={`${name} view ${i + 1}`}
+              fill
+              className={`transition-opacity duration-500 object-cover ${i === currentIdx ? "opacity-100" : "opacity-0"}`}
+            />
+          ))
+        ) : (
+          images.map((src, i) => (
+            <div key={src} className={`absolute inset-3 transition-opacity duration-500 ${i === currentIdx ? "opacity-100" : "opacity-0"}`}>
+              <div className="relative w-full h-full">
+                <Image src={src} alt={`${name} view ${i + 1}`} fill className="object-contain" />
+              </div>
+            </div>
+          ))
+        )}
       </div>
       <div className="px-5 py-5">
         <p className="mb-1 text-xs uppercase tracking-widest text-sandcast font-space-mono">{category}</p>
@@ -126,16 +134,16 @@ export function TechnologySection() {
       {/* 2. Signature products */}
       <div className="bg-background">
         <div className="px-6 py-16 text-center md:px-12 md:py-20 lg:px-20 lg:py-24 lg:pb-16">
-          <h2 className="text-xl tracking-wide text-mulled-iron md:text-2xl lg:text-3xl font-horizon uppercase">
+          <p className="inline-block text-sm md:text-base uppercase tracking-[0.25em] text-smoked-bronze font-space-mono border-b-2 border-smoked-bronze/40 pb-1 mb-6">
+            Signature Products
+          </p>
+          <h2 className="text-2xl tracking-wide text-mulled-iron md:text-3xl lg:text-4xl font-horizon uppercase">
             The Mettali Standard.
             <br />
             Built for Every Room.
           </h2>
-          <p className="mx-auto mt-6 max-w-md text-xs uppercase tracking-widest text-slate-moss font-space-mono">
-            Signature Products
-          </p>
         </div>
-        <div className="grid grid-cols-2 gap-6 px-6 pb-20 md:grid-cols-4 md:px-12 lg:px-20">
+        <div className="grid grid-cols-2 gap-6 px-6 pb-6 md:grid-cols-4 md:px-12 lg:px-20">
           {products.map((product) => (
             <HoverProductCard key={product.name} name={product.name} category={product.category} images={product.images} fit={product.fit} />
           ))}
@@ -143,7 +151,7 @@ export function TechnologySection() {
       </div>
 
       {/* 3. At Mettali description */}
-      <div className="bg-background px-6 py-20 md:px-12 md:py-28 lg:px-20 lg:py-36">
+      <div className="bg-background px-6 py-10 md:px-12 md:py-14 lg:px-20 lg:py-16">
         <div className="mx-auto max-w-4xl">
           <ScrollRevealText text={descriptionText} />
         </div>

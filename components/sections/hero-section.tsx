@@ -5,25 +5,25 @@ import { useEffect, useRef, useState } from "react";
 
 const sideImages = [
   {
-    src: "/images/heroa.png",
+    src: "/images/hero1.png",
     alt: "Mettali aluminium furniture in a modern space",
     position: "left",
     span: 1,
   },
   {
-    src: "/images/herob.png",
+    src: "/images/hero2.png",
     alt: "Mettali product showcase",
     position: "left",
     span: 1,
   },
   {
-    src: "/images/heroc.png",
+    src: "/images/hero3.png",
     alt: "Mettali aluminium home decor",
     position: "right",
     span: 1,
   },
   {
-    src: "/images/herod.png",
+    src: "/images/hero4.png",
     alt: "Mettali aluminium collection",
     position: "right",
     span: 1,
@@ -131,11 +131,11 @@ export function HeroSection() {
               }}
             >
               <Image
-                src="/images/Heromain5.png"
+                src="/images/Heromain8.png"
                 alt="Mettali aluminium furniture in a sleek modern living space"
                 fill
                 className="object-cover"
-                style={{ objectPosition: `${50 + imageProgress * 15}% 60%` }}
+                style={{ objectPosition: `${50 + imageProgress * 15}% ` }}
                 priority
               />
             </div>
@@ -242,16 +242,16 @@ export function HeroSection() {
       </div>
 
       {/* Scroll space to enable animation */}
-      <div className="h-screen" />
+      <div className="h-[60vh]" />
 
       {/* Tagline — slides up when it enters the viewport */}
       <div
         ref={taglineRef}
-        className={`px-6 pb-8 pt-2 text-center transition-all duration-700 ease-out ${
-          taglineVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+        className={`px-6 pb-4 pt-6 text-center transition-all duration-700 ease-out ${
+          taglineVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-60"
         }`}
       >
-        <p className="mx-auto max-w-2xl text-xl leading-tight text-slate-moss md:text-2xl lg:text-3xl font-horizon uppercase tracking-wide">
+        <p className="mx-auto max-w-5xl text-5xl leading-tight text-slate-moss md:text-6xl lg:text-5xl font-horizon uppercase tracking-wide opacity-80">
           Metal that belongs
           <br />
           in every home.

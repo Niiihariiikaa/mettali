@@ -3,10 +3,10 @@
 import Image from "next/image";
 
 const specs = [
-  { label: "Materials", value: "Aluminium Alloy" },
-  { label: "Warranty", value: "10 Years" },
-  { label: "Delivery", value: "6-10 Weeks" },
-  { label: "Returns", value: "30 Days" },
+  { label: "Material", value: "Aluminium" },
+  { label: "Craftsmanship", value: "Precision engineered" },
+  { label: "Delivery", value: "10-14 days" },
+  { label: "Quality", value: "Inspected before shipping" },
 ];
 
 export function EditorialSection() {

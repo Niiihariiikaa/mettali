@@ -21,7 +21,7 @@ type Panel = {
 
 const panels: Panel[] = [
   {
-    image: "/images/quickbuy1.png",
+    image: "/images/Heromain3.png",
     alt: "Mettali products in a styled scene",
     dots: [
       {
@@ -45,12 +45,28 @@ const panels: Panel[] = [
     alt: "Mettali wine vase",
     dots: [
       {
-        name: "Wine Vase",
+        name: "Aura Vase",
         price: "From ₹2,499",
         href: "/vases",
         dot: { left: "48%", top: "52%" },
         popup: { left: "5%", top: "20%" },
       },
+
+      {
+        name: "Aura Vase",
+        price: "From ₹2,499",
+        href: "/vases",
+        dot: { left: "70%", top: "62%" },
+        popup: { left: "38%", top: "22%" },
+      },
+
+      {
+        name: "Aura Vase",
+        price: "From ₹2,499",
+        href: "/vases",
+        dot: { left: "40%", top: "82%" },
+        popup: { left: "38%", top: "22%" },
+      }
     ],
   },
   {

@@ -7,8 +7,8 @@ const B = "/images/products-home";
 
 const products = [
   {
-    name: "Wine Stand",
-    category: "Kitchen & Bar",
+    name: "Maison",
+    category: "Wine holder",
     images: [`${B}/winestand1.png`, `${B}/winestand2.png`],
   },
   {
