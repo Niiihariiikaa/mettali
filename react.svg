@@ -1,0 +1,168 @@
+import { useState, useRef } from 'react'
+import { motion, AnimatePresence, useInView } from 'framer-motion'
+import { Menu, X } from 'lucide-react'
+
+const VIDEO_URL =
+  'https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260619_191346_9d19d66e-86a4-47f7-8dc6-712c1788c3b2.mp4'
+
+const NAV_LINKS = ['Wander', 'Archive', 'Story', 'Connect']
+
+interface StaggeredFadeProps {
+  text: string
+}
+
+function StaggeredFade({ text }: StaggeredFadeProps) {
+  const ref = useRef(null)
+  const isInView = useInView(ref, { once: true })
+  const chars = text.split('')
+
+  return (
+    <span ref={ref} className="inline-block">
+      {chars.map((char, i) => (
+        <motion.span
+          key={i}
+          className="inline-block"
+          style={{ whiteSpace: char === ' ' ? 'pre' : 'normal' }}
+          initial={{ opacity: 0 }}
+          animate={isInView ? { opacity: 1 } : { opacity: 0 }}
+          transition={{ duration: 0.4, delay: i * 0.07, ease: 'easeOut' }}
+        >
+          {char === ' ' ? '\u00A0' : char}
+        </motion.span>
+      ))}
+    </span>
+  )
+}
+
+export default function App() {
+  const [menuOpen, setMenuOpen] = useState(false)
+
+  return (
+    <div
+      className="relative w-full overflow-hidden"
+      style={{ minHeight: '100vh', background: '#010101' }}
+    >
+      {/* Video background */}
+      <video
+        src={VIDEO_URL}
+        autoPlay
+        muted
+        loop
+        playsInline
+        className="absolute inset-0 w-full h-full object-cover object-center"
+        style={{ zIndex: 1 }}
+      />
+
+      {/* Subtle dark overlay */}
+      <div
+        className="absolute inset-0"
+        style={{ background: 'rgba(1,1,1,0.3)', zIndex: 2 }}
+      />
+
+      {/* Navigation */}
+      <nav
+        className="relative flex items-center justify-between md:justify-center px-5 sm:px-8 py-6"
+        style={{ zIndex: 20 }}
+      >
+        <span
+          className="text-white font-light uppercase"
+          style={{ letterSpacing: 'clamp(0.25em, 2vw, 0.3em)', fontSize: 'clamp(0.7rem, 2vw, 0.85rem)' }}
+        >
+          Organic Visions
+        </span>
+
+        {/* Desktop nav links */}
+        <div className="hidden md:flex items-center gap-10 absolute left-1/2 -translate-x-1/2">
+          {NAV_LINKS.map((link) => (
+            <a
+              key={link}
+              href="#"
+              className="text-white/80 uppercase font-light transition-colors duration-300 hover:text-white"
+              style={{ letterSpacing: '0.2em', fontSize: '0.75rem' }}
+            >
+              {link}
+            </a>
+          ))}
+        </div>
+
+        {/* Mobile hamburger */}
+        <button
+          className="md:hidden text-white/90 hover:text-white transition-colors"
+          onClick={() => setMenuOpen((v) => !v)}
+          aria-label="Toggle menu"
+        >
+          {menuOpen ? <X size={22} /> : <Menu size={22} />}
+        </button>
+      </nav>
+
+      {/* Mobile menu */}
+      <AnimatePresence>
+        {menuOpen && (
+          <motion.div
+            className="mobile-menu-glass fixed top-16 left-4 right-4 rounded-2xl py-8 flex flex-col items-center gap-5 md:hidden"
+            style={{ zIndex: 50 }}
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.3, ease: 'easeOut' }}
+          >
+            {NAV_LINKS.map((link, i) => (
+              <motion.a
+                key={link}
+                href="#"
+                className="text-white/90 uppercase font-light hover:text-white transition-colors"
+                style={{ letterSpacing: '0.25em', fontSize: '0.75rem' }}
+                initial={{ opacity: 0, y: -8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.05 + i * 0.06, duration: 0.3, ease: 'easeOut' }}
+                onClick={() => setMenuOpen(false)}
+              >
+                {link}
+              </motion.a>
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Hero content */}
+      <div
+        className="relative flex flex-col items-center justify-center text-center px-5 sm:px-8 pt-12 sm:pt-16 md:pt-24"
+        style={{ zIndex: 10, minHeight: 'calc(100vh - 80px)' }}
+      >
+        <h1
+          className="font-garamond font-normal text-white mb-6 sm:mb-8"
+          style={{ fontSize: 'clamp(2.5rem, 10vw, 7rem)', lineHeight: 1.08, letterSpacing: '-0.02em' }}
+        >
+          <span className="block">
+            <StaggeredFade text="WITNESS THE" />
+          </span>
+          <span className="block">
+            <StaggeredFade text="HIDDEN REALM" />
+          </span>
+        </h1>
+
+        <motion.p
+          className="text-white/70 font-light leading-relaxed max-w-xs sm:max-w-md mb-8 sm:mb-10"
+          style={{ fontSize: 'clamp(0.875rem, 2vw, 1.125rem)' }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 1.6, ease: 'easeOut' }}
+        >
+          An odyssey through delicate living forms,{' '}
+          <br className="hidden sm:block" />
+          revealed by lens and curiosity.
+        </motion.p>
+
+        <motion.button
+          className="liquid-glass rounded-full px-7 sm:px-10 py-3.5 sm:py-4 text-white/90 uppercase font-light cursor-pointer"
+          style={{ letterSpacing: 'clamp(0.18em, 1vw, 0.2em)', fontSize: 'clamp(0.7rem, 1.5vw, 0.8rem)' }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 2.0, ease: 'easeOut' }}
+        >
+          Begin the Experience
+        </motion.button>
+      </div>
+    </div>
+  )
+}

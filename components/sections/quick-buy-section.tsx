@@ -21,34 +21,34 @@ type Panel = {
 
 const panels: Panel[] = [
   {
-    image: "/images/Heromain3.png",
+    image: "/images/quickbuy1.jpeg",
     alt: "Mettali products in a styled scene",
     dots: [
       {
         name: "Display Shelf",
         price: "From ₹4,999",
         href: "/shelves",
-        dot: { left: "35%", top: "50%" },
+        dot: { left: "30%", top: "50%" },
         popup: { left: "5%", top: "22%" },
       },
       {
         name: "Sculptural Vase",
         price: "From ₹2,499",
         href: "/vases",
-        dot: { left: "70%", top: "62%" },
+        dot: { left: "75%", top: "72%" },
         popup: { left: "38%", top: "22%" },
       },
     ],
   },
   {
-    image: "/images/quickbuy2.png",
+    image: "/images/quickbuy2.jpeg",
     alt: "Mettali wine vase",
     dots: [
       {
         name: "Aura Vase",
         price: "From ₹2,499",
         href: "/vases",
-        dot: { left: "48%", top: "52%" },
+        dot: { left: "40%", top: "58%" },
         popup: { left: "5%", top: "20%" },
       },
 
@@ -56,7 +56,7 @@ const panels: Panel[] = [
         name: "Aura Vase",
         price: "From ₹2,499",
         href: "/vases",
-        dot: { left: "70%", top: "62%" },
+        dot: { left: "60%", top: "52%" },
         popup: { left: "38%", top: "22%" },
       },
 
@@ -64,7 +64,7 @@ const panels: Panel[] = [
         name: "Aura Vase",
         price: "From ₹2,499",
         href: "/vases",
-        dot: { left: "40%", top: "82%" },
+        dot: { left: "60%", top: "62%" },
         popup: { left: "38%", top: "22%" },
       }
     ],
@@ -77,7 +77,7 @@ const panels: Panel[] = [
         name: "Minimal Vase",
         price: "From ₹1,999",
         href: "/vases",
-        dot: { left: "38%", top: "50%" },
+        dot: { left: "38%", top: "70%" },
         popup: { left: "5%", top: "22%" },
       },
     ],

@@ -15,7 +15,6 @@ const MI = "#49110b";  // Mulled Iron
 const HORIZON         = "'Horizon', 'Arial Black', sans-serif";
 const HORIZON_OUTLINE = "'Horizon Outlined', 'Arial Black', sans-serif";
 const SPACE_MONO      = "'Space Mono', monospace";
-const INTER      = "'Inter', sans-serif";
 
 // ── Scroll-reveal hook ─────────────────────────
 function useReveal() {
@@ -102,7 +101,7 @@ export default function LandingPage2() {
         .lp2-grid-cell { transition: background 0.3s ease; }
       `}</style>
 
-      <main style={{ background: RL, color: SB, fontFamily: INTER, overflowX: "hidden" }}>
+      <main style={{ background: RL, color: SB, fontFamily: SPACE_MONO, overflowX: "hidden" }}>
 
         {/* ─── HEADER ─────────────────────────────── */}
         <header style={{
@@ -189,7 +188,7 @@ export default function LandingPage2() {
               </div>
 
               <p style={{ ...fadeUp(about.visible, 0.15),
-                fontSize: 13, lineHeight: 1.9, color: SC, maxWidth: 300, fontFamily: INTER }}>
+                fontSize: 13, lineHeight: 1.9, color: SC, maxWidth: 300, fontFamily: SPACE_MONO }}>
                 We believe aluminium is more than a material — it's a canvas.
                 We precision-engineer each piece to inspire, function beautifully,
                 and reflect the spaces people call home.
@@ -277,7 +276,7 @@ export default function LandingPage2() {
                   background: `${SC}18`, marginBottom: 12 }}>
                   <Image src={p.src} alt={p.name} fill style={{ objectFit: "cover" }} />
                 </div>
-                <p style={{ fontSize: 12, fontWeight: 500, color: SB, fontFamily: INTER }}>{p.name}</p>
+                <p style={{ fontSize: 12, fontWeight: 500, color: SB, fontFamily: SPACE_MONO }}>{p.name}</p>
                 <p style={{ fontSize: 11, color: SC, marginTop: 4, fontFamily: SPACE_MONO }}>{p.price}</p>
               </div>
             ))}
@@ -294,7 +293,7 @@ export default function LandingPage2() {
                   background: `${SC}18`, marginBottom: 12 }}>
                   <Image src={p.src} alt={p.name} fill style={{ objectFit: "cover" }} />
                 </div>
-                <p style={{ fontSize: 12, fontWeight: 500, color: SB, fontFamily: INTER }}>{p.name}</p>
+                <p style={{ fontSize: 12, fontWeight: 500, color: SB, fontFamily: SPACE_MONO }}>{p.name}</p>
                 <p style={{ fontSize: 11, color: SC, marginTop: 4, fontFamily: SPACE_MONO }}>{p.price}</p>
               </div>
             ))}
@@ -310,7 +309,7 @@ export default function LandingPage2() {
                 <p style={{ fontSize: 9, textTransform: "uppercase", letterSpacing: "0.3em",
                   color: SM, fontFamily: SPACE_MONO }}>Coming Soon</p>
               </div>
-              <p style={{ fontSize: 12, fontWeight: 500, color: `${SB}44`, fontFamily: INTER }}>New Piece</p>
+              <p style={{ fontSize: 12, fontWeight: 500, color: `${SB}44`, fontFamily: SPACE_MONO }}>New Piece</p>
               <p style={{ fontSize: 11, color: `${SC}66`, marginTop: 4, fontFamily: SPACE_MONO }}>—</p>
             </div>
           </div>
@@ -356,7 +355,7 @@ export default function LandingPage2() {
                   fontWeight: 400, lineHeight: 1.15, marginBottom: 16 }}>
                   {cell.title}
                 </h3>
-                <p style={{ fontSize: 11, lineHeight: 1.8, fontFamily: INTER,
+                <p style={{ fontSize: 11, lineHeight: 1.8, fontFamily: SPACE_MONO,
                   color: cell.light ? `${RL}bb` : SC }}>
                   {cell.desc}
                 </p>
@@ -411,7 +410,7 @@ export default function LandingPage2() {
               </h2>
               <p style={{ ...fadeIn(craft.visible, 0.45),
                 fontSize: 12, lineHeight: 1.85, color: `${RL}bb`,
-                maxWidth: 360, marginTop: 32, fontFamily: INTER }}>
+                maxWidth: 360, marginTop: 32, fontFamily: SPACE_MONO }}>
                 Raw aluminium. Expert hands. Precision finishing. Every Mettali piece
                 follows the same uncompromising process.
               </p>
@@ -515,7 +514,7 @@ export default function LandingPage2() {
             <div>
               <Image src="/images/logo.png" alt="Mettali" width={88} height={22}
                 style={{ height: 22, width: "auto", display: "block", marginBottom: 16 }} />
-              <p style={{ fontSize: 12, lineHeight: 1.75, color: SC, maxWidth: 240, fontFamily: INTER }}>
+              <p style={{ fontSize: 12, lineHeight: 1.75, color: SC, maxWidth: 240, fontFamily: SPACE_MONO }}>
                 Premium aluminium furniture and home decor for modern living.
                 Where industrial strength meets refined elegance.
               </p>
@@ -531,7 +530,7 @@ export default function LandingPage2() {
                   {col.links.map(l => (
                     <a key={l} href="#" className="lp2-nav-a"
                       style={{ display: "block", fontSize: 11, color: SC,
-                        marginBottom: 10, fontFamily: INTER }}>{l}</a>
+                        marginBottom: 10, fontFamily: SPACE_MONO }}>{l}</a>
                   ))}
                 </div>
               ))}

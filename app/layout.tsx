@@ -1,10 +1,9 @@
 import React from "react"
 import type { Metadata } from 'next'
-import { Inter, Space_Mono } from 'next/font/google'
+import { Space_Mono } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
 
-const inter     = Inter({ subsets: ["latin"], variable: '--font-inter' });
 const spaceMono = Space_Mono({ subsets: ["latin"], weight: ["400", "700"], variable: '--font-space-mono' });
 
 export const metadata: Metadata = {
@@ -24,7 +23,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="bg-background">
-      <body className={`${inter.variable} ${spaceMono.variable} font-sans antialiased`}>
+      <body className={`${spaceMono.variable} font-sans antialiased`}>
         {children}
         <Analytics />
       </body>

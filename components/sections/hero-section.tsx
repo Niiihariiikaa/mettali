@@ -131,7 +131,7 @@ export function HeroSection() {
               }}
             >
               <Image
-                src="/images/Heromain8.png"
+                src="/images/heronew1.png"
                 alt="Mettali aluminium furniture in a sleek modern living space"
                 fill
                 className="object-cover"
@@ -251,7 +251,7 @@ export function HeroSection() {
           taglineVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-60"
         }`}
       >
-        <p className="mx-auto max-w-5xl text-5xl leading-tight text-slate-moss md:text-6xl lg:text-5xl font-horizon uppercase tracking-wide opacity-80">
+        <p className="mx-auto max-w-5xl text-5xl leading-tight text-slate-moss md:text-6xl lg:text-5xl font-horizon uppercase tracking-wide ">
           Metal that belongs
           <br />
           in every home.

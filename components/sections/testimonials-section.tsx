@@ -7,7 +7,7 @@ export function TestimonialsSection() {
     <section id="about" className="bg-background">
       {/* Large Text Statement */}
       <div className="px-6 py-24 md:px-12 md:py-32 lg:px-20 lg:py-40">
-        <p className="mx-auto max-w-5xl text-2xl leading-relaxed text-foreground md:text-3xl lg:text-[2.5rem] lg:leading-snug">
+        <p className="mx-auto max-w-5xl text-2xl leading-relaxed text-foreground md:text-3xl lg:text-[2.5rem] lg:leading-snug font-space-mono">
           Mettali was born from a simple belief — that the strongest material deserves the most thoughtful design.
           Every piece we make is formed from premium aluminium, built to endure, and designed to feel quietly extraordinary in your home.
         </p>

@@ -28,7 +28,7 @@ function ScrollRevealText({ text }: { text: string }) {
 
   const words = text.split(" ");
   return (
-    <p ref={containerRef} className="text-md leading-snug md:text-lg lg:text-2xl">
+    <p ref={containerRef} className="text-md leading-snug md:text-lg lg:text-2xl font-space-mono">
       {words.map((word, index) => (
         <span
           key={index}

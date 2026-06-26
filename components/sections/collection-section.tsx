@@ -52,7 +52,7 @@ export function CollectionSection() {
     <section id="accessories" className="bg-background">
       {/* Section Title */}
       <div className="px-6 py-20 md:px-12 lg:px-20 md:py-10">
-        <h2 className="text-3xl font-medium tracking-tight text-foreground md:text-4xl">
+        <h2 className="text-3xl tracking-tight text-foreground md:text-4xl font-horizon uppercase">
           Aluminium Decor
         </h2>
       </div>
@@ -77,14 +77,14 @@ export function CollectionSection() {
               <div className="py-6">
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex-1">
-                    <h3 className="text-lg font-medium leading-snug text-foreground">
+                    <h3 className="text-lg leading-snug text-foreground font-space-mono uppercase tracking-wide">
                       {accessory.name}
                     </h3>
-                    <p className="mt-2 text-sm text-muted-foreground">
+                    <p className="mt-2 text-sm text-muted-foreground font-space-mono">
                       {accessory.description}
                     </p>
                   </div>
-                  <span className="text-lg font-medium text-foreground">
+                  <span className="text-lg text-foreground font-space-mono">
                     {accessory.price}
                   </span>
                 </div>
@@ -111,14 +111,14 @@ export function CollectionSection() {
               <div className="py-6">
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex-1">
-                    <h3 className="text-lg font-medium leading-snug text-foreground">
+                    <h3 className="text-lg leading-snug text-foreground font-space-mono uppercase tracking-wide">
                       {accessory.name}
                     </h3>
-                    <p className="mt-2 text-sm text-muted-foreground">
+                    <p className="mt-2 text-sm text-muted-foreground font-space-mono">
                       {accessory.description}
                     </p>
                   </div>
-                  <span className="font-medium text-foreground text-2xl">
+                  <span className="text-foreground text-2xl font-space-mono">
                     {accessory.price}
                   </span>
                 </div>

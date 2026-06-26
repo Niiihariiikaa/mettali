@@ -98,12 +98,12 @@
 }
 
 @theme inline {
-  --font-sans: var(--font-space-mono), monospace;
-  --font-mono: var(--font-space-mono), monospace;
+  --font-sans: 'Space Mono', monospace;
+  --font-mono: 'Space Mono', monospace;
   --font-display: 'Horizon Outlined', sans-serif;
   --font-horizon: 'Horizon', sans-serif;
   --font-horizon-outlined: 'Horizon Outlined', sans-serif;
-  --font-space-mono: var(--font-space-mono), monospace;
+  --font-space-mono: 'Space Mono', monospace;
 
   /* Named brand color utilities: text-raw-linen, text-slate-moss, etc. */
   --color-raw-linen: var(--raw-linen);
@@ -156,6 +156,7 @@
   }
   body {
     @apply bg-background text-foreground;
+    font-family: 'Space Mono', monospace;
   }
 
   html {

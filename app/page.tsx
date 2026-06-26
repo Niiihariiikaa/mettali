@@ -7,12 +7,13 @@ import { TechnologySection } from "@/components/sections/technology-section";
 import { QuickBuySection } from "@/components/sections/quick-buy-section";
 import { EditorialSection } from "@/components/sections/editorial-section";
 import { FooterSection } from "@/components/sections/footer-section";
+import { Hero2Section } from "@/components/sections/hero2-section";
 
 export default function Home() {
   return (
     <main className="min-h-screen bg-background">
       <Header />
-      <HeroSection />
+      <Hero2Section />
       <PhilosophySection />
       <MarqueeSection />
       <CategoriesSection />

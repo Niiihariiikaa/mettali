@@ -41,7 +41,7 @@ export function FooterSection() {
                 className="h-6 w-auto"
               />
             </Link>
-            <p className="mt-4 max-w-xs text-sm leading-relaxed text-muted-foreground">
+            <p className="mt-4 max-w-xs text-sm leading-relaxed text-muted-foreground font-space-mono">
               Premium aluminium furniture and home decor for modern living. Where industrial strength meets refined elegance.
             </p>
           </div>
@@ -54,7 +54,7 @@ export function FooterSection() {
                 <li key={link.label}>
                   <Link
                     href={link.href}
-                    className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+                    className="text-sm text-muted-foreground transition-colors hover:text-foreground font-space-mono"
                   >
                     {link.label}
                   </Link>
@@ -71,7 +71,7 @@ export function FooterSection() {
                 <li key={link.label}>
                   <Link
                     href={link.href}
-                    className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+                    className="text-sm text-muted-foreground transition-colors hover:text-foreground font-space-mono"
                   >
                     {link.label}
                   </Link>
@@ -88,7 +88,7 @@ export function FooterSection() {
                 <li key={link.label}>
                   <Link
                     href={link.href}
-                    className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+                    className="text-sm text-muted-foreground transition-colors hover:text-foreground font-space-mono"
                   >
                     {link.label}
                   </Link>
@@ -102,7 +102,7 @@ export function FooterSection() {
       {/* Bottom Bar */}
       <div className="border-t border-border px-6 py-6 md:px-12 lg:px-20">
         <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
-          <p className="text-xs text-muted-foreground">
+          <p className="text-xs text-muted-foreground font-space-mono">
             2026 METTALI. All rights reserved.
           </p>
 
@@ -112,19 +112,19 @@ export function FooterSection() {
           <div className="flex items-center gap-4">
             <Link
               href="#"
-              className="text-xs text-muted-foreground transition-colors hover:text-foreground"
+              className="text-xs text-muted-foreground transition-colors hover:text-foreground font-space-mono"
             >
               Instagram
             </Link>
             <Link
               href="#"
-              className="text-xs text-muted-foreground transition-colors hover:text-foreground"
+              className="text-xs text-muted-foreground transition-colors hover:text-foreground font-space-mono"
             >
               Pinterest
             </Link>
             <Link
               href="#"
-              className="text-xs text-muted-foreground transition-colors hover:text-foreground"
+              className="text-xs text-muted-foreground transition-colors hover:text-foreground font-space-mono"
             >
               LinkedIn
             </Link>
