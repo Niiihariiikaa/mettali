@@ -7,8 +7,9 @@ const categories = [
   { name: "Organizers",   src: "/images/categories/shelves.png", href: "/organisers" },
   { name: "Flower Vases", src: "/images/categories/vases.png",      href: "/vases"      },
   { name: "Wine Holders", src: "/images/categories/wine-racks.png", href: "/wine-holders" },
+  { name: "Shoe Display Racks",   src: "/images/categories/shoe-racks.png", href: "/shoe-display-racks" },
+
   { name: "Bookshelves",  src: "/images/categories/organisers.png",    href: "/shelves"    },
-  { name: "Shoe Racks",   src: "/images/categories/shoe-racks.png", href: "/shoe-racks" },
 ];
 
 export function CategoriesSection() {

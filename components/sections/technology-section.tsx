@@ -50,7 +50,7 @@ const products = [
   { name: "Maison",     category: "Wine holder", fit: "contain", images: [`${B}/winestand1.png`, `${B}/winestand2.png`] },
   { name: "Cala",      category: "Vase",         fit: "contain", images: [`${B}/wine-vase1.png`, `${B}/wine-vase2.png`, `${B}/wine-vase3.png`] },
   { name: "Aura",category: "Vase",         fit: "contain", images: [`${B}/3vase1.png`, `${B}/3vase2.png`, `${B}/3vase3.png`] },
-  { name: "Align",      category: "Shoe rack",       fit: "contain", images: [`${B}/shoerack1.png`, `${B}/shoerack2.png`, `${B}/shoerack3.png`] },
+  { name: "Align",      category: "Shoe display rack",       fit: "contain", images: [`${B}/shoerack1.png`, `${B}/shoerack2.png`, `${B}/shoerack3.png`] },
 ];
 
 function HoverProductCard({ name, category, images, fit }: { name: string; category: string; images: string[]; fit: string }) {

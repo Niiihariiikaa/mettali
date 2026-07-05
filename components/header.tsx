@@ -9,7 +9,7 @@ const productCategories = [
   { label: "Vases",       href: "/vases" },
   { label: "Wine Holders",href: "/wine-holders" },
   { label: "Organisers",  href: "/organisers" },
-  { label: "Shoe Racks",  href: "/shoe-racks" },
+  { label: "Shoe Display Racks",  href: "/shoe-display-racks" },
   { label: "Bookshelves", href: "/shelves" },
 ];
 

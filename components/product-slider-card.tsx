@@ -2,7 +2,9 @@
 
 import Image from "next/image";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { toSlug } from "@/lib/products";
 
 interface ProductSliderCardProps {
   name: string;
@@ -14,8 +16,20 @@ interface ProductSliderCardProps {
   type?: string;
 }
 
-export function ProductSliderCard({ name, category, images, description, price, dimensions, type }: ProductSliderCardProps) {
+function parseDims(dim?: string) {
+  if (!dim) return null;
+  const parts = dim.replace(/\s*cm\s*/i, "").split("×");
+  if (parts.length !== 3) return null;
+  return { w: parts[0].trim(), d: parts[1].trim(), h: parts[2].trim() };
+}
+
+export function ProductSliderCard({
+  name, category, images, description, price, dimensions,
+}: ProductSliderCardProps) {
   const [current, setCurrent] = useState(0);
+  const router = useRouter();
+  const dims = parseDims(dimensions);
+  const href = `/${toSlug(category)}/${toSlug(name)}`;
 
   const prev = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -27,42 +41,48 @@ export function ProductSliderCard({ name, category, images, description, price, 
   };
 
   return (
-    <div className="group rounded-2xl overflow-hidden shadow-[0_4px_24px_rgba(0,0,0,0.10)] hover:shadow-[0_8px_40px_rgba(0,0,0,0.18)] transition-shadow duration-300 bg-card">
-      {/* Image area */}
-      <div className="relative aspect-[3/4] bg-white overflow-hidden">
-        {/* Padded image container */}
-        <div className="absolute inset-6">
-          <div className="relative w-full h-full">
-            <Image
-              src={images[current]}
-              alt={name}
-              fill
-              className="object-contain transition-opacity duration-300"
-            />
-          </div>
+    <div className="group flex flex-col bg-white border border-[#e2ddd8] cursor-pointer"
+      onClick={() => router.push(href)}
+      style={{ fontFamily: "'Space Mono', monospace" }}>
+
+      {/* ── Header — category + name ── */}
+      <div className="px-4 pt-4 pb-3 border-b border-[#e2ddd8]">
+        <p className="text-[9px] uppercase tracking-[0.28em] text-[#ad9e89] mb-1">
+          {category}
+        </p>
+        <p className="text-sm font-bold uppercase tracking-wide text-[#2e1f14]">
+          {name}
+        </p>
+      </div>
+
+      {/* ── Image ── */}
+      <div className="relative bg-white" style={{ aspectRatio: "4/3" }}>
+        <div className="absolute inset-8">
+          <Image
+            src={images[current]}
+            alt={name}
+            fill
+            className="object-contain transition-opacity duration-300"
+          />
         </div>
 
         {/* Counter */}
         {images.length > 1 && (
-          <div className="absolute top-3 right-3 bg-white/80 rounded-full px-2 py-0.5 text-[10px] text-slate-moss font-space-mono">
+          <span className="absolute top-3 right-3 text-[9px] text-[#ad9e89] tracking-widest">
             {current + 1}/{images.length}
-          </div>
+          </span>
         )}
 
         {/* Arrows */}
         {images.length > 1 && (
           <>
-            <button
-              onClick={prev}
-              className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white rounded-full p-1.5 opacity-0 group-hover:opacity-100 transition-opacity duration-200 shadow-sm z-10"
-            >
-              <ChevronLeft size={16} className="text-smoked-bronze" />
+            <button onClick={prev}
+              className="absolute left-2 top-1/2 -translate-y-1/2 w-7 h-7 flex items-center justify-center bg-white/90 hover:bg-white border border-[#e2ddd8] opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10">
+              <ChevronLeft size={14} className="text-[#584738]" />
             </button>
-            <button
-              onClick={next}
-              className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white rounded-full p-1.5 opacity-0 group-hover:opacity-100 transition-opacity duration-200 shadow-sm z-10"
-            >
-              <ChevronRight size={16} className="text-smoked-bronze" />
+            <button onClick={next}
+              className="absolute right-2 top-1/2 -translate-y-1/2 w-7 h-7 flex items-center justify-center bg-white/90 hover:bg-white border border-[#e2ddd8] opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10">
+              <ChevronRight size={14} className="text-[#584738]" />
             </button>
           </>
         )}
@@ -71,11 +91,10 @@ export function ProductSliderCard({ name, category, images, description, price, 
         {images.length > 1 && (
           <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5 z-10">
             {images.map((_, i) => (
-              <button
-                key={i}
+              <button key={i}
                 onClick={(e) => { e.stopPropagation(); setCurrent(i); }}
-                className={`h-1.5 rounded-full transition-all duration-200 ${
-                  i === current ? "w-4 bg-smoked-bronze" : "w-1.5 bg-smoked-bronze/30"
+                className={`h-[3px] rounded-full transition-all duration-200 ${
+                  i === current ? "w-5 bg-[#584738]" : "w-[5px] bg-[#584738]/25"
                 }`}
               />
             ))}
@@ -83,36 +102,46 @@ export function ProductSliderCard({ name, category, images, description, price, 
         )}
       </div>
 
-      {/* Text */}
-      <div className="px-5 py-5">
-        <p className="mb-1 text-xs uppercase tracking-widest text-sandcast font-space-mono">
-          {category}
-        </p>
-        <h3 className="text-smoked-bronze text-sm font-space-mono uppercase tracking-wide">
-          {name}
-        </h3>
-        {type && (
-          <span className="inline-block mt-1.5 text-[9px] uppercase tracking-widest text-sandcast border border-sandcast/40 px-1.5 py-0.5 rounded font-space-mono">
-            {type}
-          </span>
-        )}
-        {description && (
-          <p className="mt-2 text-[11px] text-slate-moss font-space-mono leading-relaxed line-clamp-3">
-            {description}
-          </p>
-        )}
-        <div className="mt-3 flex items-center justify-between">
-          {price && (
-            <p className="text-smoked-bronze font-space-mono text-sm font-semibold">
-              ₹{price.toLocaleString("en-IN")}
-            </p>
-          )}
-          {dimensions && (
-            <p className="text-[10px] text-sandcast font-space-mono tracking-wide">
-              {dimensions}
+      {/* ── About + Measurements ── */}
+      <div className="flex flex-1 border-t border-[#e2ddd8]">
+        {/* About */}
+        <div className="flex-1 px-4 py-4 border-r border-[#e2ddd8]">
+          <p className="text-[9px] uppercase tracking-[0.28em] text-[#ad9e89] mb-2">About</p>
+          {description && (
+            <p className="text-[10px] text-[#716f57] leading-[1.75] line-clamp-4">
+              {description}
             </p>
           )}
         </div>
+
+        {/* Measurements */}
+        <div className="w-[42%] px-4 py-4 shrink-0">
+          <p className="text-[9px] uppercase tracking-[0.28em] text-[#ad9e89] mb-2">Measurements</p>
+          {dims ? (
+            <table className="w-full" style={{ borderCollapse: "collapse" }}>
+              <tbody>
+                {[["W", dims.w], ["D", dims.d], ["H", dims.h]].map(([label, val]) => (
+                  <tr key={label}>
+                    <td className="text-[9px] text-[#ad9e89] uppercase tracking-widest pr-3 py-[2px]">{label}</td>
+                    <td className="text-[10px] text-[#584738] text-right">{val} cm</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          ) : (
+            <p className="text-[10px] text-[#716f57]">{dimensions}</p>
+          )}
+        </div>
+      </div>
+
+      {/* ── Price bar ── */}
+      <div className="flex items-center justify-between px-4 py-3 border-t border-[#e2ddd8]">
+        {price ? (
+          <p className="text-sm font-bold text-[#2e1f14]">
+            ₹{price.toLocaleString("en-IN")}
+          </p>
+        ) : <span />}
+        <p className="text-[9px] uppercase tracking-[0.28em] text-[#ad9e89]">Mettali.com</p>
       </div>
     </div>
   );

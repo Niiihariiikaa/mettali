@@ -285,7 +285,7 @@ export default function LandingPage2() {
           {/* 3-col second row */}
           <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 14, marginTop: 14 }}>
             {[
-              { src: "/images/product-shoe-rack.png",  name: "Frame Shoe Rack",   price: "$1,299" },
+              { src: "/images/product-shoe-rack.png",  name: "Frame Shoe Display Rack",   price: "$1,299" },
               { src: "/images/product-book-shelf.png", name: "Arc Display Shelf", price: "$1,899" },
             ].map((p, i) => (
               <div key={i} className="lp2-zoom" style={{ ...fadeUp(products.visible, 0.3 + i * 0.07) }}>
