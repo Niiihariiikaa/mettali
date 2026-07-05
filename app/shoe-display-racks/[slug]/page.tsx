@@ -13,5 +13,5 @@ export default async function ShoeRackDetailPage({ params }: { params: Promise<{
 
   const related = shoeRacks.filter((p) => p.name !== product.name).slice(0, 3);
 
-  return <ProductDetailView product={product} related={related} backHref="/shoe-racks" backLabel="Shoe Racks" />;
+  return <ProductDetailView product={product} related={related} backHref="/shoe-display-racks" backLabel="Shoe Display Racks" />;
 }
