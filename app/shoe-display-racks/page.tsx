@@ -1,5 +1,6 @@
 ﻿import { Header } from "@/components/header";
 import { FooterSection } from "@/components/sections/footer-section";
+<<<<<<< HEAD:app/shoe-display-racks/page.tsx
 import { ProductSliderCard } from "@/components/product-slider-card";
 
 const B = "/images/WHITE%20BACKGROUND-20260529T063507Z-3-001/WHITE%20BACKGROUND";
@@ -46,6 +47,10 @@ const racks = [
     images: [`${B}/pentashoerack.JPG`, `${B}/pentashoerack2.JPG`],
   },
 ];
+=======
+import { ProductGrid } from "@/components/product-grid";
+import { shoeRacks } from "@/lib/products";
+>>>>>>> 0cb8637990ab5792902a5b6928294c294db0e2d5:app/shoe-racks/page.tsx
 
 export default function ShoeDisplayRacksPage() {
   return (
@@ -56,9 +61,11 @@ export default function ShoeDisplayRacksPage() {
         <h1 className="text-4xl md:text-5xl text-mulled-iron font-horizon uppercase tracking-wide">Shoe Display Racks</h1>
         <p className="mt-4 text-sm text-slate-moss font-space-mono max-w-sm mx-auto">Slim and sturdy entryway racks â€” built to organise and elevate your space.</p>
       </div>
-      <div className="grid grid-cols-1 gap-6 px-6 pb-28 md:grid-cols-3 md:px-12 lg:grid-cols-3 lg:px-20">
-        {racks.map((p) => <ProductSliderCard key={p.name} {...p} />)}
-      </div>
+      <ProductGrid
+        products={shoeRacks}
+        basePath="/shoe-racks"
+        className="grid grid-cols-1 gap-6 px-6 pb-28 md:grid-cols-3 md:px-12 lg:grid-cols-3 lg:px-20"
+      />
       <FooterSection />
     </main>
   );
