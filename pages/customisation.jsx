@@ -577,7 +577,7 @@ export function CustomisationContent() {
 export default function CustomisationPage() {
   return (
     <main style={{ background: TP, minHeight: "100vh" }}>
-      <Header />
+      <Header variant="dark" />
       <CustomisationContent />
       <FooterSection />
     </main>

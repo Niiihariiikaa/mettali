@@ -3,7 +3,9 @@
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Menu, X, ChevronDown } from "lucide-react";
+import { Menu, X, ChevronDown, ShoppingBag } from "lucide-react";
+import { useCart } from "@/components/cart-context";
+import { CartDrawer } from "@/components/cart-drawer";
 
 const productCategories = [
   { label: "Vases",       href: "/vases" },
@@ -13,12 +15,13 @@ const productCategories = [
   { label: "Bookshelves", href: "/shelves" },
 ];
 
-export function Header() {
+export function Header({ variant = "light" }: { variant?: "dark" | "light" }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [productsOpen, setProductsOpen] = useState(false);
   const [mobileProductsOpen, setMobileProductsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const { count, openCart } = useCart();
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 50);
@@ -36,7 +39,11 @@ export function Header() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const linkClass = `text-sm transition-colors ${isScrolled ? "text-muted-foreground hover:text-foreground" : "text-white/70 hover:text-white"}`;
+  // White nav text only over dark heroes (variant="dark") before scrolling;
+  // on light pages the text is always dark so the navbar never disappears.
+  const onDark = variant === "dark" && !isScrolled;
+
+  const linkClass = `text-sm transition-colors ${onDark ? "text-white/70 hover:text-white" : "text-muted-foreground hover:text-foreground"}`;
 
   return (
     <header
@@ -54,7 +61,7 @@ export function Header() {
               alt="Mettali"
               fill
               style={{ objectFit: "cover", objectPosition: "center 40%" }}
-              className={`transition-all duration-300 ${isScrolled ? "" : "brightness-0 invert"}`}
+              className={`transition-all duration-300 ${onDark ? "brightness-0 invert" : ""}`}
             />
           </div>
         </Link>
@@ -68,7 +75,7 @@ export function Header() {
           <div ref={dropdownRef} className="relative">
             <button
               onClick={() => setProductsOpen(o => !o)}
-              className={`flex items-center gap-1 text-sm transition-colors ${isScrolled ? "text-muted-foreground hover:text-foreground" : "text-white/70 hover:text-white"}`}
+              className={`flex items-center gap-1 text-sm transition-colors ${onDark ? "text-white/70 hover:text-white" : "text-muted-foreground hover:text-foreground"}`}
             >
               Products
               <ChevronDown size={14} className={`transition-transform duration-200 ${productsOpen ? "rotate-180" : ""}`} />
@@ -94,24 +101,52 @@ export function Header() {
         </nav>
 
         {/* CTA */}
-        <div className="hidden items-center gap-6 md:flex">
+        <div className="hidden items-center gap-5 md:flex">
+          <button
+            type="button"
+            onClick={openCart}
+            aria-label="Open cart"
+            className={`relative transition-colors ${onDark ? "text-white/80 hover:text-white" : "text-muted-foreground hover:text-foreground"}`}
+          >
+            <ShoppingBag size={20} />
+            {count > 0 && (
+              <span className="absolute -top-1.5 -right-2 flex h-4 min-w-4 items-center justify-center rounded-full bg-mulled-iron px-1 text-[9px] font-medium text-white font-space-mono">
+                {count}
+              </span>
+            )}
+          </button>
           <Link
             href="#reserve"
-            className={`px-4 py-2 text-sm font-medium transition-all rounded-full ${isScrolled ? "bg-foreground text-background hover:opacity-80" : "bg-white text-foreground hover:bg-white/90"}`}
+            className={`px-4 py-2 text-sm font-medium transition-all rounded-full ${onDark ? "bg-white text-foreground hover:bg-white/90" : "bg-foreground text-background hover:opacity-80"}`}
           >
             Shop Now
           </Link>
         </div>
 
-        {/* Mobile Menu Button */}
-        <button
-          type="button"
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-          className={`transition-colors md:hidden ${isScrolled ? "text-foreground" : "text-white"}`}
-          aria-label="Toggle menu"
-        >
-          {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
+        {/* Mobile: cart + menu buttons */}
+        <div className="flex items-center gap-4 md:hidden">
+          <button
+            type="button"
+            onClick={openCart}
+            aria-label="Open cart"
+            className={`relative transition-colors ${onDark ? "text-white" : "text-foreground"}`}
+          >
+            <ShoppingBag size={22} />
+            {count > 0 && (
+              <span className="absolute -top-1.5 -right-2 flex h-4 min-w-4 items-center justify-center rounded-full bg-mulled-iron px-1 text-[9px] font-medium text-white font-space-mono">
+                {count}
+              </span>
+            )}
+          </button>
+          <button
+            type="button"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            className={`transition-colors ${onDark ? "text-white" : "text-foreground"}`}
+            aria-label="Toggle menu"
+          >
+            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
       </div>
 
       {/* Mobile Menu */}
@@ -158,6 +193,8 @@ export function Header() {
           </nav>
         </div>
       )}
+
+      <CartDrawer />
     </header>
   );
 }

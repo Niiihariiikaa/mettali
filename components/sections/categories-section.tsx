@@ -4,12 +4,12 @@ import Image from "next/image";
 import Link from "next/link";
 
 const categories = [
-  { name: "Organizers",   src: "/images/categories/shelves.png", href: "/organisers" },
-  { name: "Flower Vases", src: "/images/categories/vases.png",      href: "/vases"      },
-  { name: "Wine Holders", src: "/images/categories/wine-racks.png", href: "/wine-holders" },
-  { name: "Shoe Display Racks",   src: "/images/categories/shoe-racks.png", href: "/shoe-display-racks" },
+  { name: "Organizers",   src: "/images2/categories/shelves.webp", href: "/organisers" },
+  { name: "Flower Vases", src: "/images2/categories/vases.webp",      href: "/vases"      },
+  { name: "Wine Holders", src: "/images2/categories/wine-racks.webp", href: "/wine-holders" },
+  { name: "Shoe Display Racks",   src: "/images2/categories/shoe-racks.webp", href: "/shoe-display-racks" },
 
-  { name: "Bookshelves",  src: "/images/categories/organisers.png",    href: "/shelves"    },
+  { name: "Bookshelves",  src: "/images2/categories/organisers.webp",    href: "/shelves"    },
 ];
 
 export function CategoriesSection() {

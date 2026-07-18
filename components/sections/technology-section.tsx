@@ -44,55 +44,38 @@ function ScrollRevealText({ text }: { text: string }) {
 
 // ─── Hover product card ───────────────────────────────────────────────────────
 
-const B = "/images/products-home";
+const B = "/images2/products-home";
 
 const products = [
-  { name: "Maison",     category: "Wine holder", fit: "contain", images: [`${B}/winestand1.png`, `${B}/winestand2.png`] },
-  { name: "Cala",      category: "Vase",         fit: "contain", images: [`${B}/wine-vase1.png`, `${B}/wine-vase2.png`, `${B}/wine-vase3.png`] },
-  { name: "Aura",category: "Vase",         fit: "contain", images: [`${B}/3vase1.png`, `${B}/3vase2.png`, `${B}/3vase3.png`] },
-  { name: "Align",      category: "Shoe display rack",       fit: "contain", images: [`${B}/shoerack1.png`, `${B}/shoerack2.png`, `${B}/shoerack3.png`] },
+  { name: "Maison",     category: "Wine holder", fit: "contain", images: [`${B}/winestand1.webp`, `${B}/winestand2.webp`] },
+  { name: "Cala",      category: "Vase",         fit: "contain", images: [`${B}/wine-vase1.webp`, `${B}/wine-vase2.webp`, `${B}/wine-vase3.webp`] },
+  { name: "Aura",category: "Vase",         fit: "contain", images: [`${B}/3vase1.webp`, `${B}/3vase2.webp`, `${B}/3vase3.webp`] },
+  { name: "Align",      category: "Shoe display rack",       fit: "contain", images: [`${B}/shoerack1.webp`, `${B}/shoerack2.webp`, `${B}/shoerack3.webp`] },
 ];
 
 function HoverProductCard({ name, category, images, fit }: { name: string; category: string; images: string[]; fit: string }) {
-  const [currentIdx, setCurrentIdx] = useState(0);
-  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const [hovered, setHovered] = useState(false);
 
-  const handleMouseEnter = () => {
-    if (images.length <= 1) return;
-    let idx = 1;
-    setCurrentIdx(idx);
-    intervalRef.current = setInterval(() => {
-      idx = idx >= images.length - 1 ? 1 : idx + 1;
-      setCurrentIdx(idx);
-    }, 1200);
-  };
-
-  const handleMouseLeave = () => {
-    if (intervalRef.current) clearInterval(intervalRef.current);
-    setCurrentIdx(0);
-  };
+  // Exactly one photo is rendered at a time: the second one while
+  // hovering, the first otherwise — no cycling, no stacked images.
+  const showAlt = hovered && images.length > 1;
+  const src = showAlt ? images[1] : images[0];
 
   return (
-    <div className="group bg-card cursor-pointer overflow-hidden" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+    <div
+      className="group bg-card cursor-pointer overflow-hidden"
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+    >
       <div className="relative aspect-3/4 bg-white overflow-hidden isolate">
         {fit === "cover" ? (
-          images.map((src, i) => (
-            <Image
-              key={src}
-              src={src}
-              alt={`${name} view ${i + 1}`}
-              fill
-              className={`transition-opacity duration-500 object-cover ${i === currentIdx ? "opacity-100" : "opacity-0"}`}
-            />
-          ))
+          <Image key={src} src={src} alt={name} fill className="object-cover" />
         ) : (
-          images.map((src, i) => (
-            <div key={src} className={`absolute inset-3 transition-opacity duration-500 ${i === currentIdx ? "opacity-100" : "opacity-0"}`}>
-              <div className="relative w-full h-full">
-                <Image src={src} alt={`${name} view ${i + 1}`} fill className="object-contain" />
-              </div>
+          <div className="absolute inset-3">
+            <div className="relative w-full h-full">
+              <Image key={src} src={src} alt={name} fill className="object-contain" />
             </div>
-          ))
+          </div>
         )}
       </div>
       <div className="px-5 py-5">

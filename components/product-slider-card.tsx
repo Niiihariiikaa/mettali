@@ -3,7 +3,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, ShoppingBag, Check } from "lucide-react";
+import { useCart } from "@/components/cart-context";
 
 interface ProductSliderCardProps {
   name: string;
@@ -18,6 +19,17 @@ interface ProductSliderCardProps {
 
 export function ProductSliderCard({ name, category, images, description, price, dimensions, type, href }: ProductSliderCardProps) {
   const [current, setCurrent] = useState(0);
+  const [added, setAdded] = useState(false);
+  const { addItem } = useCart();
+
+  const handleAddToCart = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (price === undefined) return;
+    addItem({ name, category, price, image: images[0], href });
+    setAdded(true);
+    setTimeout(() => setAdded(false), 1600);
+  };
 
   const prev = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -128,7 +140,17 @@ export function ProductSliderCard({ name, category, images, description, price, 
           <p className="text-base font-semibold text-smoked-bronze font-space-mono">
             ₹{price.toLocaleString("en-IN")}
           </p>
-          <p className="text-[9px] uppercase tracking-widest text-sandcast font-space-mono">Mettali.com</p>
+          <button
+            onClick={handleAddToCart}
+            className={`flex items-center gap-1.5 px-3 py-1.5 text-[10px] uppercase tracking-widest font-space-mono transition-colors ${
+              added
+                ? "bg-slate-moss text-white"
+                : "bg-mulled-iron text-white hover:bg-smoked-bronze"
+            }`}
+          >
+            {added ? <Check size={12} /> : <ShoppingBag size={12} />}
+            {added ? "Added" : "Add to Cart"}
+          </button>
         </div>
       )}
     </div>

@@ -109,7 +109,7 @@ export function ProductDetailView({
           </p>
 
           {/* Specs */}
-          <div className="mt-8 grid grid-cols-3 divide-x divide-border border border-border">
+          <div className={`mt-8 grid ${product.weight ? "grid-cols-4" : "grid-cols-3"} divide-x divide-border border border-border`}>
             {dimValues.map((d, i) => (
               <div key={i} className="px-4 py-4 text-center">
                 <p className="mb-1 text-[10px] uppercase tracking-widest text-sandcast font-space-mono">
@@ -118,6 +118,14 @@ export function ProductDetailView({
                 <p className="text-sm text-mulled-iron font-space-mono">{d} cm</p>
               </div>
             ))}
+            {product.weight && (
+              <div className="px-4 py-4 text-center">
+                <p className="mb-1 text-[10px] uppercase tracking-widest text-sandcast font-space-mono">
+                  Weight
+                </p>
+                <p className="text-sm text-mulled-iron font-space-mono">{product.weight}</p>
+              </div>
+            )}
           </div>
 
           <a

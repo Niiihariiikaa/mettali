@@ -1,40 +1,40 @@
 "use client";
 
 import Image from "next/image";
-import { useRef, useState } from "react";
+import { useState } from "react";
 
-const B = "/images/products-home";
+const B = "/images2/products-home";
 
 const products = [
   {
     name: "Maison",
     category: "Wine holder",
-    images: [`${B}/winestand1.png`, `${B}/winestand2.png`],
+    images: [`${B}/winestand1.webp`],
   },
   {
     name: "Minimal Vase",
     category: "Décor",
-    images: [`${B}/vase1.png`, `${B}/vase2.png`, `${B}/vase3.png`],
+    images: [`${B}/vase1.webp`],
   },
   {
     name: "Wine Vase",
     category: "Décor",
-    images: [`${B}/wine-vase1.png`, `${B}/wine-vase2.png`, `${B}/wine-vase3.png`],
+    images: [`${B}/wine-vase1.webp`],
   },
   {
     name: "Triple Vase Set",
     category: "Décor",
-    images: [`${B}/3vase1.png`, `${B}/3vase2.png`, `${B}/3vase3.png`],
+    images: [`${B}/3vase1.webp`],
   },
   {
     name: "Signature Vase",
     category: "Décor",
-    images: [`${B}/signvase1.png`, `${B}/signvase2.png`, `${B}/signvase3.png`],
+    images: [`${B}/signvase1.webp`],
   },
   {
     name: "Duo Vase",
     category: "Décor",
-    images: [`${B}/2vase1.png`, `${B}/2vase2.png`],
+    images: [`${B}/2vase1.webp`],
   },
 ];
 
@@ -47,45 +47,30 @@ function HoverProductCard({
   category: string;
   images: string[];
 }) {
-  const [currentIdx, setCurrentIdx] = useState(0);
-  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const [hovered, setHovered] = useState(false);
 
-  const handleMouseEnter = () => {
-    if (images.length <= 1) return;
-    let idx = 1;
-    setCurrentIdx(idx);
-    intervalRef.current = setInterval(() => {
-      idx = idx >= images.length - 1 ? 1 : idx + 1;
-      setCurrentIdx(idx);
-    }, 1200);
-  };
-
-  const handleMouseLeave = () => {
-    if (intervalRef.current) clearInterval(intervalRef.current);
-    setCurrentIdx(0);
-  };
+  // Exactly one photo is rendered at a time: the second one while
+  // hovering, the first otherwise — no crossfade, no stacked images.
+  const showAlt = hovered && images.length > 1;
+  const src = showAlt ? images[1] : images[0];
 
   return (
     <div
       className="group bg-card cursor-pointer"
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
     >
       {/* Image */}
       <div className="relative aspect-3/4 bg-white overflow-hidden">
         <div className="absolute inset-6">
           <div className="relative w-full h-full">
-            {images.map((src, i) => (
-              <Image
-                key={src}
-                src={src}
-                alt={`${name} view ${i + 1}`}
-                fill
-                className={`object-contain transition-opacity duration-500 ${
-                  i === currentIdx ? "opacity-100" : "opacity-0"
-                } ${i > 0 ? "scale-[1.45]" : "scale-100"}`}
-              />
-            ))}
+            <Image
+              key={src}
+              src={src}
+              alt={name}
+              fill
+              className={`object-contain ${showAlt ? "scale-[1.45]" : "scale-100"}`}
+            />
           </div>
         </div>
       </div>

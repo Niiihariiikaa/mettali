@@ -12,7 +12,7 @@ import { Hero2Section } from "@/components/sections/hero2-section";
 export default function Home() {
   return (
     <main className="min-h-screen bg-background">
-      <Header />
+      <Header variant="dark" />
       <Hero2Section />
       <PhilosophySection />
       <MarqueeSection />
