@@ -5,11 +5,31 @@ import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { Minus, Plus, ShoppingBag, X } from "lucide-react";
 import { useCart } from "@/components/cart-context";
+import { createCheckoutUrl } from "@/lib/shopify";
 
 export function CartDrawer() {
   const { items, isOpen, closeCart, removeItem, setQty, subtotal, count } =
     useCart();
   const [mounted, setMounted] = useState(false);
+  const [checkingOut, setCheckingOut] = useState(false);
+  const [checkoutError, setCheckoutError] = useState("");
+
+  const checkoutItems = items.filter((i) => i.variantId);
+  const hasFullCheckout = checkoutItems.length === items.length && items.length > 0;
+
+  const handleCheckout = async () => {
+    setCheckoutError("");
+    setCheckingOut(true);
+    try {
+      const url = await createCheckoutUrl(
+        checkoutItems.map((i) => ({ variantId: i.variantId!, quantity: i.qty }))
+      );
+      window.location.href = url;
+    } catch (err) {
+      setCheckoutError(err instanceof Error ? err.message : "Checkout failed. Please try again.");
+      setCheckingOut(false);
+    }
+  };
 
   useEffect(() => setMounted(true), []);
 
@@ -130,20 +150,36 @@ export function CartDrawer() {
                 ₹{subtotal.toLocaleString("en-IN")}
               </span>
             </div>
-            {/* TODO(shopify): replace with Shopify cartCreate + redirect to checkoutUrl */}
-            <a
-              href={`mailto:customise@mettali.in?subject=Order enquiry&body=${encodeURIComponent(
-                items
-                  .map((i) => `${i.qty} × ${i.name} — ₹${i.price * i.qty}`)
-                  .join("\n") + `\n\nSubtotal: ₹${subtotal}`
-              )}`}
-              className="block w-full bg-foreground px-5 py-3 text-center text-sm font-medium text-background transition-opacity hover:opacity-85"
-            >
-              Enquire to Order
-            </a>
-            <p className="mt-2 text-center text-[10px] text-slate-moss/70 font-space-mono">
-              Online checkout launching soon.
-            </p>
+            {checkoutError && (
+              <p className="mb-2 text-center text-xs text-destructive font-space-mono">
+                {checkoutError}
+              </p>
+            )}
+            {checkoutItems.length > 0 ? (
+              <button
+                onClick={handleCheckout}
+                disabled={checkingOut}
+                className="block w-full bg-foreground px-5 py-3 text-center text-sm font-medium text-background transition-opacity hover:opacity-85 disabled:opacity-60"
+              >
+                {checkingOut ? "Redirecting…" : "Checkout →"}
+              </button>
+            ) : (
+              <a
+                href={`mailto:customise@mettali.in?subject=Order enquiry&body=${encodeURIComponent(
+                  items
+                    .map((i) => `${i.qty} × ${i.name} — ₹${i.price * i.qty}`)
+                    .join("\n") + `\n\nSubtotal: ₹${subtotal}`
+                )}`}
+                className="block w-full bg-foreground px-5 py-3 text-center text-sm font-medium text-background transition-opacity hover:opacity-85"
+              >
+                Enquire to Order
+              </a>
+            )}
+            {!hasFullCheckout && checkoutItems.length > 0 && (
+              <p className="mt-2 text-center text-[10px] text-slate-moss/70 font-space-mono">
+                Some items aren&apos;t available for instant checkout yet — you can complete the rest and we&apos;ll follow up on those separately.
+              </p>
+            )}
           </div>
         )}
       </aside>

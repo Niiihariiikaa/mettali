@@ -15,9 +15,10 @@ interface ProductSliderCardProps {
   dimensions?: string;
   type?: string;
   href?: string;
+  shopify?: { productId: string; variantId: string; handle: string };
 }
 
-export function ProductSliderCard({ name, category, images, description, price, dimensions, type, href }: ProductSliderCardProps) {
+export function ProductSliderCard({ name, category, images, description, price, dimensions, type, href, shopify }: ProductSliderCardProps) {
   const [current, setCurrent] = useState(0);
   const [added, setAdded] = useState(false);
   const { addItem } = useCart();
@@ -26,7 +27,7 @@ export function ProductSliderCard({ name, category, images, description, price, 
     e.preventDefault();
     e.stopPropagation();
     if (price === undefined) return;
-    addItem({ name, category, price, image: images[0], href });
+    addItem({ name, category, price, image: images[0], href, variantId: shopify?.variantId });
     setAdded(true);
     setTimeout(() => setAdded(false), 1600);
   };

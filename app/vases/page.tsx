@@ -2,8 +2,10 @@ import { Header } from "@/components/header";
 import { FooterSection } from "@/components/sections/footer-section";
 import { ProductGrid } from "@/components/product-grid";
 import { vases } from "@/lib/products";
+import { withLivePrices } from "@/lib/shopify";
 
-export default function VasesPage() {
+export default async function VasesPage() {
+  const items = await withLivePrices(vases);
   return (
     <main className="min-h-screen bg-background">
       <Header />
@@ -13,7 +15,7 @@ export default function VasesPage() {
         <p className="mt-4 text-sm text-slate-moss font-space-mono max-w-sm mx-auto">Sculptural aluminium vases — where function meets artistry.</p>
       </div>
       <ProductGrid
-        products={vases}
+        products={items}
         basePath="/vases"
         className="grid grid-cols-1 gap-6 px-6 pb-28 md:grid-cols-3 md:px-12 lg:grid-cols-4 lg:px-20"
       />

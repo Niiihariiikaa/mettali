@@ -1,5 +1,6 @@
 export interface Product {
   name: string;
+  shopify?: { productId: string; variantId: string; handle: string };
   category: string;
   price: number;
   dimensions: string;
@@ -21,7 +22,7 @@ const B2 = "/products2";
 
 export const shelves: Product[] = [
   {
-    name: "Verse",
+    name: "Verse", shopify: { productId: "gid://shopify/Product/8824406704281", variantId: "gid://shopify/ProductVariant/48361779626137", handle: "verse" },
     type: "Wall-mounted",
     price: 2500,
     dimensions: "36×14×59 cm",
@@ -30,7 +31,7 @@ export const shelves: Product[] = [
     images: [`${B2}/shelf1.webp`],
   },
   {
-    name: "Narrative (Big)",
+    name: "Narrative (Big)", shopify: { productId: "gid://shopify/Product/8824406737049", variantId: "gid://shopify/ProductVariant/48361779658905", handle: "narrative-big" },
     type: "Free Standing",
     price: 22000,
     dimensions: "72×22×150 cm",
@@ -39,7 +40,7 @@ export const shelves: Product[] = [
     images: [`${B}/Narrative-bookshelf1.webp`, `${B}/Narrative-bookshelf2.webp`, `${B}/Narrative-bookshelf3.webp`],
   },
   {
-    name: "Narrative (Small)",
+    name: "Narrative (Small)", shopify: { productId: "gid://shopify/Product/8824406769817", variantId: "gid://shopify/ProductVariant/48361779724441", handle: "narrative-small" },
     type: "Free Standing",
     price: 14000,
     dimensions: "56×22×106 cm",
@@ -48,7 +49,7 @@ export const shelves: Product[] = [
     images: [`${B}/Narrative-bookshelf1.webp`, `${B}/Narrative-bookshelf2.webp`, `${B}/Narrative-bookshelf3.webp`],
   },
   {
-    name: "Sonnet",
+    name: "Sonnet", shopify: { productId: "gid://shopify/Product/8824406802585", variantId: "gid://shopify/ProductVariant/48361779757209", handle: "sonnet" },
     type: "Wall-mounted",
     price: 3200,
     dimensions: "14×11×96 cm",
@@ -57,7 +58,7 @@ export const shelves: Product[] = [
     images: [`${B2}/sonnet-bookshelf.webp`],
   },
   {
-    name: "Scroll",
+    name: "Scroll", shopify: { productId: "gid://shopify/Product/8824406835353", variantId: "gid://shopify/ProductVariant/48361779789977", handle: "scroll" },
     type: "Wall-mounted",
     price: 3200,
     dimensions: "30×11×96 cm",
@@ -66,7 +67,7 @@ export const shelves: Product[] = [
     images: [`${B}/scroll-bookshelf1.webp`, `${B}/scroll-bookshelf2.webp`],
   },
   {
-    name: "Saga",
+    name: "Saga", shopify: { productId: "gid://shopify/Product/8824406868121", variantId: "gid://shopify/ProductVariant/48361779855513", handle: "saga" },
     type: "Wall-mounted",
     price: 2500,
     dimensions: "64×11×87 cm",
@@ -75,25 +76,25 @@ export const shelves: Product[] = [
     images: [`${B}/Saga-bookshelf1.webp`],
   },
   {
-    name: "Index",
+    name: "Index", shopify: { productId: "gid://shopify/Product/8824406900889", variantId: "gid://shopify/ProductVariant/48361779888281", handle: "index" },
     type: "Wall-mounted",
     price: 4000,
     dimensions: "32×14×76 cm",
     weight: "1.5 kg",
     description: "A clever fusion of form and function, featuring a two-way design with invisible folds.",
-    images: [`${B2}/shelf1.webp`],
+    images: [`${B}/index-1.webp`, `${B}/index-2.webp`, `${B}/index-3.webp`],
   },
   {
-    name: "Preface (Big)",
+    name: "Preface (Big)", shopify: { productId: "gid://shopify/Product/8824407195801", variantId: "gid://shopify/ProductVariant/48361780052121", handle: "preface-big" },
     type: "Free Standing",
     price: 15500,
     dimensions: "30×25×133 cm",
     weight: "10 kg",
     description: "Grid-like sections designed to display books and decorative pieces. A striking, complex bend at the top adds architectural drama.",
-    images: [`${B2}/shelf1.webp`],
+    images: [`${B}/preface-big-1.webp`, `${B}/preface-big-2.webp`],
   },
   {
-    name: "Preface (Small)",
+    name: "Preface (Small)", shopify: { productId: "gid://shopify/Product/8824407949465", variantId: "gid://shopify/ProductVariant/48361780969625", handle: "preface-small" },
     type: "Table Top",
     price: 8500,
     dimensions: "21×21×100 cm",
@@ -102,7 +103,7 @@ export const shelves: Product[] = [
     images: [`${B2}/shelf1.webp`],
   },
   {
-    name: "Prologue",
+    name: "Prologue", shopify: { productId: "gid://shopify/Product/8824407982233", variantId: "gid://shopify/ProductVariant/48361781002393", handle: "prologue" },
     type: "Free Standing",
     price: 14000,
     dimensions: "35×25×127 cm",
@@ -111,34 +112,34 @@ export const shelves: Product[] = [
     images: [`${B2}/shelf1.webp`],
   },
   {
-    name: "Chapter",
+    name: "Chapter", shopify: { productId: "gid://shopify/Product/8824408080537", variantId: "gid://shopify/ProductVariant/48361781100697", handle: "chapter" },
     type: "Table Top",
     price: 5500,
     dimensions: "44×25×80 cm",
     weight: "4 kg",
     description: "Combines functionality with soft, rounded edges for a modern, inviting look.",
-    images: [`${B}/Chapter-bookshelf1.webp`, `${B}/Chapter-bookshelf2.webp`],
+    images: [`${B}/Chapter-bookshelf1.webp`, `${B}/Chapter-bookshelf2.webp`, `${B}/chapter-3.webp`, `${B}/chapter-4.webp`],
   },
   {
-    name: "Tale",
+    name: "Tale", shopify: { productId: "gid://shopify/Product/8824408211609", variantId: "gid://shopify/ProductVariant/48361781231769", handle: "tale" },
     type: "Wall-mounted",
     price: 5500,
     dimensions: "59×11×82 cm",
     weight: "2 kg",
     description: "Features a striking, tapered ladder design with three angled compartments.",
-    images: [`${B2}/shelf1.webp`],
+    images: [`${B}/tale-1.webp`, `${B}/tale-2.webp`],
   },
   {
-    name: "Ink (Set of 3)",
+    name: "Ink (Set of 3)", shopify: { productId: "gid://shopify/Product/8824408277145", variantId: "gid://shopify/ProductVariant/48361781330073", handle: "ink-set-of-3" },
     type: "Wall-mounted",
     price: 1500,
     dimensions: "15×10×10 cm",
     weight: "0.5 kg",
     description: "Compact and minimalist design, offering an invisible display for your books.",
-    images: [`${B2}/shelf1.webp`],
+    images: [`${B}/ink-1.webp`, `${B}/ink-2.webp`, `${B}/ink-3.webp`],
   },
   {
-    name: "Drama",
+    name: "Drama", shopify: { productId: "gid://shopify/Product/8824408309913", variantId: "gid://shopify/ProductVariant/48361781362841", handle: "drama" },
     type: "Free Standing",
     price: 9500,
     dimensions: "108×25×118 cm",
@@ -147,25 +148,25 @@ export const shelves: Product[] = [
     images: [`${B2}/shelf1.webp`],
   },
   {
-    name: "Volume 1",
+    name: "Volume 1", shopify: { productId: "gid://shopify/Product/8824408342681", variantId: "gid://shopify/ProductVariant/48361781428377", handle: "volume-1" },
     type: "Free Standing",
     price: 4200,
     dimensions: "30×30×36 cm",
     weight: "2 kg",
     description: "Stackable cubes with a minimalist design — use alone or layer for a modular display.",
-    images: [`${B2}/shelf1.webp`],
+    images: [`${B}/volume1-1.webp`, `${B}/volume1-2.webp`],
   },
   {
-    name: "Volume 2",
+    name: "Volume 2", shopify: { productId: "gid://shopify/Product/8824408375449", variantId: "gid://shopify/ProductVariant/48361781461145", handle: "volume-2" },
     type: "Free Standing",
     price: 7500,
     dimensions: "30×30×75 cm",
     weight: "4 kg",
     description: "Stackable cubes with a minimalist design — use alone or layer for a modular display.",
-    images: [`${B2}/shelf1.webp`],
+    images: [`${B}/volume2-1.webp`],
   },
   {
-    name: "Fiction",
+    name: "Fiction", shopify: { productId: "gid://shopify/Product/8824408408217", variantId: "gid://shopify/ProductVariant/48361781493913", handle: "fiction" },
     type: "Wall-mounted",
     price: 5000,
     dimensions: "24×160×25 cm",
@@ -174,7 +175,7 @@ export const shelves: Product[] = [
     images: [`${B2}/shelf1.webp`],
   },
   {
-    name: "Genre",
+    name: "Genre", shopify: { productId: "gid://shopify/Product/8824408440985", variantId: "gid://shopify/ProductVariant/48361781526681", handle: "genre" },
     type: "Wall-mounted",
     price: 4000,
     dimensions: "35×9.5×40 cm",
@@ -183,34 +184,34 @@ export const shelves: Product[] = [
     images: [`${B2}/shelf1.webp`],
   },
   {
-    name: "Quill",
+    name: "Quill", shopify: { productId: "gid://shopify/Product/8824408473753", variantId: "gid://shopify/ProductVariant/48361781559449", handle: "quill" },
     type: "Wall-mounted",
     price: 2700,
     dimensions: "72×14×20 cm",
     weight: "1 kg",
     description: "Bold triangular center, flanked by wing-like extensions on both sides.",
-    images: [`${B2}/shelf1.webp`],
+    images: [`${B}/quill-1.webp`, `${B}/quill-2.webp`, `${B}/quill-3.webp`, `${B}/quill-4.webp`],
   },
   {
-    name: "Prose (Set of 2)",
+    name: "Prose (Set of 2)", shopify: { productId: "gid://shopify/Product/8824408539289", variantId: "gid://shopify/ProductVariant/48361781657753", handle: "prose-set-of-2" },
     type: "Wall-mounted",
     price: 2000,
     dimensions: "43×14×9.5 cm",
     weight: "0.7 kg",
     description: "Straightforward and clean design, mirrors the simplicity and flow of a well-crafted prose.",
-    images: [`${B2}/shelf1.webp`],
+    images: [`${B}/prose-1.webp`, `${B}/prose-2.webp`],
   },
   {
-    name: "Ballad",
+    name: "Ballad", shopify: { productId: "gid://shopify/Product/8824408604825", variantId: "gid://shopify/ProductVariant/48361781788825", handle: "ballad" },
     type: "Wall-mounted",
     price: 8500,
     dimensions: "40×15.5×70 cm",
     weight: "7 kg",
     description: "Four unique shelves that come together in a harmonious display with complex bends and fluid lines.",
-    images: [`${B2}/shelf1.webp`],
+    images: [`${B}/ballad-1.webp`],
   },
   {
-    name: "Epic",
+    name: "Epic", shopify: { productId: "gid://shopify/Product/8824408637593", variantId: "gid://shopify/ProductVariant/48361781854361", handle: "epic" },
     type: "Wall-mounted",
     price: 5500,
     dimensions: "23×22×70 cm",
@@ -219,7 +220,7 @@ export const shelves: Product[] = [
     images: [`${B2}/shelf1.webp`],
   },
   {
-    name: "Stanza",
+    name: "Stanza", shopify: { productId: "gid://shopify/Product/8824408670361", variantId: "gid://shopify/ProductVariant/48361781887129", handle: "stanza" },
     type: "Wall-mounted",
     price: 2200,
     dimensions: "25.5×14×52 cm",
@@ -228,25 +229,25 @@ export const shelves: Product[] = [
     images: [`${B2}/shelf1.webp`],
   },
   {
-    name: "Chronicle",
+    name: "Chronicle", shopify: { productId: "gid://shopify/Product/8824408703129", variantId: "gid://shopify/ProductVariant/48361781919897", handle: "chronicle" },
     type: "Free Standing",
     price: 8500,
     dimensions: "30×30×150 cm",
     weight: "5.5 kg",
     description: "Long, floor-mounted design featuring simple, precise folds.",
-    images: [`${B2}/shelf1.webp`],
+    images: [`${B}/chronicle-1.webp`],
   },
   {
-    name: "Binding",
+    name: "Binding", shopify: { productId: "gid://shopify/Product/8824408735897", variantId: "gid://shopify/ProductVariant/48361781952665", handle: "binding" },
     type: "Free Standing",
     price: 17500,
     dimensions: "62×21×200 cm",
     weight: "10 kg",
     description: "Sleek, modern design with a long pipe that elegantly connects three triangles on opposite sides.",
-    images: [`${B2}/shelf1.webp`],
+    images: [`${B}/binding-1.webp`, `${B}/binding-2.webp`, `${B}/binding-3.webp`, `${B}/binding-4.webp`],
   },
   {
-    name: "Draft",
+    name: "Draft", shopify: { productId: "gid://shopify/Product/8824408768665", variantId: "gid://shopify/ProductVariant/48361781985433", handle: "draft" },
     type: "Wall-mounted",
     price: 4500,
     dimensions: "25×20×75 cm",
@@ -255,19 +256,21 @@ export const shelves: Product[] = [
     images: [`${B2}/shelf1.webp`],
   },
   {
-    name: "Parable",
+    name: "Parable", shopify: { productId: "gid://shopify/Product/8824408801433", variantId: "gid://shopify/ProductVariant/48361782050969", handle: "parable" },
     type: "Table Top",
     price: 3500,
     dimensions: "71×28×31 cm",
     weight: "2.5 kg",
     description: "Long, tabletop design that offers ample capacity for books. Functional and versatile.",
-    images: [`${B2}/shelf1.webp`],
+    images: [`${B}/parable-1.webp`, `${B}/parable-2.webp`, `${B}/parable-3.webp`],
   },
-].map((s) => ({ ...s, category: "Shelves" }));
+]
+  .map((s) => ({ ...s, category: "Shelves" }))
+  .filter((p) => !(p.images.length === 1 && p.images[0] === `${B2}/shelf1.webp`));
 
 export const vases: Product[] = [
   {
-    name: "Luna Vase",
+    name: "Luna Vase", shopify: { productId: "gid://shopify/Product/8824408899737", variantId: "gid://shopify/ProductVariant/48361782247577", handle: "luna-vase" },
     category: "Vases",
     price: 1500,
     dimensions: "13×10×31 cm",
@@ -276,7 +279,7 @@ export const vases: Product[] = [
     images: [`${B}/Lunavase1.webp`, `${B}/Lunavase2.webp`, `${B}/Lunavase3.webp`, `${B}/lunavaseb1.webp`, `${B}/lunavaseb3.webp`],
   },
   {
-    name: "Maya Vase",
+    name: "Maya Vase", shopify: { productId: "gid://shopify/Product/8824408998041", variantId: "gid://shopify/ProductVariant/48361782476953", handle: "maya-vase" },
     category: "Vases",
     price: 1600,
     dimensions: "20×20×24 cm",
@@ -285,7 +288,7 @@ export const vases: Product[] = [
     images: [`${B}/mayavasec1.webp`, `${B}/mayavasec2.webp`, `${B}/mayavased1.webp`, `${B}/mayavased2.webp`],
   },
   {
-    name: "Terra Vase",
+    name: "Terra Vase", shopify: { productId: "gid://shopify/Product/8824409030809", variantId: "gid://shopify/ProductVariant/48361782542489", handle: "terra-vase" },
     category: "Vases",
     price: 1600,
     dimensions: "11×11×30 cm",
@@ -298,7 +301,7 @@ export const vases: Product[] = [
     ],
   },
   {
-    name: "Cala Vase",
+    name: "Cala Vase", shopify: { productId: "gid://shopify/Product/8824409096345", variantId: "gid://shopify/ProductVariant/48361782640793", handle: "cala-vase" },
     category: "Vases",
     price: 1300,
     dimensions: "10.5×10.5×20 cm",
@@ -310,7 +313,7 @@ export const vases: Product[] = [
     ],
   },
   {
-    name: "Aura Vase (S)",
+    name: "Aura Vase (S)", shopify: { productId: "gid://shopify/Product/8824409129113", variantId: "gid://shopify/ProductVariant/48361782673561", handle: "aura-vase-s" },
     category: "Vases",
     price: 1500,
     dimensions: "16×16×15 cm",
@@ -322,7 +325,7 @@ export const vases: Product[] = [
     ],
   },
   {
-    name: "Aura Vase (M)",
+    name: "Aura Vase (M)", shopify: { productId: "gid://shopify/Product/8824409227417", variantId: "gid://shopify/ProductVariant/48361782771865", handle: "aura-vase-m" },
     category: "Vases",
     price: 1700,
     dimensions: "15×15×22 cm",
@@ -334,7 +337,7 @@ export const vases: Product[] = [
     ],
   },
   {
-    name: "Aura Vase (L)",
+    name: "Aura Vase (L)", shopify: { productId: "gid://shopify/Product/8824409260185", variantId: "gid://shopify/ProductVariant/48361782870169", handle: "aura-vase-l" },
     category: "Vases",
     price: 1900,
     dimensions: "14×14×30 cm",
@@ -346,7 +349,7 @@ export const vases: Product[] = [
     ],
   },
   {
-    name: "Aura Vase (Set of 3)",
+    name: "Aura Vase (Set of 3)", shopify: { productId: "gid://shopify/Product/8824409292953", variantId: "gid://shopify/ProductVariant/48361782902937", handle: "aura-vase-set-of-3" },
     category: "Vases",
     price: 4500,
     dimensions: "14×14×30 cm",
@@ -361,7 +364,7 @@ export const vases: Product[] = [
 
 export const wineHolders: Product[] = [
   {
-    name: "Riva",
+    name: "Riva", shopify: { productId: "gid://shopify/Product/8824409325721", variantId: "gid://shopify/ProductVariant/48361783001241", handle: "riva" },
     category: "Wine Holders",
     price: 2900,
     dimensions: "41.5×41.5×14 cm",
@@ -370,7 +373,7 @@ export const wineHolders: Product[] = [
     images: [`${B}/Riva.webp`, `${B}/Riva2.webp`, `${B}/Riva3.webp`],
   },
   {
-    name: "Maison",
+    name: "Maison", shopify: { productId: "gid://shopify/Product/8824409358489", variantId: "gid://shopify/ProductVariant/48361783034009", handle: "maison" },
     category: "Wine Holders",
     price: 3200,
     dimensions: "40×22×25 cm",
@@ -382,7 +385,7 @@ export const wineHolders: Product[] = [
     ],
   },
   {
-    name: "Clink",
+    name: "Clink", shopify: { productId: "gid://shopify/Product/8824409391257", variantId: "gid://shopify/ProductVariant/48361783066777", handle: "clink" },
     category: "Wine Holders",
     price: 3200,
     dimensions: "19×14.5×60 cm",
@@ -391,7 +394,7 @@ export const wineHolders: Product[] = [
     images: [`${B}/clink1.webp`, `${B}/clink2.webp`, `${B}/clink3.webp`, `${B}/clink4.webp`],
   },
   {
-    name: "Opera",
+    name: "Opera", shopify: { productId: "gid://shopify/Product/8824409489561", variantId: "gid://shopify/ProductVariant/48361783230617", handle: "opera" },
     category: "Wine Holders",
     price: 2800,
     dimensions: "40×14.5×39 cm",
@@ -403,7 +406,7 @@ export const wineHolders: Product[] = [
 
 export const organisers: Product[] = [
   {
-    name: "Linea Organiser",
+    name: "Linea Organiser", shopify: { productId: "gid://shopify/Product/8824409555097", variantId: "gid://shopify/ProductVariant/48361783328921", handle: "linea-organiser" },
     category: "Organisers",
     price: 2100,
     dimensions: "15.5×10×45 cm",
@@ -415,7 +418,7 @@ export const organisers: Product[] = [
     ],
   },
   {
-    name: "Perch Organiser",
+    name: "Perch Organiser", shopify: { productId: "gid://shopify/Product/8824409587865", variantId: "gid://shopify/ProductVariant/48361783361689", handle: "perch-organiser" },
     category: "Organisers",
     price: 8000,
     dimensions: "73×15×40 cm",
@@ -424,7 +427,7 @@ export const organisers: Product[] = [
     images: [`${B}/Perch-wineholder1.webp`, `${B}/Perchwineholder2.webp`, `${B}/Perchwineholder3.webp`],
   },
   {
-    name: "Nest Organiser",
+    name: "Nest Organiser", shopify: { productId: "gid://shopify/Product/8824409620633", variantId: "gid://shopify/ProductVariant/48361783394457", handle: "nest-organiser" },
     category: "Organisers",
     price: 4500,
     dimensions: "61×13×61 cm",
@@ -436,7 +439,7 @@ export const organisers: Product[] = [
 
 export const shoeRacks: Product[] = [
   {
-    name: "Step",
+    name: "Step", shopify: { productId: "gid://shopify/Product/8824409653401", variantId: "gid://shopify/ProductVariant/48361783492761", handle: "step" },
     category: "Shoe Display Racks",
     price: 900,
     dimensions: "28×10×24 cm",
@@ -445,7 +448,7 @@ export const shoeRacks: Product[] = [
     images: [`${B2}/step-shoerack1.webp`, `${B2}/step-shoerack2.webp`, `${B2}/stepshoerack3.webp`, `${B2}/stepshoerackb2.webp`],
   },
   {
-    name: "Vault",
+    name: "Vault", shopify: { productId: "gid://shopify/Product/8824409686169", variantId: "gid://shopify/ProductVariant/48361783656601", handle: "vault" },
     category: "Shoe Display Racks",
     price: 6500,
     dimensions: "31×27×61 cm",
@@ -454,7 +457,7 @@ export const shoeRacks: Product[] = [
     images: [`${B2}/Vaultshoerack1.webp`, `${B2}/Vaultshoerack2.webp`, `${B2}/vaultshoerack3.webp`],
   },
   {
-    name: "Orbit",
+    name: "Orbit", shopify: { productId: "gid://shopify/Product/8824410734745", variantId: "gid://shopify/ProductVariant/48361784705177", handle: "orbit" },
     category: "Shoe Display Racks",
     price: 5500,
     dimensions: "44×37.5×84 cm",
@@ -463,7 +466,7 @@ export const shoeRacks: Product[] = [
     images: [`${B}/Orbit-shoerack1.webp`, `${B}/Orbitshoerack2.webp`, `${B}/Orbitshoerack3.webp`],
   },
   {
-    name: "Align",
+    name: "Align", shopify: { productId: "gid://shopify/Product/8824411226265", variantId: "gid://shopify/ProductVariant/48361785786521", handle: "align" },
     category: "Shoe Display Racks",
     price: 3600,
     dimensions: "82.5×26×271 cm",
@@ -472,7 +475,7 @@ export const shoeRacks: Product[] = [
     images: [`${B}/Alignshoerack.webp`, `${B}/Alignshoerack2.webp`, `${B}/alignshoerack3.webp`],
   },
   {
-    name: "Penta",
+    name: "Penta", shopify: { productId: "gid://shopify/Product/8824411259033", variantId: "gid://shopify/ProductVariant/48361785819289", handle: "penta" },
     category: "Shoe Display Racks",
     price: 3800,
     dimensions: "106.5×26×33 cm",

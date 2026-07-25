@@ -2,8 +2,10 @@ import { Header } from "@/components/header";
 import { FooterSection } from "@/components/sections/footer-section";
 import { ProductGrid } from "@/components/product-grid";
 import { shoeRacks } from "@/lib/products";
+import { withLivePrices } from "@/lib/shopify";
 
-export default function ShoeDisplayRacksPage() {
+export default async function ShoeDisplayRacksPage() {
+  const items = await withLivePrices(shoeRacks);
   return (
     <main className="min-h-screen bg-background">
       <Header />
@@ -13,7 +15,7 @@ export default function ShoeDisplayRacksPage() {
         <p className="mt-4 text-sm text-slate-moss font-space-mono max-w-sm mx-auto">Slim and sturdy entryway racks — built to organise and elevate your space.</p>
       </div>
       <ProductGrid
-        products={shoeRacks}
+        products={items}
         basePath="/shoe-display-racks"
         className="grid grid-cols-1 gap-6 px-6 pb-28 md:grid-cols-3 md:px-12 lg:grid-cols-3 lg:px-20"
       />

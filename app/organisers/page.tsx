@@ -2,8 +2,10 @@ import { Header } from "@/components/header";
 import { FooterSection } from "@/components/sections/footer-section";
 import { ProductGrid } from "@/components/product-grid";
 import { organisers } from "@/lib/products";
+import { withLivePrices } from "@/lib/shopify";
 
-export default function OrganisersPage() {
+export default async function OrganisersPage() {
+  const items = await withLivePrices(organisers);
   return (
     <main className="min-h-screen bg-background">
       <Header />
@@ -13,7 +15,7 @@ export default function OrganisersPage() {
         <p className="mt-4 text-sm text-slate-moss font-space-mono max-w-sm mx-auto">Functional organisers crafted from powder-coated aluminium — where storage meets design.</p>
       </div>
       <ProductGrid
-        products={organisers}
+        products={items}
         basePath="/organisers"
         className="grid grid-cols-1 gap-6 px-6 pb-28 md:grid-cols-3 md:px-12 lg:px-20"
       />

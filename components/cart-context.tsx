@@ -15,6 +15,7 @@ export interface CartItem {
   price: number;
   image: string;
   href?: string;
+  variantId?: string;
   qty: number;
 }
 

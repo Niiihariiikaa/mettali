@@ -1,8 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+import { useCart } from "@/components/cart-context";
 
 // ─── Scroll-reveal text ──────────────────────────────────────────────────────
 
@@ -89,6 +89,7 @@ function HoverProductCard({ name, category, images, fit }: { name: string; categ
 // ─── Main section ─────────────────────────────────────────────────────────────
 
 export function TechnologySection() {
+  const { openCart } = useCart();
   const descriptionText =
     "At Mettali, raw aluminium is the starting point — not the shortcut. Every piece passes through precision forming, expert powder coating, and careful hand-finishing before it earns its place in your home. Durable enough to outlast trends, refined enough to define them.";
 
@@ -105,12 +106,13 @@ export function TechnologySection() {
           <p className="mt-5 text-sm uppercase tracking-[0.25em] text-white/75 font-space-mono">
             On Your First Purchase
           </p>
-          <Link
-            href="#reserve"
+          <button
+            type="button"
+            onClick={openCart}
             className="mt-10 border border-white/60 px-8 py-3 text-xs uppercase tracking-widest text-white font-space-mono hover:bg-white hover:text-smoked-bronze transition-colors duration-200"
           >
             Shop Now
-          </Link>
+          </button>
         </div>
       </div>
 

@@ -3,10 +3,11 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, ShoppingBag, Check } from "lucide-react";
 import { Header } from "@/components/header";
 import { FooterSection } from "@/components/sections/footer-section";
 import { ProductSliderCard } from "@/components/product-slider-card";
+import { useCart } from "@/components/cart-context";
 import { slugify, type Product } from "@/lib/products";
 
 export function ProductDetailView({
@@ -21,9 +22,17 @@ export function ProductDetailView({
   backLabel: string;
 }) {
   const [current, setCurrent] = useState(0);
+  const [added, setAdded] = useState(false);
+  const { addItem } = useCart();
 
   const dimValues = product.dimensions.replace(/\s*cm$/i, "").split("×").map((d) => d.trim());
   const dimLabels = ["Width", "Depth", "Height"];
+
+  const handleAddToCart = () => {
+    addItem({ name: product.name, category: product.category, price: product.price, image: product.images[0], variantId: product.shopify?.variantId });
+    setAdded(true);
+    setTimeout(() => setAdded(false), 1600);
+  };
 
   return (
     <main className="min-h-screen bg-background">
@@ -128,12 +137,15 @@ export function ProductDetailView({
             )}
           </div>
 
-          <a
-            href="#reserve"
-            className="mt-8 inline-flex w-fit items-center gap-2 bg-mulled-iron px-8 py-4 text-center text-xs uppercase tracking-widest text-white font-space-mono transition-opacity duration-200 hover:opacity-85"
+          <button
+            onClick={handleAddToCart}
+            className={`mt-8 inline-flex w-fit items-center gap-2 px-8 py-4 text-center text-xs uppercase tracking-widest text-white font-space-mono transition-opacity duration-200 hover:opacity-85 ${
+              added ? "bg-slate-moss" : "bg-mulled-iron"
+            }`}
           >
-            Enquire / Shop Now
-          </a>
+            {added ? <Check size={14} /> : <ShoppingBag size={14} />}
+            {added ? "Added to Cart" : "Add to Cart"}
+          </button>
           <p className="mt-4 text-xs text-slate-moss font-space-mono">
             Crafted in-house, from first sketch to final finish.
           </p>

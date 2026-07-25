@@ -115,12 +115,13 @@ export function Header({ variant = "light" }: { variant?: "dark" | "light" }) {
               </span>
             )}
           </button>
-          <Link
-            href="#reserve"
+          <button
+            type="button"
+            onClick={openCart}
             className={`px-4 py-2 text-sm font-medium transition-all rounded-full ${onDark ? "bg-white text-foreground hover:bg-white/90" : "bg-foreground text-background hover:opacity-80"}`}
           >
             Shop Now
-          </Link>
+          </button>
         </div>
 
         {/* Mobile: cart + menu buttons */}
@@ -183,13 +184,13 @@ export function Header({ variant = "light" }: { variant?: "dark" | "light" }) {
 
             <Link href="/customization" className="text-lg text-foreground" onClick={() => setIsMenuOpen(false)}>Customization</Link>
 
-            <Link
-              href="#reserve"
+            <button
+              type="button"
+              onClick={() => { setIsMenuOpen(false); openCart(); }}
               className="mt-4 bg-foreground px-5 py-3 text-center text-sm font-medium text-background rounded-full"
-              onClick={() => setIsMenuOpen(false)}
             >
               Shop Now
-            </Link>
+            </button>
           </nav>
         </div>
       )}

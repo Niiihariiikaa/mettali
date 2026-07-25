@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { ProductDetailView } from "@/components/product-detail-view";
 import { vases, slugify } from "@/lib/products";
+import { withLivePrices } from "@/lib/shopify";
 
 export function generateStaticParams() {
   return vases.map((p) => ({ slug: slugify(p.name) }));
@@ -13,5 +14,8 @@ export default async function VaseDetailPage({ params }: { params: Promise<{ slu
 
   const related = vases.filter((p) => p.name !== product.name).slice(0, 3);
 
-  return <ProductDetailView product={product} related={related} backHref="/vases" backLabel="Vases" />;
+  const [liveProduct] = await withLivePrices([product]);
+  const liveRelated = await withLivePrices(related);
+
+  return <ProductDetailView product={liveProduct} related={liveRelated} backHref="/vases" backLabel="Vases" />;
 }

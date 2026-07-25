@@ -2,8 +2,10 @@ import { Header } from "@/components/header";
 import { FooterSection } from "@/components/sections/footer-section";
 import { ProductGrid } from "@/components/product-grid";
 import { shelves } from "@/lib/products";
+import { withLivePrices } from "@/lib/shopify";
 
-export default function ShelvesPage() {
+export default async function ShelvesPage() {
+  const items = await withLivePrices(shelves);
   return (
     <main className="min-h-screen bg-background">
       <Header />
@@ -15,7 +17,7 @@ export default function ShelvesPage() {
         </p>
       </div>
       <ProductGrid
-        products={shelves}
+        products={items}
         basePath="/shelves"
         className="grid grid-cols-1 gap-6 px-6 pb-28 md:grid-cols-3 md:px-12 lg:grid-cols-4 lg:px-20"
       />
