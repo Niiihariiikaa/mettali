@@ -50,7 +50,7 @@ const products = [
   { name: "Maison",     category: "Wine holder", fit: "contain", images: [`${B}/winestand1.webp`, `${B}/winestand2.webp`] },
   { name: "Cala",      category: "Vase",         fit: "contain", images: [`${B}/wine-vase1.webp`, `${B}/wine-vase2.webp`, `${B}/wine-vase3.webp`] },
   { name: "Aura",category: "Vase",         fit: "contain", images: [`${B}/3vase1.webp`, `${B}/3vase2.webp`, `${B}/3vase3.webp`] },
-  { name: "Align",      category: "Shoe display rack",       fit: "contain", images: [`${B}/shoerack1.webp`, `${B}/shoerack2.webp`, `${B}/shoerack3.webp`] },
+  { name: "Align",      category: "Shoe display rack",       fit: "contain", images: ["/products1_webp/alighnshoerack-4.png"] },
 ];
 
 function HoverProductCard({ name, category, images, fit }: { name: string; category: string; images: string[]; fit: string }) {
@@ -96,20 +96,20 @@ export function TechnologySection() {
   return (
     <section>
       {/* 1. Video panel */}
-      <div className="relative h-screen overflow-hidden">
+      <div className="relative aspect-video overflow-hidden md:aspect-auto md:h-screen">
         <video autoPlay muted loop playsInline className="absolute inset-0 h-full w-full object-cover">
           <source src="/images/strengthmeetsbeauty.mp4" type="video/mp4" />
         </video>
         <div className="absolute inset-0" style={{ background: "rgba(88,71,56,0.35)" }} />
         <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center">
-          <h2 className="font-horizon text-5xl uppercase text-white md:text-7xl">10% Off</h2>
-          <p className="mt-5 text-sm uppercase tracking-[0.25em] text-white/75 font-space-mono">
+          <h2 className="font-horizon text-2xl uppercase text-white sm:text-4xl md:text-7xl">10% Off</h2>
+          <p className="mt-2 text-[10px] uppercase tracking-[0.2em] text-white/75 font-space-mono sm:mt-4 sm:text-sm sm:tracking-[0.25em]">
             On Your First Purchase
           </p>
           <button
             type="button"
             onClick={openCart}
-            className="mt-10 border border-white/60 px-8 py-3 text-xs uppercase tracking-widest text-white font-space-mono hover:bg-white hover:text-smoked-bronze transition-colors duration-200"
+            className="mt-3 border border-white/60 px-5 py-2 text-[10px] uppercase tracking-widest text-white font-space-mono hover:bg-white hover:text-smoked-bronze transition-colors duration-200 sm:mt-10 sm:px-8 sm:py-3 sm:text-xs"
           >
             Shop Now
           </button>

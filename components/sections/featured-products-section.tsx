@@ -36,6 +36,11 @@ const products = [
     category: "Décor",
     images: [`${B}/2vase1.webp`],
   },
+  {
+    name: "Align",
+    category: "Shoe Display Rack",
+    images: ["/products1_webp/alighnshoerack-4.png"],
+  },
 ];
 
 function HoverProductCard({

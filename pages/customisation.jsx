@@ -619,7 +619,7 @@ export function CustomisationContent() {
       <CustomisationStyles />
 
       {/* ══ HERO — full video (natural height), heading on left ══ */}
-      <section style={{ position: "relative", background: DK }}>
+      <section style={{ position: "relative", background: DK, minHeight: "48vh" }}>
         {/* video at natural aspect ratio — full height visible, no cropping */}
         <video
           autoPlay muted loop playsInline

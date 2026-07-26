@@ -203,6 +203,7 @@ export default function AboutPage() {
         }}
       >
         <div
+          className="about-process-grid"
           style={{
             display: "grid",
             gridTemplateColumns: "1fr 2fr",
@@ -210,6 +211,11 @@ export default function AboutPage() {
             alignItems: "start",
           }}
         >
+          <style>{`
+            @media (max-width: 640px) {
+              .about-process-grid { grid-template-columns: 1fr !important; }
+            }
+          `}</style>
           {/* Left */}
           <div>
             <p

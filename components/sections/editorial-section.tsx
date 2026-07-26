@@ -26,12 +26,12 @@ export function EditorialSection() {
         {specs.map((spec) => (
           <div
             key={spec.label}
-            className="border-b border-r border-border p-8 text-center last:border-r-0 md:border-b-0"
+            className="border-b border-r border-border p-4 text-center last:border-r-0 md:border-b-0 md:p-8"
           >
             <p className="mb-2 text-xs uppercase tracking-widest text-sandcast font-space-mono">
               {spec.label}
             </p>
-            <p className="text-mulled-iron text-xl font-horizon uppercase">
+            <p className="wrap-break-word text-base text-mulled-iron font-horizon uppercase md:text-xl">
               {spec.value}
             </p>
           </div>

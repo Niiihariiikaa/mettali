@@ -77,7 +77,7 @@ export function ProductDetailView({
 
           {/* Thumbnails */}
           {product.images.length > 1 && (
-            <div className="mt-4 flex gap-3">
+            <div className="mt-4 flex gap-3 overflow-x-auto pb-1">
               {product.images.map((src, i) => (
                 <button
                   key={src}

@@ -5,12 +5,14 @@ import Link from "next/link";
 import { useState } from "react";
 import { X } from "lucide-react";
 
+type Point = { left: string; top: string };
+
 type Dot = {
   name: string;
   price: string;
   href: string;
-  dot: { left: string; top: string };
-  popup: { left: string; top: string };
+  dot: { mobile: Point; desktop: Point };
+  popup: { mobile: Point; desktop: Point };
 };
 
 type Panel = {
@@ -21,68 +23,78 @@ type Panel = {
 
 const panels: Panel[] = [
   {
-    image: "/images/quickbuy1.jpeg",
-    alt: "Mettali products in a styled scene",
-    dots: [
-      {
-        name: "Display Shelf",
-        price: "From ₹4,999",
-        href: "/shelves",
-        dot: { left: "30%", top: "50%" },
-        popup: { left: "5%", top: "22%" },
-      },
-      {
-        name: "Sculptural Vase",
-        price: "From ₹2,499",
-        href: "/vases",
-        dot: { left: "75%", top: "72%" },
-        popup: { left: "38%", top: "22%" },
-      },
-    ],
-  },
-  {
-    image: "/images/quickbuy2.jpeg",
+    image: "/products1_webp/products1/quick1.png",
     alt: "Mettali wine vase",
     dots: [
       {
-        name: "Aura Vase",
-        price: "From ₹2,499",
-        href: "/vases",
-        dot: { left: "40%", top: "58%" },
-        popup: { left: "5%", top: "20%" },
+        name: "Aura Vase [M] ",
+        price: "From ₹1,700",
+        href: "/vases/aura-vase-m",
+        dot: { mobile: { left: "45%", top: "75%" }, desktop: { left: "45%", top: "73%" } },
+        popup: { mobile: { left: "5%", top: "70%" }, desktop: { left: "-5%", top: "80%" } },
       },
-
       {
-        name: "Aura Vase",
-        price: "From ₹2,499",
-        href: "/vases",
-        dot: { left: "60%", top: "52%" },
-        popup: { left: "38%", top: "22%" },
+        name: "Aura Vase [L]",
+        price: "From ₹1,900",
+        href: "/vases/aura-vase-l",
+        dot: { mobile: { left: "60%", top: "62%" }, desktop: { left: "60%", top: "62%" } },
+        popup: { mobile: { left: "38%", top: "72%" }, desktop: { left: "38%", top: "42%" } },
       },
-
       {
-        name: "Aura Vase",
-        price: "From ₹2,499",
-        href: "/vases",
-        dot: { left: "60%", top: "62%" },
-        popup: { left: "38%", top: "22%" },
-      }
+        name: "Aura Vase [S]",
+        price: "From ₹1,500",
+        href: "/vases/aura-vase-s",
+        dot: { mobile: { left: "60%", top: "72%" }, desktop: { left: "60%", top: "72%" } },
+        popup: { mobile: { left: "38%", top: "12%" }, desktop: { left: "58%", top: "82%" } },
+      },
     ],
   },
   {
-    image: "/images/quickbuy3.png",
+    image: "/products1_webp/products1/quick3.png",
+    alt: "Mettali products in a styled scene",
+    dots: [
+      {
+        name: "LINEA",
+        price: "From ₹2,100",
+        href: "/organisers/linea-organiser",
+        dot: { mobile: { left: "42%", top: "60%" }, desktop: { left: "30%", top: "50%" } },
+        popup: { mobile: { left: "5%", top: "12%" }, desktop: { left: "5%", top: "22%" } },
+      },
+      {
+        name: "CALA",
+        price: "From ₹1,300",
+        href: "/vases/cala-vase",
+        dot: { mobile: { left: "80%", top: "75%" }, desktop: { left: "75%", top: "72%" } },
+        popup: { mobile: { left: "38%", top: "12%" }, desktop: { left: "38%", top: "72%" } },
+      },
+    ],
+  },
+  {
+    image: "/products1_webp/products1/quick2.jpeg",
     alt: "Mettali vase collection",
     dots: [
       {
-        name: "Minimal Vase",
-        price: "From ₹1,999",
-        href: "/vases",
-        dot: { left: "38%", top: "70%" },
-        popup: { left: "5%", top: "22%" },
+        name: "CLINK",
+        price: "From ₹3,499",
+        href: "/wine-holders/clink",
+        dot: { mobile: { left: "48%", top: "58%" }, desktop: { left: "48%", top: "60%" } },
+        popup: { mobile: { left: "5%", top: "12%" }, desktop: { left: "5%", top: "62%" } },
       },
     ],
   },
 ];
+
+// Renders a point as CSS custom properties; a small <style> block (below)
+// switches --pos-left/--pos-top from the mobile values to the desktop
+// values at the md breakpoint, so positioning needs no JS/media-query logic.
+function posStyle(point: { mobile: Point; desktop: Point }): React.CSSProperties {
+  return {
+    left: point.mobile.left,
+    top: point.mobile.top,
+    ["--pos-left-desktop" as string]: point.desktop.left,
+    ["--pos-top-desktop" as string]: point.desktop.top,
+  };
+}
 
 export function QuickBuySection() {
   // activeKey = "panelIdx-dotIdx" or null
@@ -91,9 +103,14 @@ export function QuickBuySection() {
   const toggle = (key: string) => setActiveKey(prev => prev === key ? null : key);
 
   return (
-    <section id="gallery" className="flex h-screen">
+    <section id="gallery" className="flex flex-col md:h-screen md:flex-row">
+      <style>{`
+        @media (min-width: 768px) {
+          .qb-pos { left: var(--pos-left-desktop) !important; top: var(--pos-top-desktop) !important; }
+        }
+      `}</style>
       {panels.map((panel, pi) => (
-        <div key={pi} className="relative flex-1 overflow-hidden">
+        <div key={pi} className="relative h-[70vh] overflow-hidden md:h-auto md:flex-1">
           {/* Background image */}
           <Image
             src={panel.image}
@@ -113,8 +130,8 @@ export function QuickBuySection() {
                 {/* Dot button */}
                 <button
                   onClick={() => toggle(key)}
-                  style={{ left: dot.dot.left, top: dot.dot.top }}
-                  className="absolute -translate-x-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white/90 flex items-center justify-center shadow-lg hover:scale-110 transition-transform duration-200 z-10"
+                  style={posStyle(dot.dot)}
+                  className="qb-pos absolute -translate-x-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white/90 flex items-center justify-center shadow-lg hover:scale-110 transition-transform duration-200 z-10"
                   aria-label={`Quick view ${dot.name}`}
                 >
                   <div className="w-2.5 h-2.5 rounded-full bg-foreground" />
@@ -123,8 +140,8 @@ export function QuickBuySection() {
                 {/* Popup card */}
                 {isOpen && (
                   <div
-                    style={{ left: dot.popup.left, top: dot.popup.top }}
-                    className="absolute bg-white rounded-2xl p-4 shadow-2xl w-64 z-20 animate-scale-in"
+                    style={posStyle(dot.popup)}
+                    className="qb-pos absolute bg-white rounded-2xl p-4 shadow-2xl w-56 max-w-[80vw] sm:w-64 z-20 animate-scale-in"
                   >
                     <button
                       onClick={() => setActiveKey(null)}
