@@ -57,17 +57,14 @@ export function ProductSliderCard({ name, category, images, description, price, 
       </div>
 
       {/* Image area */}
-      <div className="relative aspect-square bg-white overflow-hidden">
-        <div className="absolute inset-6">
-          <div className="relative h-full w-full">
-            <Image
-              src={images[current]}
-              alt={name}
-              fill
-              className="object-contain transition-opacity duration-300"
-            />
-          </div>
-        </div>
+      <div className="relative bg-white overflow-hidden pb-4">
+        <div className="relative aspect-4/5 w-full">
+          <Image
+            src={images[current]}
+            alt={name}
+            fill
+            className="object-cover transition-opacity duration-300"
+          />
 
         {/* Counter */}
         {images.length > 1 && (
@@ -108,6 +105,7 @@ export function ProductSliderCard({ name, category, images, description, price, 
             ))}
           </div>
         )}
+        </div>
       </div>
 
       {/* About / Measurements row */}

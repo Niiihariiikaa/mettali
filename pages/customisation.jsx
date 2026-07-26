@@ -23,6 +23,88 @@ const CUSTOMIZE_OPTIONS = [
 ];
 
 /* ══════════════════════════════════════════════════════
+   Splash — intro animation shown once per session when the
+   customisation page loads, built from sketch renders in
+   /public/mettali products.
+   ══════════════════════════════════════════════════════ */
+const SPLASH_IMAGES = [
+  "/mettali%20products/volume-1-freestanding-bookshelf-2.svg",
+  "/mettali%20products/quill-wallmounted-bookshelf-2.svg",
+  "/mettali%20products/preface-300-freestanding-bookshelf-1.svg",
+  "/mettali%20products/narrative-freestanding-bookshelf.svg",
+  "/mettali%20products/index-wallmounted%20bookshelf-1.svg",
+  "/mettali%20products/Chapter-tabletop-bookshelf-1.svg",
+  "/mettali%20products/55.svg",
+];
+
+function CustomiseSplash() {
+  const [visible, setVisible] = useState(true);
+  const [leaving, setLeaving] = useState(false);
+
+  useEffect(() => {
+    const leaveTimer = setTimeout(() => setLeaving(true), 2000);
+    const hideTimer = setTimeout(() => setVisible(false), 2700);
+    return () => { clearTimeout(leaveTimer); clearTimeout(hideTimer); };
+  }, []);
+
+  if (!visible) return null;
+
+  return (
+    <div style={{
+      position: "fixed", inset: 0, zIndex: 9999,
+      background: RL,
+      display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
+      opacity: leaving ? 0 : 1,
+      transition: "opacity 0.7s ease",
+      pointerEvents: leaving ? "none" : "auto",
+    }}>
+      <style>{`
+        @keyframes cs-item { from { opacity:0; transform: translateY(28px) scale(0.88); } to { opacity:1; transform:none; } }
+        @keyframes cs-word { from { opacity:0; letter-spacing:0.6em; } to { opacity:1; letter-spacing:0.42em; } }
+      `}</style>
+
+      <div style={{
+        display: "flex", flexWrap: "wrap", justifyContent: "center",
+        gap: "clamp(6px, 2.4vw, 26px)", marginBottom: 34, padding: "0 16px",
+      }}>
+        {SPLASH_IMAGES.map((src, i) => (
+          <div
+            key={src}
+            style={{
+              position: "relative",
+              width: "clamp(34px, 9vw, 92px)",
+              height: "clamp(34px, 9vw, 92px)",
+              overflow: "hidden",
+              opacity: 0,
+              animation: `cs-item 0.7s cubic-bezier(0.16,1,0.3,1) ${0.18 * i + 0.1}s forwards`,
+            }}
+          >
+            <img
+              src={src}
+              alt=""
+              style={{
+                position: "absolute", inset: 0,
+                width: "100%", height: "100%",
+                objectFit: "contain",
+                transform: "scale(2.4)",
+              }}
+            />
+          </div>
+        ))}
+      </div>
+
+      <p style={{
+        fontFamily: SPACE, fontSize: 11, letterSpacing: "0.42em",
+        textTransform: "uppercase", color: SB, margin: 0,
+        opacity: 0, animation: "cs-word 0.9s ease 1s forwards",
+      }}>
+        Customize Your Piece
+      </p>
+    </div>
+  );
+}
+
+/* ══════════════════════════════════════════════════════
    Burst — one-shot particle explosion (on submit)
    ══════════════════════════════════════════════════════ */
 function Burst({ trigger }) {
@@ -247,6 +329,29 @@ export function CustomisationStyles() {
       .cz-contact:hover { transform: translateY(-2px); border-color: ${SC} !important; }
 
       .cz-dot { animation: cz-pop 0.35s cubic-bezier(0.34,1.56,0.64,1) both; }
+
+      .cz-grid-2 { display: grid; grid-template-columns: 1fr 1fr; }
+      .cz-hero-pad { padding: 0 36px; }
+      .cz-intro-wrap { padding: 140px 56px 110px; }
+      .cz-form-outer { padding: 40px 40px 128px; }
+      .cz-hero-video { display: block; }
+
+      @media (max-width: 860px) {
+        .cz-grid-2 { grid-template-columns: 1fr; }
+        .cz-intro-wrap { padding: 96px 32px 80px; }
+        .cz-form-outer { padding: 28px 20px 96px; }
+        .cz-hero-pad { padding: 0 28px; }
+      }
+      @media (max-width: 480px) {
+        .cz-intro-wrap { padding: 72px 20px 64px; }
+        .cz-form-outer { padding: 20px 12px 80px; }
+        .cz-hero-pad { padding: 0 20px; }
+      }
+
+      @media (max-width: 640px) {
+        .cz-hero-video { display: none; }
+        .cz-hero-section { min-height: 62vh; }
+      }
     `}</style>
   );
 }
@@ -285,7 +390,7 @@ export function CustomisationIntro({ light = false }) {
             Beyond the collection
           </h2>
         </Reveal>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 48 }}>
+        <div className="cz-grid-2" style={{ gap: 48 }}>
           <WordReveal
             text="In addition to customizing selected Mettali pieces, we also consider requests for entirely new designs. Whether you're looking for a unique furniture piece or a design tailored to a particular space, our team can explore bespoke solutions that align with Mettali's design language, craftsmanship standards, and production capabilities."
             size="13px"
@@ -305,8 +410,8 @@ export function CustomisationIntro({ light = false }) {
 
   if (!light) {
     return (
-      <section style={{ background: TP, marginTop: -1 }}>
-        <div style={{ maxWidth: 1080, margin: "0 auto", padding: "72px 56px 110px" }}>
+      <section style={{ background: TP }}>
+        <div className="cz-intro-wrap" style={{ maxWidth: 1080, margin: "0 auto" }}>
           {inner}
         </div>
       </section>
@@ -371,7 +476,7 @@ export function CustomisationForm() {
   };
 
   return (
-    <section style={{ maxWidth: 980, margin: "0 auto", padding: "40px 40px 128px" }}>
+    <section className="cz-form-outer" style={{ maxWidth: 980, margin: "0 auto" }}>
       <div style={{
         background: "#ffffff",
         border: "1px solid #e2ddd8",
@@ -420,7 +525,7 @@ export function CustomisationForm() {
           {/* ── Request type ── */}
           <Reveal>
             <SectionLabel n="01">Request Type *</SectionLabel>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 18, marginBottom: 72 }}>
+            <div className="cz-grid-2" style={{ gap: 18, marginBottom: 72 }}>
               {[
                 { v: "customize", t: "Customize an Existing Piece", d: "Adjust dimensions, colors or finishes of a Mettali design." },
                 { v: "bespoke",   t: "Bespoke / New Design Request", d: "Commission an entirely new piece, tailored to your space." },
@@ -462,7 +567,7 @@ export function CustomisationForm() {
           {/* ── Your details ── */}
           <Reveal>
             <SectionLabel n="02">Your Details</SectionLabel>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "40px 40px", marginBottom: 72 }}>
+            <div className="cz-grid-2" style={{ gap: "40px 40px", marginBottom: 72 }}>
               <Field label="Full Name" name="fullName" required />
               <Field label="Email Address" name="email" required type="email" />
               <Field label="Phone Number" name="phone" type="tel" />
@@ -540,7 +645,7 @@ export function CustomisationForm() {
                 </div>
 
                 {/* Direct contact */}
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
+                <div className="cz-grid-2" style={{ gap: 16 }}>
                   <a
                     href="https://wa.me/919876543210" target="_blank" rel="noopener noreferrer"
                     className="cz-contact"
@@ -618,14 +723,14 @@ export function CustomisationContent() {
     <div style={{ background: TP, minHeight: "100vh" }}>
       <CustomisationStyles />
 
-      {/* ══ HERO — full video (natural height), heading on left ══ */}
-      <section style={{ position: "relative", background: DK, minHeight: "48vh" }}>
-        {/* video at natural aspect ratio — full height visible, no cropping */}
+      {/* ══ HERO — full-width video, natural height, heading on left ══ */}
+      <section className="cz-hero-section" style={{ position: "relative", background: DK, paddingTop: "clamp(24px, 5vw, 56px)" }}>
         <video
+          className="cz-hero-video"
           autoPlay muted loop playsInline
-          style={{ display: "block", width: "100%", height: "auto" }}
+          style={{ width: "100%", height: "auto" }}
         >
-          <source src="/images/customise.mp4" type="video/mp4" />
+          <source src="/images/cust.mp4" type="video/mp4" />
         </video>
 
         {/* readability overlay — darker on the left where the heading sits */}
@@ -634,18 +739,18 @@ export function CustomisationContent() {
           background: "linear-gradient(to right, rgba(20,13,8,0.66) 0%, rgba(20,13,8,0.28) 45%, rgba(20,13,8,0.04) 100%)",
         }} />
 
-        {/* merge gradient — video melts into the taupe section below */}
+        {/* merge gradient — subtle blend into the taupe section below, only at the very end of the video */}
         <div style={{
-          position: "absolute", left: 0, right: 0, bottom: 0, height: "16%", zIndex: 1,
-          background: `linear-gradient(to bottom, transparent 0%, ${TP}38 60%, ${TP} 100%)`,
+          position: "absolute", left: 0, right: 0, bottom: 0, height: "80%", zIndex: 1,
+          background: `linear-gradient(to bottom, transparent 0%, ${TP}38 40%, ${TP} 100%)`,
         }} />
 
-        {/* Heading — left, vertically centred */}
+        {/* Heading — left, near top */}
         <div style={{
           position: "absolute", inset: 0, zIndex: 2,
-          display: "flex", alignItems: "center",
+          display: "flex", alignItems: "flex-start",
         }}>
-          <div style={{ width: "100%", padding: "0 36px" }}>
+          <div className="cz-hero-pad" style={{ width: "100%", paddingTop: "clamp(88px, 9vw, 96px)" }}>
             <p className="cz-label" style={{
               fontFamily: SPACE, fontSize: 10, letterSpacing: "0.42em",
               textTransform: "uppercase", color: SC, marginBottom: 26,
@@ -675,6 +780,7 @@ export function CustomisationContent() {
 export default function CustomisationPage() {
   return (
     <main style={{ background: TP, minHeight: "100vh" }}>
+      <CustomiseSplash />
       <Header variant="dark" />
       <CustomisationContent />
       <FooterSection />

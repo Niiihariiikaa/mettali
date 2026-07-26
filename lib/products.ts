@@ -435,6 +435,14 @@ export const organisers: Product[] = [
     description: "Clean geometric grid with unique nesting cradles. A versatile display for coffee mugs, perfumes, or small decorative pieces.",
     images: [`${B}/Nest-wineholder1.webp`, `${B}/Nestwineholder2.webp`, `${B}/Nestwineholder3.webp`, `${B}/Nest-black1.webp`, `${B}/Nestblack2.webp`],
   },
+  {
+    name: "Brew Organiser",
+    category: "Organisers",
+    price: 5500,
+    dimensions: "60×15×60 cm",
+    description: "Bold cylindrical form with a sculptural silhouette. A statement display for mugs, bottles, or curated collectibles.",
+    images: ["/images2/products/brew1.jpeg"],
+  },
 ];
 
 export const shoeRacks: Product[] = [

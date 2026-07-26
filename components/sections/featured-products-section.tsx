@@ -39,7 +39,7 @@ const products = [
   {
     name: "Align",
     category: "Shoe Display Rack",
-    images: ["/products1_webp/alighnshoerack-4.png"],
+    images: [`${B}/alighnshoerack-4.png`, `${B}/shoerack2.webp`],
   },
 ];
 

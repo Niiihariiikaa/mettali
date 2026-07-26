@@ -133,6 +133,7 @@ export function Hero2Section() {
               }}
               style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }}
             >
+              <source src="/images/hero3.mp4" type="video/mp4" />
               <source src="/images/heronew.mp4" type="video/mp4" />
               <source src="/images/hero2.mp4" type="video/mp4" />
               <source src="/images/strengthmeetsbeauty.mp4" type="video/mp4" />
