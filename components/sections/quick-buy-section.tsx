@@ -103,14 +103,14 @@ export function QuickBuySection() {
   const toggle = (key: string) => setActiveKey(prev => prev === key ? null : key);
 
   return (
-    <section id="gallery" className="flex flex-col gap-3 bg-background p-3 md:h-screen md:flex-row md:gap-4 md:p-4">
+    <section id="gallery" className="flex flex-col gap-3 bg-background p-3 md:h-[65vh] md:flex-row md:gap-4 md:p-4">
       <style>{`
         @media (min-width: 768px) {
           .qb-pos { left: var(--pos-left-desktop) !important; top: var(--pos-top-desktop) !important; }
         }
       `}</style>
       {panels.map((panel, pi) => (
-        <div key={pi} className="relative h-[70vh] overflow-hidden md:h-auto md:flex-1">
+        <div key={pi} className="relative h-[50vh] overflow-hidden md:h-auto md:flex-1">
           {/* Background image */}
           <Image
             src={panel.image}

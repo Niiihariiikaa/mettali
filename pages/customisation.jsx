@@ -331,26 +331,25 @@ export function CustomisationStyles() {
       .cz-dot { animation: cz-pop 0.35s cubic-bezier(0.34,1.56,0.64,1) both; }
 
       .cz-grid-2 { display: grid; grid-template-columns: 1fr 1fr; }
-      .cz-hero-pad { padding: 0 36px; }
       .cz-intro-wrap { padding: 140px 56px 110px; }
       .cz-form-outer { padding: 40px 40px 128px; }
-      .cz-hero-video { display: block; }
 
       @media (max-width: 860px) {
         .cz-grid-2 { grid-template-columns: 1fr; }
         .cz-intro-wrap { padding: 96px 32px 80px; }
         .cz-form-outer { padding: 28px 20px 96px; }
-        .cz-hero-pad { padding: 0 28px; }
       }
       @media (max-width: 480px) {
         .cz-intro-wrap { padding: 72px 20px 64px; }
         .cz-form-outer { padding: 20px 12px 80px; }
-        .cz-hero-pad { padding: 0 20px; }
       }
 
-      @media (max-width: 640px) {
-        .cz-hero-video { display: none; }
-        .cz-hero-section { min-height: 62vh; }
+      .cz-sidebar { display: grid; grid-template-columns: 1fr 3fr; gap: clamp(32px, 5vw, 64px); align-items: start; }
+      .cz-sidebar-tag { writing-mode: vertical-rl; transform: rotate(180deg); }
+      @media (max-width: 700px) {
+        .cz-sidebar { grid-template-columns: 1fr; gap: 20px; }
+        .cz-sidebar-tag { writing-mode: horizontal-tb; transform: none; }
+        .cz-sidebar-line { display: none; }
       }
     `}</style>
   );
@@ -364,15 +363,28 @@ export function CustomisationIntro({ light = false }) {
   const dimColor = light ? "rgba(46,31,20,0.22)" : "rgba(255,254,252,0.24)";
   const headingColor = light ? DK : RL;
 
+  const tagColor = light ? DK : SC;
+
   const inner = (
     <>
-      <WordReveal
-        text="Selected Mettali pieces can be customized to suit your space and preferences. Tell us what you'd like to change, and our team will review your request and get back to you with possibilities, pricing, and timelines."
-        size="clamp(17px, 2vw, 25px)"
-        leading={1.9}
-        lit={litColor}
-        dim={dimColor}
-      />
+      <div className="cz-sidebar">
+        <div style={{ paddingTop: 6 }}>
+          <div className="cz-sidebar-line" style={{ width: 1, height: 48, background: tagColor, marginBottom: 16 }} />
+          <p className="cz-sidebar-tag" style={{
+            fontFamily: SPACE, fontSize: 9, letterSpacing: "0.35em",
+            textTransform: "uppercase", color: tagColor, margin: 0,
+          }}>
+            The Details
+          </p>
+        </div>
+        <WordReveal
+          text="Selected Mettali pieces can be customized to suit your space and preferences. Tell us what you'd like to change, and our team will review your request and get back to you with possibilities, pricing, and timelines."
+          size="clamp(17px, 2vw, 25px)"
+          leading={1.9}
+          lit={litColor}
+          dim={dimColor}
+        />
+      </div>
 
       <div style={{ marginTop: 80 }}>
         <Reveal>
@@ -425,7 +437,6 @@ export function CustomisationIntro({ light = false }) {
         background: "#fffefc",
         border: "1px solid #e2ddd8",
         padding: "clamp(40px, 6vw, 72px) clamp(28px, 5vw, 64px)",
-        boxShadow: "0 32px 80px rgba(20,13,8,0.25)",
       }}>
         {inner}
       </div>
@@ -481,7 +492,6 @@ export function CustomisationForm() {
         background: "#ffffff",
         border: "1px solid #e2ddd8",
         padding: "clamp(40px, 6vw, 72px) clamp(28px, 5vw, 64px)",
-        boxShadow: "0 32px 80px rgba(20,13,8,0.25)",
       }}>
       {submitted ? (
         <Reveal>
@@ -723,51 +733,48 @@ export function CustomisationContent() {
     <div style={{ background: TP, minHeight: "100vh" }}>
       <CustomisationStyles />
 
-      {/* ══ HERO — full-width video, natural height, heading on left ══ */}
-      <section className="cz-hero-section" style={{ position: "relative", background: DK, paddingTop: "clamp(24px, 5vw, 56px)" }}>
-        <video
-          className="cz-hero-video"
-          autoPlay muted loop playsInline
-          style={{ width: "100%", height: "auto" }}
-        >
-          <source src="/images/cust.mp4" type="video/mp4" />
-        </video>
-
-        {/* readability overlay — darker on the left where the heading sits */}
-        <div style={{
-          position: "absolute", inset: 0, zIndex: 1,
-          background: "linear-gradient(to right, rgba(20,13,8,0.66) 0%, rgba(20,13,8,0.28) 45%, rgba(20,13,8,0.04) 100%)",
-        }} />
-
-        {/* merge gradient — subtle blend into the taupe section below, only at the very end of the video */}
-        <div style={{
-          position: "absolute", left: 0, right: 0, bottom: 0, height: "80%", zIndex: 1,
-          background: `linear-gradient(to bottom, transparent 0%, ${TP}38 40%, ${TP} 100%)`,
-        }} />
-
-        {/* Heading — left, near top */}
-        <div style={{
-          position: "absolute", inset: 0, zIndex: 2,
-          display: "flex", alignItems: "flex-start",
+      {/* ══ HERO — inspired by the About page: light, left-aligned, bordered ══ */}
+      <section style={{
+        background: RL,
+        paddingTop: "clamp(120px, 16vw, 180px)",
+        paddingBottom: "clamp(64px, 8vw, 100px)",
+        paddingLeft: "clamp(24px, 6vw, 96px)",
+        paddingRight: "clamp(24px, 6vw, 96px)",
+        borderBottom: "1px solid #e2ddd8",
+      }}>
+        <p className="cz-label" style={{
+          fontFamily: SPACE, fontSize: 10, letterSpacing: "0.38em",
+          textTransform: "uppercase", color: SC, marginBottom: 28,
         }}>
-          <div className="cz-hero-pad" style={{ width: "100%", paddingTop: "clamp(88px, 9vw, 96px)" }}>
-            <p className="cz-label" style={{
-              fontFamily: SPACE, fontSize: 10, letterSpacing: "0.42em",
-              textTransform: "uppercase", color: SC, marginBottom: 26,
-            }}>
-              — Made For You
-            </p>
+          — Made For You
+        </p>
 
-            <h1 className="cz-title" style={{
-              fontFamily: HORIZON,
-              fontSize: "clamp(38px, 5.2vw, 72px)",
-              lineHeight: 1.04, fontWeight: 400,
-              color: RL, margin: 0,
-              textTransform: "uppercase",
-            }}>
-              Customize<br />Your Mettali<br />Piece
-            </h1>
-          </div>
+        <h1 className="cz-title" style={{
+          fontFamily: HORIZON,
+          fontSize: "clamp(40px, 8vw, 84px)",
+          lineHeight: 0.98, letterSpacing: "0.02em",
+          textTransform: "uppercase", color: DK, margin: 0,
+        }}>
+          Customize Your<br />Mettali Piece
+        </h1>
+
+        <div style={{
+          display: "flex", alignItems: "flex-end", justifyContent: "space-between",
+          marginTop: 40, gap: 24, flexWrap: "wrap",
+        }}>
+          <p className="cz-sub" style={{
+            fontFamily: SPACE, fontSize: "clamp(12px, 1.4vw, 14px)",
+            lineHeight: 1.7, color: SM, letterSpacing: "0.02em",
+            margin: 0, maxWidth: 420,
+          }}>
+            Tell us what you'd like to change — our team will help bring it to life.
+          </p>
+          <p style={{
+            fontFamily: SPACE, fontSize: 10, color: SC,
+            letterSpacing: "0.25em", textTransform: "uppercase", margin: 0,
+          }}>
+            Bespoke Design Requests
+          </p>
         </div>
       </section>
 
@@ -781,7 +788,7 @@ export default function CustomisationPage() {
   return (
     <main style={{ background: TP, minHeight: "100vh" }}>
       <CustomiseSplash />
-      <Header variant="dark" />
+      <Header />
       <CustomisationContent />
       <FooterSection />
     </main>
