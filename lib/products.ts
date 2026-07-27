@@ -262,7 +262,7 @@ export const shelves: Product[] = [
     dimensions: "71×28×31 cm",
     weight: "2.5 kg",
     description: "Long, tabletop design that offers ample capacity for books. Functional and versatile.",
-    images: [`${B}/parable-1.webp`, `${B}/parable-2.webp`, `${B}/parable-3.webp`],
+    images: ["/mettali%20products/parabel-tabletop-bookshelf.png", `${B}/parable-1.webp`, `${B}/parable-2.webp`, `${B}/parable-3.webp`],
   },
 ]
   .map((s) => ({ ...s, category: "Shelves" }))
