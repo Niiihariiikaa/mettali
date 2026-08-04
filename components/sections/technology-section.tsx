@@ -100,7 +100,7 @@ export function TechnologySection() {
         <video autoPlay muted loop playsInline className="absolute inset-0 h-full w-full object-cover">
           <source src="/images/strengthmeetsbeauty.mp4" type="video/mp4" />
         </video>
-        <div className="absolute inset-0" style={{ background: "rgba(88,71,56,0.35)" }} />
+        <div className="absolute inset-0" style={{ background: "rgba(0,0,0,0.78)" }} />
         <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center">
           <h2 className="font-horizon text-2xl uppercase text-white sm:text-4xl md:text-7xl">10% Off</h2>
           <p className="mt-2 text-[10px] uppercase tracking-[0.2em] text-white/75 font-space-mono sm:mt-4 sm:text-sm sm:tracking-[0.25em]">

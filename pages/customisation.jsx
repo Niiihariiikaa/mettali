@@ -33,8 +33,6 @@ const SPLASH_IMAGES = [
   "/mettali%20products/preface-300-freestanding-bookshelf-1.svg",
   "/mettali%20products/narrative-freestanding-bookshelf.svg",
   "/mettali%20products/index-wallmounted%20bookshelf-1.svg",
-  "/mettali%20products/Chapter-tabletop-bookshelf-1.svg",
-  "/mettali%20products/55.svg",
 ];
 
 function CustomiseSplash() {

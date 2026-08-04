@@ -5,7 +5,7 @@ import Image from "next/image";
 const specs = [
   { label: "Material", value: "Aluminium" },
   { label: "Craftsmanship", value: "Precision engineered" },
-  { label: "Delivery", value: "10-14 days" },
+  { label: "Delivery", value: "7-10 days" },
   { label: "Quality", value: "Inspected before shipping" },
 ];
 

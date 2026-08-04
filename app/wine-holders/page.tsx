@@ -1,6 +1,6 @@
 import { Header } from "@/components/header";
 import { FooterSection } from "@/components/sections/footer-section";
-import { ProductGrid } from "@/components/product-grid";
+import { ProductFilterBar } from "@/components/product-filter-bar";
 import { wineHolders } from "@/lib/products";
 import { withLivePrices } from "@/lib/shopify";
 
@@ -14,7 +14,7 @@ export default async function WineHoldersPage() {
         <h1 className="text-3xl sm:text-4xl md:text-5xl text-mulled-iron font-horizon uppercase tracking-wide">Wine Holders</h1>
         <p className="mt-4 text-sm text-slate-moss font-space-mono max-w-sm mx-auto">Elegant aluminium wine holders — designed to display, not just store.</p>
       </div>
-      <ProductGrid
+      <ProductFilterBar
         products={items}
         basePath="/wine-holders"
         className="grid grid-cols-1 gap-6 px-6 pb-28 md:grid-cols-2 md:px-12 lg:grid-cols-4 lg:px-20"
