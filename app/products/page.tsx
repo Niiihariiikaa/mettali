@@ -1,5 +1,6 @@
 import { Header } from "@/components/header";
 import { FooterSection } from "@/components/sections/footer-section";
+import { CategoriesSection } from "@/components/sections/categories-section";
 import { ProductFilterBar } from "@/components/product-filter-bar";
 import { shelves, vases, wineHolders, organisers, shoeRacks } from "@/lib/products";
 import { withLivePrices } from "@/lib/shopify";
@@ -24,6 +25,7 @@ export default async function AllProductsPage() {
         <h1 className="text-3xl sm:text-4xl md:text-5xl text-mulled-iron font-horizon uppercase tracking-wide">All Products</h1>
         <p className="mt-4 text-sm text-slate-moss font-space-mono max-w-sm mx-auto">Every Mettali piece, in one place — precision-formed aluminium for every room.</p>
       </div>
+      <CategoriesSection showViewAll={false} heading="Explore Categories" />
       <ProductFilterBar
         products={items}
         categoryBasePaths={CATEGORY_BASE_PATHS}

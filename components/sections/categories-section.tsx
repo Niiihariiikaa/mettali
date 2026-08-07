@@ -4,15 +4,20 @@ import Image from "next/image";
 import Link from "next/link";
 
 const categories = [
-  { name: "Organizers",   src: "/images2/categories/shelves.webp", href: "/organisers" },
+  { name: "Organizers",   src: "/images2/categories/organisers.webp", href: "/organisers" },
   { name: "Flower Vases", src: "/images2/categories/vases.webp",      href: "/vases"      },
   { name: "Wine Holders", src: "/images2/categories/wine-racks.webp", href: "/wine-holders" },
   { name: "Shoe Display Racks",   src: "/images2/categories/shoe-racks.webp", href: "/shoe-display-racks" },
-
-  { name: "Bookshelves",  src: "/images2/categories/organisers.webp",    href: "/shelves"    },
+  { name: "Bookshelves",  src: "/images2/categories/shelves.webp",    href: "/shelves"    },
 ];
 
-export function CategoriesSection() {
+export function CategoriesSection({
+  showViewAll = true,
+  heading = "Browse the Range",
+}: {
+  showViewAll?: boolean;
+  heading?: string;
+}) {
   return (
     <section className="bg-background px-6 py-16 md:px-12 md:py-20 lg:px-20 lg:py-24">
       {/* Header */}
@@ -22,16 +27,18 @@ export function CategoriesSection() {
             Shop by Category
           </p>
           <h2 className="text-xl text-mulled-iron tracking-wide md:text-2xl font-horizon uppercase">
-            Browse the Range
+            {heading}
           </h2>
         </div>
-        <a
-          href="#"
-          className="hidden text-xs uppercase tracking-widest text-slate-moss underline-offset-4 hover:opacity-60 transition-opacity md:block"
-          style={{ fontFamily: "'Space Mono', monospace" }}
-        >
-          View All
-        </a>
+        {showViewAll && (
+          <Link
+            href="/products"
+            className="hidden text-xs uppercase tracking-widest text-slate-moss underline-offset-4 hover:opacity-60 transition-opacity md:block"
+            style={{ fontFamily: "'Space Mono', monospace" }}
+          >
+            View All
+          </Link>
+        )}
       </div>
 
       {/* Grid */}

@@ -23,33 +23,6 @@ type Panel = {
 
 const panels: Panel[] = [
   {
-    image: "/products1_webp/products1/quick1.png",
-    alt: "Mettali wine vase",
-    dots: [
-      {
-        name: "Aura Vase [M] ",
-        price: "From ₹1,700",
-        href: "/vases/aura-vase-m",
-        dot: { mobile: { left: "45%", top: "75%" }, desktop: { left: "45%", top: "73%" } },
-        popup: { mobile: { left: "5%", top: "70%" }, desktop: { left: "-5%", top: "80%" } },
-      },
-      {
-        name: "Aura Vase [L]",
-        price: "From ₹1,900",
-        href: "/vases/aura-vase-l",
-        dot: { mobile: { left: "60%", top: "62%" }, desktop: { left: "60%", top: "62%" } },
-        popup: { mobile: { left: "38%", top: "72%" }, desktop: { left: "38%", top: "42%" } },
-      },
-      {
-        name: "Aura Vase [S]",
-        price: "From ₹1,500",
-        href: "/vases/aura-vase-s",
-        dot: { mobile: { left: "60%", top: "72%" }, desktop: { left: "60%", top: "72%" } },
-        popup: { mobile: { left: "38%", top: "12%" }, desktop: { left: "58%", top: "82%" } },
-      },
-    ],
-  },
-  {
     image: "/products1_webp/products1/quick3.png",
     alt: "Mettali products in a styled scene",
     dots: [
@@ -70,15 +43,28 @@ const panels: Panel[] = [
     ],
   },
   {
-    image: "/products1_webp/products1/quick2.jpeg",
-    alt: "Mettali vase collection",
+    image: "/images/quick2.png",
+    alt: "Mettali vase in a styled living room",
+    dots: [
+      {
+        name: "MAYA VASE",
+        price: "From ₹1,600",
+        href: "/vases/maya-vase",
+        dot: { mobile: { left: "21%", top: "50%" }, desktop: { left: "21%", top: "72%" } },
+        popup: { mobile: { left: "5%", top: "12%" }, desktop: { left: "5%", top: "38%" } },
+      },
+    ],
+  },
+  {
+    image: "/images/quick3.png",
+    alt: "Mettali wine holder in a styled living room",
     dots: [
       {
         name: "CLINK",
         price: "From ₹3,499",
         href: "/wine-holders/clink",
-        dot: { mobile: { left: "48%", top: "58%" }, desktop: { left: "48%", top: "60%" } },
-        popup: { mobile: { left: "5%", top: "12%" }, desktop: { left: "5%", top: "62%" } },
+        dot: { mobile: { left: "53%", top: "50%" }, desktop: { left: "53%", top: "58%" } },
+        popup: { mobile: { left: "20%", top: "10%" }, desktop: { left: "20%", top: "10%" } },
       },
     ],
   },

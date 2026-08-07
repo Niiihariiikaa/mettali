@@ -3,27 +3,15 @@
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Menu, X, ChevronDown, ShoppingBag, Search } from "lucide-react";
+import { Menu, X, ShoppingBag, Search } from "lucide-react";
 import { useCart } from "@/components/cart-context";
 import { CartDrawer } from "@/components/cart-drawer";
 import { SearchBar } from "@/components/search-bar";
 
-const productCategories = [
-  { label: "All Products", href: "/products" },
-  { label: "Vases",       href: "/vases" },
-  { label: "Wine Holders",href: "/wine-holders" },
-  { label: "Organisers",  href: "/organisers" },
-  { label: "Shoe Display Racks",  href: "/shoe-display-racks" },
-  { label: "Bookshelves", href: "/shelves" },
-];
-
 export function Header({ variant = "light" }: { variant?: "dark" | "light" }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [productsOpen, setProductsOpen] = useState(false);
-  const [mobileProductsOpen, setMobileProductsOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLElement>(null);
   const { count, openCart } = useCart();
 
@@ -35,9 +23,6 @@ export function Header({ variant = "light" }: { variant?: "dark" | "light" }) {
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
-        setProductsOpen(false);
-      }
       if (headerRef.current && !headerRef.current.contains(e.target as Node)) {
         setSearchOpen(false);
       }
@@ -97,33 +82,7 @@ export function Header({ variant = "light" }: { variant?: "dark" | "light" }) {
             <nav className="flex items-center gap-8">
               <Link href="/" className={linkClass}>Home</Link>
               <Link href="/about" className={linkClass}>About Us</Link>
-
-              {/* Products dropdown */}
-              <div ref={dropdownRef} className="relative">
-                <button
-                  onClick={() => setProductsOpen(o => !o)}
-                  className={`flex items-center gap-1 text-sm transition-colors ${onDark ? "text-white/70 hover:text-white" : "text-muted-foreground hover:text-foreground"}`}
-                >
-                  Products
-                  <ChevronDown size={14} className={`transition-transform duration-200 ${productsOpen ? "rotate-180" : ""}`} />
-                </button>
-
-                {productsOpen && (
-                  <div className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-44 bg-background rounded-xl shadow-lg border border-border/40 overflow-hidden z-50">
-                    {productCategories.map((cat) => (
-                      <Link
-                        key={cat.href}
-                        href={cat.href}
-                        onClick={() => setProductsOpen(false)}
-                        className="block px-4 py-2.5 text-sm text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-colors font-space-mono"
-                      >
-                        {cat.label}
-                      </Link>
-                    ))}
-                  </div>
-                )}
-              </div>
-
+              <Link href="/products" className={linkClass}>Products</Link>
               <Link href="/customization" className={linkClass}>Customization</Link>
               <Link href="/bulk-order" className={linkClass}>Bulk Order &amp; Gifting</Link>
             </nav>
@@ -224,32 +183,7 @@ export function Header({ variant = "light" }: { variant?: "dark" | "light" }) {
           <nav className="flex flex-col gap-6">
             <Link href="/" className="text-lg text-foreground" onClick={() => setIsMenuOpen(false)}>Home</Link>
             <Link href="/about" className="text-lg text-foreground" onClick={() => setIsMenuOpen(false)}>About Us</Link>
-
-            {/* Mobile Products accordion */}
-            <div>
-              <button
-                onClick={() => setMobileProductsOpen(o => !o)}
-                className="flex items-center justify-between w-full text-lg text-foreground"
-              >
-                Products
-                <ChevronDown size={16} className={`transition-transform duration-200 ${mobileProductsOpen ? "rotate-180" : ""}`} />
-              </button>
-              {mobileProductsOpen && (
-                <div className="mt-3 ml-4 flex flex-col gap-4 border-l border-border pl-4">
-                  {productCategories.map((cat) => (
-                    <Link
-                      key={cat.href}
-                      href={cat.href}
-                      className="text-base text-muted-foreground"
-                      onClick={() => setIsMenuOpen(false)}
-                    >
-                      {cat.label}
-                    </Link>
-                  ))}
-                </div>
-              )}
-            </div>
-
+            <Link href="/products" className="text-lg text-foreground" onClick={() => setIsMenuOpen(false)}>Products</Link>
             <Link href="/customization" className="text-lg text-foreground" onClick={() => setIsMenuOpen(false)}>Customization</Link>
             <Link href="/bulk-order" className="text-lg text-foreground" onClick={() => setIsMenuOpen(false)}>Bulk Order &amp; Gifting</Link>
 

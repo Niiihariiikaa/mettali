@@ -1,8 +1,12 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+import { Heart, ShoppingBag, Check } from "lucide-react";
 import { useCart } from "@/components/cart-context";
+import { useWishlist } from "@/lib/wishlist";
+import { shelves, vases, wineHolders, organisers, shoeRacks, slugify, type Product } from "@/lib/products";
 
 // ─── Scroll-reveal text ──────────────────────────────────────────────────────
 
@@ -42,47 +46,119 @@ function ScrollRevealText({ text }: { text: string }) {
   );
 }
 
-// ─── Hover product card ───────────────────────────────────────────────────────
+// ─── Signature products ───────────────────────────────────────────────────────
 
-const B = "/images2/products-home";
+const CATEGORY_BASE_PATHS: Record<string, string> = {
+  Shelves: "/shelves",
+  Vases: "/vases",
+  "Wine Holders": "/wine-holders",
+  Organisers: "/organisers",
+  "Shoe Display Racks": "/shoe-display-racks",
+};
 
-const products = [
-  { name: "Maison",     category: "Wine holder", fit: "contain", images: [`${B}/winestand1.webp`, `${B}/winestand2.webp`] },
-  { name: "Cala",      category: "Vase",         fit: "contain", images: [`${B}/wine-vase1.webp`, `${B}/wine-vase2.webp`, `${B}/wine-vase3.webp`] },
-  { name: "Aura",category: "Vase",         fit: "contain", images: [`${B}/3vase1.webp`, `${B}/3vase2.webp`, `${B}/3vase3.webp`] },
-  { name: "Align",      category: "Shoe display rack",       fit: "contain", images: [`${B}/alighnshoerack-4.png`, `${B}/shoerack2.webp`] },
+function findProduct(list: Product[], name: string): Product {
+  const p = list.find((x) => x.name === name);
+  if (!p) throw new Error(`Signature product not found in catalog: ${name}`);
+  return p;
+}
+
+const B = "/products1_webp/products1";
+const HOME = "/images2/products-home";
+
+const SIGNATURE_PRODUCTS: { label: string; product: Product; images: [string, string] }[] = [
+  { label: "Maison", product: findProduct(wineHolders, "Maison"), images: [`${HOME}/winestand1.webp`, `${HOME}/winestand2.webp`] },
+  { label: "Cala", product: findProduct(vases, "Cala Vase"), images: [`${HOME}/wine-vase1.webp`, `${HOME}/wine-vase2.webp`] },
+  { label: "Aura", product: findProduct(vases, "Aura Vase (M)"), images: [`${HOME}/3vase1.webp`, `${HOME}/3vase2.webp`] },
+  { label: "Genre", product: findProduct(shelves, "Genre"), images: ["/images/genre-signature.png", "/images2/categories/genre shelf- signature product hover.PNG"] },
+  { label: "Nest", product: findProduct(organisers, "Nest Organiser"), images: ["/images/nest-signature.png", "/products1_webp/nest-signature image - hover.png"] },
+  { label: "Align", product: findProduct(shoeRacks, "Align"), images: [`${HOME}/alighnshoerack-4.png`, `${HOME}/shoerack2.webp`] },
 ];
 
-function HoverProductCard({ name, category, images, fit }: { name: string; category: string; images: string[]; fit: string }) {
+function SignatureProductCard({ label, product, images }: { label: string; product: Product; images: [string, string] }) {
   const [hovered, setHovered] = useState(false);
+  const [added, setAdded] = useState(false);
+  const { addItem } = useCart();
+  const { wishlisted, toggle } = useWishlist(product.name);
 
-  // Exactly one photo is rendered at a time: the second one while
-  // hovering, the first otherwise — no cycling, no stacked images.
-  const showAlt = hovered && images.length > 1;
-  const src = showAlt ? images[1] : images[0];
+  const href = `${CATEGORY_BASE_PATHS[product.category]}/${slugify(product.name)}`;
+
+  const handleAddToCart = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    addItem({ name: product.name, category: product.category, price: product.price, image: images[0], href, variantId: product.shopify?.variantId });
+    setAdded(true);
+    setTimeout(() => setAdded(false), 1600);
+  };
+
+  const handleWishlist = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    toggle();
+  };
 
   return (
-    <div
-      className="group bg-card cursor-pointer overflow-hidden"
+    <Link
+      href={href}
+      className="group block cursor-pointer overflow-hidden bg-card"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      <div className="relative aspect-3/4 bg-white overflow-hidden isolate">
-        {fit === "cover" ? (
-          <Image key={src} src={src} alt={name} fill className="object-cover" />
-        ) : (
-          <div className="absolute inset-3">
-            <div className="relative w-full h-full">
-              <Image key={src} src={src} alt={name} fill className="object-contain" />
-            </div>
+      <div className="relative aspect-3/4 overflow-hidden bg-white isolate">
+        {/* Base: white product shot */}
+        <div
+          className="absolute inset-3 transition-opacity duration-700 ease-in-out"
+          style={{ opacity: hovered ? 0 : 1 }}
+        >
+          <div className="relative h-full w-full">
+            <Image src={images[0]} alt={label} fill className="object-contain" />
           </div>
-        )}
+        </div>
+
+        {/* Crossfade: mood / lifestyle photo */}
+        <Image
+          src={images[1]}
+          alt={`${label} in a styled room`}
+          fill
+          className="object-cover transition-opacity duration-700 ease-in-out"
+          style={{ opacity: hovered ? 1 : 0 }}
+        />
+
+        {/* Hover actions */}
+        <div
+          className="absolute right-3 top-3 flex flex-col gap-2 transition-opacity duration-300 ease-in-out"
+          style={{ opacity: hovered ? 1 : 0 }}
+        >
+          <button
+            type="button"
+            onClick={handleWishlist}
+            aria-label={wishlisted ? "Remove from wishlist" : "Add to wishlist"}
+            className={`flex h-9 w-9 items-center justify-center rounded-full shadow-md transition-colors duration-200 ${
+              wishlisted ? "bg-mulled-iron text-white" : "bg-white text-smoked-bronze hover:bg-mulled-iron hover:text-white"
+            }`}
+          >
+            <Heart size={15} fill={wishlisted ? "currentColor" : "none"} />
+          </button>
+          <button
+            type="button"
+            onClick={handleAddToCart}
+            aria-label="Add to cart"
+            className={`flex h-9 w-9 items-center justify-center rounded-full shadow-md transition-colors duration-200 ${
+              added ? "bg-slate-moss text-white" : "bg-white text-smoked-bronze hover:bg-mulled-iron hover:text-white"
+            }`}
+          >
+            {added ? <Check size={15} /> : <ShoppingBag size={15} />}
+          </button>
+        </div>
       </div>
-      <div className="px-5 py-5">
-        <p className="mb-1 text-xs uppercase tracking-widest text-sandcast font-space-mono">{category}</p>
-        <h3 className="text-smoked-bronze text-sm font-space-mono uppercase tracking-wide">{name}</h3>
+
+      <div className="flex items-center justify-between gap-2 px-5 py-5">
+        <div className="min-w-0">
+          <p className="mb-1 text-xs uppercase tracking-widest text-sandcast font-space-mono">{product.category}</p>
+          <h3 className="truncate text-smoked-bronze text-sm font-space-mono uppercase tracking-wide">{label}</h3>
+        </div>
+        <p className="shrink-0 text-sm text-mulled-iron font-space-mono">₹{product.price.toLocaleString("en-IN")}</p>
       </div>
-    </div>
+    </Link>
   );
 }
 
@@ -96,11 +172,11 @@ export function TechnologySection() {
   return (
     <section>
       {/* 1. Video panel */}
-      <div className="relative aspect-video overflow-hidden md:aspect-auto md:h-screen">
+      <div className="relative aspect-video overflow-hidden md:aspect-auto md:h-[85vh]">
         <video autoPlay muted loop playsInline className="absolute inset-0 h-full w-full object-cover">
-          <source src="/images/strengthmeetsbeauty.mp4" type="video/mp4" />
+          <source src="/products1_webp/products1/more_sharp_k_video_focus_sho.mp4" type="video/mp4" />
         </video>
-        <div className="absolute inset-0" style={{ background: "rgba(0,0,0,0.78)" }} />
+        <div className="absolute inset-0" style={{ background: "rgba(0,0,0,0.4)" }} />
         <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center">
           <h2 className="font-horizon text-2xl uppercase text-white sm:text-4xl md:text-7xl">10% Off</h2>
           <p className="mt-2 text-[10px] uppercase tracking-[0.2em] text-white/75 font-space-mono sm:mt-4 sm:text-sm sm:tracking-[0.25em]">
@@ -128,9 +204,9 @@ export function TechnologySection() {
             Built for Every Room.
           </h2>
         </div>
-        <div className="grid grid-cols-2 gap-6 px-6 pb-6 md:grid-cols-4 md:px-12 lg:px-20">
-          {products.map((product) => (
-            <HoverProductCard key={product.name} name={product.name} category={product.category} images={product.images} fit={product.fit} />
+        <div className="grid grid-cols-2 gap-6 px-6 pb-6 sm:grid-cols-3 md:px-12 lg:px-20">
+          {SIGNATURE_PRODUCTS.map((sp) => (
+            <SignatureProductCard key={sp.label} label={sp.label} product={sp.product} images={sp.images} />
           ))}
         </div>
       </div>

@@ -181,7 +181,7 @@ export const shelves: Product[] = [
     dimensions: "35×9.5×40 cm",
     weight: "2 kg",
     description: "A hanging side holder that's perfect for magazines or books. Its curved top doubles as a compact table.",
-    images: [`${B2}/shelf1.webp`],
+    images: ["/images2/categories/genre shelf signature product.PNG", "/images2/categories/genre shelf- signature product hover.PNG"],
   },
   {
     name: "Quill", shopify: { productId: "gid://shopify/Product/8824408473753", variantId: "gid://shopify/ProductVariant/48361781559449", handle: "quill" },
@@ -433,7 +433,7 @@ export const organisers: Product[] = [
     dimensions: "61×13×61 cm",
     weight: "3 kg",
     description: "Clean geometric grid with unique nesting cradles. A versatile display for coffee mugs, perfumes, or small decorative pieces.",
-    images: [`${B}/Nest-wineholder1.webp`, `${B}/Nestwineholder2.webp`, `${B}/Nestwineholder3.webp`, `${B}/Nest-black1.webp`, `${B}/Nestblack2.webp`],
+    images: [`${B}/Nestblack2.webp`, "/products1_webp/nest-signature image - hover.png", `${B}/Nest-wineholder1.webp`, `${B}/Nestwineholder2.webp`, `${B}/Nestwineholder3.webp`, `${B}/Nest-black1.webp`],
   },
   {
     name: "Brew Organiser",
