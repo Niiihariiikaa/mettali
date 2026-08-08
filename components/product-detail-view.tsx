@@ -23,15 +23,29 @@ export function ProductDetailView({
 }) {
   const [current, setCurrent] = useState(0);
   const [added, setAdded] = useState(false);
+  const [sizeIndex, setSizeIndex] = useState(0);
   const { addItem } = useCart();
 
-  const dimValues = product.dimensions.replace(/\s*cm$/i, "").split("×").map((d) => d.trim());
+  const selectedSize = product.sizes?.[sizeIndex];
+  const effectivePrice = selectedSize?.price ?? product.price;
+  const effectiveDimensions = selectedSize?.dimensions ?? product.dimensions;
+  const effectiveWeight = selectedSize?.weight ?? product.weight;
+  const effectiveShopify = selectedSize?.shopify ?? product.shopify;
+  const effectiveImages = selectedSize?.images ?? product.images;
+  const effectiveName = selectedSize ? `${product.name} (${selectedSize.label})` : product.name;
+
+  const dimValues = effectiveDimensions.replace(/\s*cm$/i, "").split("×").map((d) => d.trim());
   const dimLabels = ["Width", "Depth", "Height"];
 
   const handleAddToCart = () => {
-    addItem({ name: product.name, category: product.category, price: product.price, image: product.images[0], variantId: product.shopify?.variantId });
+    addItem({ name: effectiveName, category: product.category, price: effectivePrice, image: effectiveImages[0], variantId: effectiveShopify?.variantId });
     setAdded(true);
     setTimeout(() => setAdded(false), 1600);
+  };
+
+  const selectSize = (i: number) => {
+    setSizeIndex(i);
+    setCurrent(0);
   };
 
   return (
@@ -53,20 +67,20 @@ export function ProductDetailView({
           <div className="relative aspect-square overflow-hidden border border-border bg-white shadow-[0_4px_32px_rgba(0,0,0,0.08)]">
             <div className="absolute inset-10">
               <div className="relative h-full w-full">
-                <Image src={product.images[current]} alt={product.name} fill className="object-contain" priority />
+                <Image src={effectiveImages[current]} alt={product.name} fill className="object-contain" priority />
               </div>
             </div>
 
-            {product.images.length > 1 && (
+            {effectiveImages.length > 1 && (
               <>
                 <button
-                  onClick={() => setCurrent((c) => (c - 1 + product.images.length) % product.images.length)}
+                  onClick={() => setCurrent((c) => (c - 1 + effectiveImages.length) % effectiveImages.length)}
                   className="absolute left-3 top-1/2 -translate-y-1/2 rounded-full bg-white/90 p-2 shadow-sm hover:bg-white"
                 >
                   <ChevronLeft size={18} className="text-smoked-bronze" />
                 </button>
                 <button
-                  onClick={() => setCurrent((c) => (c + 1) % product.images.length)}
+                  onClick={() => setCurrent((c) => (c + 1) % effectiveImages.length)}
                   className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full bg-white/90 p-2 shadow-sm hover:bg-white"
                 >
                   <ChevronRight size={18} className="text-smoked-bronze" />
@@ -76,9 +90,9 @@ export function ProductDetailView({
           </div>
 
           {/* Thumbnails */}
-          {product.images.length > 1 && (
+          {effectiveImages.length > 1 && (
             <div className="mt-4 flex gap-3 overflow-x-auto pb-1">
-              {product.images.map((src, i) => (
+              {effectiveImages.map((src, i) => (
                 <button
                   key={src}
                   onClick={() => setCurrent(i)}
@@ -110,15 +124,37 @@ export function ProductDetailView({
           )}
 
           <p className="mt-6 text-2xl font-semibold text-smoked-bronze font-space-mono">
-            ₹{product.price.toLocaleString("en-IN")}
+            ₹{effectivePrice.toLocaleString("en-IN")}
           </p>
 
           <p className="mt-6 max-w-md text-sm leading-relaxed text-slate-moss font-space-mono">
             {product.description}
           </p>
 
+          {/* Size options */}
+          {product.sizes && product.sizes.length > 0 && (
+            <div className="mt-6">
+              <h5 className="mb-2 text-[10px] uppercase tracking-widest text-mulled-iron font-space-mono">Size</h5>
+              <div className="flex flex-wrap gap-2">
+                {product.sizes.map((s, i) => (
+                  <button
+                    key={s.label}
+                    onClick={() => selectSize(i)}
+                    className={`px-3.5 py-1.5 text-xs uppercase tracking-widest font-space-mono border transition-colors ${
+                      i === sizeIndex
+                        ? "border-mulled-iron bg-mulled-iron text-white"
+                        : "border-border text-slate-moss hover:border-sandcast"
+                    }`}
+                  >
+                    {s.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
           {/* Specs */}
-          <div className={`mt-8 grid ${product.weight ? "grid-cols-4" : "grid-cols-3"} divide-x divide-border border border-border`}>
+          <div className={`mt-8 grid ${effectiveWeight ? "grid-cols-4" : "grid-cols-3"} divide-x divide-border border border-border`}>
             {dimValues.map((d, i) => (
               <div key={i} className="px-4 py-4 text-center">
                 <p className="mb-1 text-[10px] uppercase tracking-widest text-sandcast font-space-mono">
@@ -127,12 +163,12 @@ export function ProductDetailView({
                 <p className="text-sm text-mulled-iron font-space-mono">{d} cm</p>
               </div>
             ))}
-            {product.weight && (
+            {effectiveWeight && (
               <div className="px-4 py-4 text-center">
                 <p className="mb-1 text-[10px] uppercase tracking-widest text-sandcast font-space-mono">
                   Weight
                 </p>
-                <p className="text-sm text-mulled-iron font-space-mono">{product.weight}</p>
+                <p className="text-sm text-mulled-iron font-space-mono">{effectiveWeight}</p>
               </div>
             )}
           </div>

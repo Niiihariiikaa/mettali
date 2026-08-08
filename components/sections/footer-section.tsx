@@ -43,9 +43,9 @@ export function FooterSection() {
           </div>
 
           {/* Links */}
-          <div>
+          <div className="flex flex-col items-start sm:items-end">
             <h4 className="mb-4 text-xs uppercase tracking-widest text-foreground font-space-mono">Company</h4>
-            <ul className="space-y-3">
+            <ul className="space-y-3 text-left sm:text-right">
               {footerLinks.map((link) => (
                 <li key={link.label}>
                   <Link

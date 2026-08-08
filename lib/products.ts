@@ -1,3 +1,12 @@
+export interface ProductSizeOption {
+  label: string;
+  price: number;
+  dimensions: string;
+  weight?: string;
+  images?: string[];
+  shopify?: { productId: string; variantId: string; handle: string };
+}
+
 export interface Product {
   name: string;
   shopify?: { productId: string; variantId: string; handle: string };
@@ -8,6 +17,7 @@ export interface Product {
   images: string[];
   type?: string;
   weight?: string;
+  sizes?: ProductSizeOption[];
 }
 
 export function slugify(name: string): string {
@@ -31,22 +41,29 @@ export const shelves: Product[] = [
     images: [`${B2}/shelf1.webp`],
   },
   {
-    name: "Narrative (Big)", shopify: { productId: "gid://shopify/Product/8824406737049", variantId: "gid://shopify/ProductVariant/48361779658905", handle: "narrative-big" },
+    name: "Narrative", shopify: { productId: "gid://shopify/Product/8824406737049", variantId: "gid://shopify/ProductVariant/48361779658905", handle: "narrative-big" },
     type: "Free Standing",
     price: 22000,
     dimensions: "72×22×150 cm",
     weight: "14 kg",
     description: "Embodies the intricate journey of storytelling, with a design that blends bold straight lines and graceful curves.",
     images: [`${B}/Narrative-bookshelf1.webp`, `${B}/Narrative-bookshelf2.webp`, `${B}/Narrative-bookshelf3.webp`],
-  },
-  {
-    name: "Narrative (Small)", shopify: { productId: "gid://shopify/Product/8824406769817", variantId: "gid://shopify/ProductVariant/48361779724441", handle: "narrative-small" },
-    type: "Free Standing",
-    price: 14000,
-    dimensions: "56×22×106 cm",
-    weight: "7 kg",
-    description: "Embodies the intricate journey of storytelling, with a design that blends bold straight lines and graceful curves.",
-    images: [`${B}/Narrative-bookshelf1.webp`, `${B}/Narrative-bookshelf2.webp`, `${B}/Narrative-bookshelf3.webp`],
+    sizes: [
+      {
+        label: "Big",
+        price: 22000,
+        dimensions: "72×22×150 cm",
+        weight: "14 kg",
+        shopify: { productId: "gid://shopify/Product/8824406737049", variantId: "gid://shopify/ProductVariant/48361779658905", handle: "narrative-big" },
+      },
+      {
+        label: "Small",
+        price: 14000,
+        dimensions: "56×22×106 cm",
+        weight: "7 kg",
+        shopify: { productId: "gid://shopify/Product/8824406769817", variantId: "gid://shopify/ProductVariant/48361779724441", handle: "narrative-small" },
+      },
+    ],
   },
   {
     name: "Sonnet", shopify: { productId: "gid://shopify/Product/8824406802585", variantId: "gid://shopify/ProductVariant/48361779757209", handle: "sonnet" },
@@ -64,7 +81,7 @@ export const shelves: Product[] = [
     dimensions: "30×11×96 cm",
     weight: "1.5 kg",
     description: "A sophisticated invisible bookshelf designed to blend functionality with modern elegance. Its long and sleek C-shaped display creates the illusion of floating books.",
-    images: [`${B}/scroll-bookshelf1.webp`, `${B}/scroll-bookshelf2.webp`],
+    images: [`${B}/ChatGPT Image Feb 12, 2026, 01_20_51 PM.webp`, `${B}/scroll-bookshelf1.webp`, `${B}/scroll-bookshelf2.webp`],
   },
   {
     name: "Saga", shopify: { productId: "gid://shopify/Product/8824406868121", variantId: "gid://shopify/ProductVariant/48361779855513", handle: "saga" },
@@ -91,7 +108,7 @@ export const shelves: Product[] = [
     dimensions: "30×25×133 cm",
     weight: "10 kg",
     description: "Grid-like sections designed to display books and decorative pieces. A striking, complex bend at the top adds architectural drama.",
-    images: [`${B}/preface-big-1.webp`, `${B}/preface-big-2.webp`],
+    images: ["/mettali%20products/preface-bookshelf-0.svg", `${B}/preface-big-1.webp`, `${B}/preface-big-2.webp`],
   },
   {
     name: "Preface (Small)", shopify: { productId: "gid://shopify/Product/8824407949465", variantId: "gid://shopify/ProductVariant/48361780969625", handle: "preface-small" },
@@ -118,7 +135,7 @@ export const shelves: Product[] = [
     dimensions: "44×25×80 cm",
     weight: "4 kg",
     description: "Combines functionality with soft, rounded edges for a modern, inviting look.",
-    images: [`${B}/Chapter-bookshelf1.webp`, `${B}/Chapter-bookshelf2.webp`, `${B}/chapter-3.webp`, `${B}/chapter-4.webp`],
+    images: [`${B}/Chapter-bookshelf2.webp`, `${B}/Chapter-bookshelf1.webp`, `${B}/chapter-3.webp`, `${B}/chapter-4.webp`],
   },
   {
     name: "Tale", shopify: { productId: "gid://shopify/Product/8824408211609", variantId: "gid://shopify/ProductVariant/48361781231769", handle: "tale" },
@@ -127,7 +144,7 @@ export const shelves: Product[] = [
     dimensions: "59×11×82 cm",
     weight: "2 kg",
     description: "Features a striking, tapered ladder design with three angled compartments.",
-    images: [`${B}/tale-1.webp`, `${B}/tale-2.webp`],
+    images: [`${B}/tale-0.webp`, `${B}/tale-1.webp`, `${B}/tale-2.webp`],
   },
   {
     name: "Ink (Set of 3)", shopify: { productId: "gid://shopify/Product/8824408277145", variantId: "gid://shopify/ProductVariant/48361781330073", handle: "ink-set-of-3" },
@@ -136,7 +153,7 @@ export const shelves: Product[] = [
     dimensions: "15×10×10 cm",
     weight: "0.5 kg",
     description: "Compact and minimalist design, offering an invisible display for your books.",
-    images: [`${B}/ink-1.webp`, `${B}/ink-2.webp`, `${B}/ink-3.webp`],
+    images: [`${B}/ink-3.webp`, `${B}/ink-1.webp`, `${B}/ink-2.webp`],
   },
   {
     name: "Drama", shopify: { productId: "gid://shopify/Product/8824408309913", variantId: "gid://shopify/ProductVariant/48361781362841", handle: "drama" },
@@ -154,7 +171,7 @@ export const shelves: Product[] = [
     dimensions: "30×30×36 cm",
     weight: "2 kg",
     description: "Stackable cubes with a minimalist design — use alone or layer for a modular display.",
-    images: [`${B}/volume1-1.webp`, `${B}/volume1-2.webp`],
+    images: [`${B}/volume1-0.webp`, `${B}/volume1-1.webp`, `${B}/volume1-2.webp`],
   },
   {
     name: "Volume 2", shopify: { productId: "gid://shopify/Product/8824408375449", variantId: "gid://shopify/ProductVariant/48361781461145", handle: "volume-2" },
@@ -190,7 +207,7 @@ export const shelves: Product[] = [
     dimensions: "72×14×20 cm",
     weight: "1 kg",
     description: "Bold triangular center, flanked by wing-like extensions on both sides.",
-    images: [`${B}/quill-1.webp`, `${B}/quill-2.webp`, `${B}/quill-3.webp`, `${B}/quill-4.webp`],
+    images: [`${B}/quill-0.webp`, `${B}/quill-1.webp`, `${B}/quill-2.webp`, `${B}/quill-3.webp`, `${B}/quill-4.webp`],
   },
   {
     name: "Prose (Set of 2)", shopify: { productId: "gid://shopify/Product/8824408539289", variantId: "gid://shopify/ProductVariant/48361781657753", handle: "prose-set-of-2" },
@@ -199,7 +216,7 @@ export const shelves: Product[] = [
     dimensions: "43×14×9.5 cm",
     weight: "0.7 kg",
     description: "Straightforward and clean design, mirrors the simplicity and flow of a well-crafted prose.",
-    images: [`${B}/prose-1.webp`, `${B}/prose-2.webp`],
+    images: [`${B}/prose-0.webp`, `${B}/prose-1.webp`, `${B}/prose-2.webp`],
   },
   {
     name: "Ballad", shopify: { productId: "gid://shopify/Product/8824408604825", variantId: "gid://shopify/ProductVariant/48361781788825", handle: "ballad" },
@@ -208,7 +225,7 @@ export const shelves: Product[] = [
     dimensions: "40×15.5×70 cm",
     weight: "7 kg",
     description: "Four unique shelves that come together in a harmonious display with complex bends and fluid lines.",
-    images: [`${B}/ballad-1.webp`],
+    images: ["/mettali%20products/ballad-0.svg", `${B}/ballad-1.webp`],
   },
   {
     name: "Epic", shopify: { productId: "gid://shopify/Product/8824408637593", variantId: "gid://shopify/ProductVariant/48361781854361", handle: "epic" },
@@ -244,7 +261,7 @@ export const shelves: Product[] = [
     dimensions: "62×21×200 cm",
     weight: "10 kg",
     description: "Sleek, modern design with a long pipe that elegantly connects three triangles on opposite sides.",
-    images: [`${B}/binding-1.webp`, `${B}/binding-2.webp`, `${B}/binding-3.webp`, `${B}/binding-4.webp`],
+    images: ["/mettali%20products/binding-freestanding-bookshelf-0.svg", `${B}/binding-1.webp`, `${B}/binding-2.webp`, `${B}/binding-3.webp`, `${B}/binding-4.webp`],
   },
   {
     name: "Draft", shopify: { productId: "gid://shopify/Product/8824408768665", variantId: "gid://shopify/ProductVariant/48361781985433", handle: "draft" },
@@ -295,9 +312,9 @@ export const vases: Product[] = [
     weight: "1 kg",
     description: "Striking hexagonal silhouette with clean, precise lines. A sophisticated statement piece that stands alone or holds botanicals.",
     images: [
-      `${B2}/Terra-vase-1.webp`, `${B2}/Terra-vase-2.webp`, `${B2}/Terra-vase3.webp`,
-      `${B2}/Terra-vase-peach-1.webp`, `${B2}/Terra-vase-peach2.webp`, `${B2}/Terra-vase-peach3.webp`,
-      `${B2}/Terra-vase-silver-1.webp`, `${B2}/Terra-vase-silver-2.webp`, `${B2}/Terra-vase-silver-3.webp`,
+      `${B2}/Terra-vase-0.webp`, `${B2}/Terra-vase-1.webp`, `${B2}/Terra-vase-2.webp`, `${B2}/Terra-vase3.webp`,
+      `${B2}/Terra-vase-peach0.webp`, `${B2}/Terra-vase-peach-1.webp`, `${B2}/Terra-vase-peach2.webp`, `${B2}/Terra-vase-peach3.webp`,
+      `${B2}/Terra-vase-silver-0.webp`, `${B2}/Terra-vase-silver-1.webp`, `${B2}/Terra-vase-silver-2.webp`, `${B2}/Terra-vase-silver-3.webp`,
     ],
   },
   {
@@ -308,56 +325,66 @@ export const vases: Product[] = [
     weight: "0.5 kg",
     description: "Flowing form with elegant curved panels and a soft, scalloped rim. A versatile accent for any shelf, desk, or tabletop.",
     images: [
-      `${B}/Cala-vase-black1.webp`, `${B}/Cala-vase-black2.webp`, `${B}/Cala-vase-black3.webp`,
+      `${B}/Cala-vase-black0.webp`, `${B}/Cala-vase-black1.webp`, `${B}/Cala-vase-black2.webp`, `${B}/Cala-vase-black3.webp`,
       `${B}/Cala-vase-green-1.webp`, `${B}/Cala-vase-green2.webp`, `${B}/Cala-vase-green-3.webp`,
     ],
   },
   {
-    name: "Aura Vase (S)", shopify: { productId: "gid://shopify/Product/8824409129113", variantId: "gid://shopify/ProductVariant/48361782673561", handle: "aura-vase-s" },
-    category: "Vases",
-    price: 1500,
-    dimensions: "16×16×15 cm",
-    weight: "1 kg",
-    description: "Innovative 3-in-1 modular set with playful wavy rims. Use together as a layered centrepiece or separately as individual accents.",
-    images: [
-      `${B}/Aura-vase-8.webp`,`${B}/Aura-vase-1.webp`, `${B}/Aura-vase-2.webp`, `${B}/Aura-vase-3.webp`, `${B}/Aura-vase-4.webp`,
-      `${B}/Aura-vase-5.webp`,
-    ],
-  },
-  {
-    name: "Aura Vase (M)", shopify: { productId: "gid://shopify/Product/8824409227417", variantId: "gid://shopify/ProductVariant/48361782771865", handle: "aura-vase-m" },
-    category: "Vases",
-    price: 1700,
-    dimensions: "15×15×22 cm",
-    weight: "1 kg",
-    description: "Innovative 3-in-1 modular set with playful wavy rims. Use together as a layered centrepiece or separately as individual accents.",
-    images: [
-      `${B}/Aura-vase-7.webp`,`${B}/Aura-vase-1.webp`, `${B}/Aura-vase-2.webp`, `${B}/Aura-vase-3.webp`, `${B}/Aura-vase-4.webp`,
-      `${B}/Aura-vase-5.webp`,
-    ],
-  },
-  {
-    name: "Aura Vase (L)", shopify: { productId: "gid://shopify/Product/8824409260185", variantId: "gid://shopify/ProductVariant/48361782870169", handle: "aura-vase-l" },
-    category: "Vases",
-    price: 1900,
-    dimensions: "14×14×30 cm",
-    weight: "1.5 kg",
-    description: "Innovative 3-in-1 modular set with playful wavy rims. Use together as a layered centrepiece or separately as individual accents.",
-    images: [
-      `${B}/Aura-vase-6.webp`, `${B}/Aura-vase-1.webp`, `${B}/Aura-vase-2.webp`, `${B}/Aura-vase-3.webp`, `${B}/Aura-vase-4.webp`,
-      `${B}/Aura-vase-5.webp`,
-    ],
-  },
-  {
-    name: "Aura Vase (Set of 3)", shopify: { productId: "gid://shopify/Product/8824409292953", variantId: "gid://shopify/ProductVariant/48361782902937", handle: "aura-vase-set-of-3" },
+    name: "Aura Vase", shopify: { productId: "gid://shopify/Product/8824409292953", variantId: "gid://shopify/ProductVariant/48361782902937", handle: "aura-vase-set-of-3" },
     category: "Vases",
     price: 4500,
     dimensions: "14×14×30 cm",
     weight: "3.5 kg",
-    description: "The complete Aura trio — small, medium, and large — with playful wavy rims. Layer them together as a sculptural centrepiece or scatter them as individual accents.",
+    description: "Innovative 3-in-1 modular set with playful wavy rims. Use together as a layered centrepiece or separately as individual accents.",
     images: [
       `${B}/Aura-vase-1.webp`, `${B}/Aura-vase-2.webp`, `${B}/Aura-vase-3.webp`, `${B}/Aura-vase-4.webp`,
       `${B}/Aura-vase-5.webp`,
+    ],
+    sizes: [
+      {
+        label: "Set of 3",
+        price: 4500,
+        dimensions: "14×14×30 cm",
+        weight: "3.5 kg",
+        shopify: { productId: "gid://shopify/Product/8824409292953", variantId: "gid://shopify/ProductVariant/48361782902937", handle: "aura-vase-set-of-3" },
+        images: [
+          `${B}/Aura-vase-1.webp`, `${B}/Aura-vase-2.webp`, `${B}/Aura-vase-3.webp`, `${B}/Aura-vase-4.webp`,
+          `${B}/Aura-vase-5.webp`,
+        ],
+      },
+      {
+        label: "S",
+        price: 1500,
+        dimensions: "16×16×15 cm",
+        weight: "1 kg",
+        shopify: { productId: "gid://shopify/Product/8824409129113", variantId: "gid://shopify/ProductVariant/48361782673561", handle: "aura-vase-s" },
+        images: [
+          `${B}/Aura-vase-8.webp`,`${B}/Aura-vase-1.webp`, `${B}/Aura-vase-2.webp`, `${B}/Aura-vase-3.webp`, `${B}/Aura-vase-4.webp`,
+          `${B}/Aura-vase-5.webp`,
+        ],
+      },
+      {
+        label: "M",
+        price: 1700,
+        dimensions: "15×15×22 cm",
+        weight: "1 kg",
+        shopify: { productId: "gid://shopify/Product/8824409227417", variantId: "gid://shopify/ProductVariant/48361782771865", handle: "aura-vase-m" },
+        images: [
+          `${B}/Aura-vase-7.webp`,`${B}/Aura-vase-1.webp`, `${B}/Aura-vase-2.webp`, `${B}/Aura-vase-3.webp`, `${B}/Aura-vase-4.webp`,
+          `${B}/Aura-vase-5.webp`,
+        ],
+      },
+      {
+        label: "L",
+        price: 1900,
+        dimensions: "14×14×30 cm",
+        weight: "1.5 kg",
+        shopify: { productId: "gid://shopify/Product/8824409260185", variantId: "gid://shopify/ProductVariant/48361782870169", handle: "aura-vase-l" },
+        images: [
+          `${B}/Aura-vase-6.webp`, `${B}/Aura-vase-1.webp`, `${B}/Aura-vase-2.webp`, `${B}/Aura-vase-3.webp`, `${B}/Aura-vase-4.webp`,
+          `${B}/Aura-vase-5.webp`,
+        ],
+      },
     ],
   },
 ];
@@ -380,6 +407,7 @@ export const wineHolders: Product[] = [
     weight: "2 kg",
     description: "Striking honeycomb structure holding 6 bottles. Contemporary geometric precision meets premium freestanding wine storage.",
     images: [
+      `${B}/Maison-wine-holder0.webp`,
       `${B}/Maison-wineholder-1..webp`, `${B}/Maison-wine-holder2.webp`, `${B}/Maison-wine-holder3.webp`,
       `${B}/Maison-wine-holder-b1.webp`, `${B}/Maison-wine-holderb3.webp`,
     ],
@@ -391,7 +419,7 @@ export const wineHolders: Product[] = [
     dimensions: "19×14.5×60 cm",
     weight: "2 kg",
     description: "Sleek vertical wall-mounted rack presenting your collection as a floating display. Modular — install one unit or build an entire wine wall.",
-    images: [`${B}/clink1.webp`, `${B}/clink2.webp`, `${B}/clink3.webp`, `${B}/clink4.webp`],
+    images: [`${B}/clink0.webp`, `${B}/clink1.webp`, `${B}/clink2.webp`, `${B}/clink3.webp`, `${B}/clink4.webp`],
   },
   {
     name: "Opera", shopify: { productId: "gid://shopify/Product/8824409489561", variantId: "gid://shopify/ProductVariant/48361783230617", handle: "opera" },
@@ -413,7 +441,7 @@ export const organisers: Product[] = [
     weight: "1 kg",
     description: "Minimalist tabletop organiser with a stunning continuous silhouette. Ideal as a vanity tray, desk accessory, or countertop shelf.",
     images: [
-      `${B}/Linea-organiser-green.webp`, `${B}/Linea%20organiser-green2.webp`,
+      `${B2}/shelf1.webp`, `${B2}/Shelf%20art-2534.webp`, `${B}/Linea%20organiser-green2.webp`,
       `${B}/Linea%20organiser%20light%20green%20.webp`,
     ],
   },
@@ -424,7 +452,7 @@ export const organisers: Product[] = [
     dimensions: "73×15×40 cm",
     weight: "7 kg",
     description: "Multi-faceted organiser with staggered compartments. Works freestanding or wall-mounted — perfect for mugs, perfumes, or collectibles.",
-    images: [`${B}/Perch-wineholder1.webp`, `${B}/Perchwineholder2.webp`, `${B}/Perchwineholder3.webp`],
+    images: [`${B}/Perchwineholder0.webp`, `${B}/Perch-wineholder1.webp`, `${B}/Perchwineholder2.webp`, `${B}/Perchwineholder3.webp`],
   },
   {
     name: "Nest Organiser", shopify: { productId: "gid://shopify/Product/8824409620633", variantId: "gid://shopify/ProductVariant/48361783394457", handle: "nest-organiser" },
@@ -433,7 +461,7 @@ export const organisers: Product[] = [
     dimensions: "61×13×61 cm",
     weight: "3 kg",
     description: "Clean geometric grid with unique nesting cradles. A versatile display for coffee mugs, perfumes, or small decorative pieces.",
-    images: [`${B}/Nestblack2.webp`, "/products1_webp/nest-signature image - hover.png", `${B}/Nest-wineholder1.webp`, `${B}/Nestwineholder2.webp`, `${B}/Nestwineholder3.webp`, `${B}/Nest-black1.webp`],
+    images: [`${B}/Nestwineholder3.webp`, `${B}/Nestblack2.webp`, "/products1_webp/nest-signature image - hover.png", `${B}/Nest-wineholder1.webp`, `${B}/Nestwineholder2.webp`, `${B}/Nest-black1.webp`],
   },
   {
     name: "Brew Organiser",
@@ -462,7 +490,7 @@ export const shoeRacks: Product[] = [
     dimensions: "31×27×61 cm",
     weight: "6 kg",
     description: "Space-saving design with a hidden front profile. Wall-mounted or freestanding, with customisable layers of 4, 6, or 8.",
-    images: [`${B2}/Vaultshoerack1.webp`, `${B2}/Vaultshoerack2.webp`, `${B2}/vaultshoerack3.webp`],
+    images: [`${B2}/Vaultshoerack0.webp`, `${B2}/Vaultshoerack1.webp`, `${B2}/Vaultshoerack2.webp`, `${B2}/vaultshoerack3.webp`],
   },
   {
     name: "Orbit", shopify: { productId: "gid://shopify/Product/8824410734745", variantId: "gid://shopify/ProductVariant/48361784705177", handle: "orbit" },
@@ -471,7 +499,7 @@ export const shoeRacks: Product[] = [
     dimensions: "44×37.5×84 cm",
     weight: "4 kg",
     description: "Circular pods create a gallery-style wall showcase for your collection. Turns any wall into a striking piece of contemporary design.",
-    images: [`${B}/Orbit-shoerack1.webp`, `${B}/Orbitshoerack2.webp`, `${B}/Orbitshoerack3.webp`],
+    images: [`${B}/Orbitshoerack0.webp`, `${B}/Orbit-shoerack1.webp`, `${B}/Orbitshoerack2.webp`, `${B}/Orbitshoerack3.webp`],
   },
   {
     name: "Align", shopify: { productId: "gid://shopify/Product/8824411226265", variantId: "gid://shopify/ProductVariant/48361785786521", handle: "align" },
@@ -480,7 +508,7 @@ export const shoeRacks: Product[] = [
     dimensions: "82.5×26×271 cm",
     weight: "3.5 kg",
     description: "A continuous zig-zag form forged from a single piece of premium aluminium. Bold graphic wall art that doubles as a sophisticated shoe display.",
-    images: [`${B}/Alignshoerack.webp`, `${B}/Alignshoerack2.webp`, `${B}/alignshoerack3.webp`],
+    images: [`${B}/Alignshoerack0.webp`, `${B}/Alignshoerack.webp`, `${B}/Alignshoerack2.webp`, `${B}/alignshoerack3.webp`],
   },
   {
     name: "Penta", shopify: { productId: "gid://shopify/Product/8824411259033", variantId: "gid://shopify/ProductVariant/48361785819289", handle: "penta" },
@@ -489,6 +517,6 @@ export const shoeRacks: Product[] = [
     dimensions: "106.5×26×33 cm",
     weight: "3 kg",
     description: "Uniquely versatile floating wall shelf with five planes — holds shoes, books, small plants, and décor. A dynamic all-in-one display solution.",
-    images: [`${B}/pentashoerack.webp`, `${B}/pentashoerack2.webp`],
+    images: [`${B}/pentashoerack0.webp`, `${B}/pentashoerack.webp`, `${B}/pentashoerack2.webp`],
   },
 ];

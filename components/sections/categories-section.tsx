@@ -5,7 +5,7 @@ import Link from "next/link";
 
 const categories = [
   { name: "Organizers",   src: "/images2/categories/organisers.webp", href: "/organisers" },
-  { name: "Flower Vases", src: "/images2/categories/vases.webp",      href: "/vases"      },
+  { name: "Flower Vases", src: "/images2/categories/vases.webp",      href: "/vases",      zoom: true },
   { name: "Wine Holders", src: "/images2/categories/wine-racks.webp", href: "/wine-holders" },
   { name: "Shoe Display Racks",   src: "/images2/categories/shoe-racks.webp", href: "/shoe-display-racks" },
   { name: "Bookshelves",  src: "/images2/categories/shelves.webp",    href: "/shelves"    },
@@ -50,7 +50,11 @@ export function CategoriesSection({
                 src={cat.src}
                 alt={cat.name}
                 fill
-                className="object-cover transition-transform duration-500 group-hover:scale-[1.05]"
+                className={`object-cover transition-transform duration-500 ${
+                  cat.zoom
+                    ? "scale-125 -translate-y-8 group-hover:scale-[1.31]"
+                    : "group-hover:scale-[1.05]"
+                }`}
               />
               {/* subtle hover veil */}
               <div className="absolute inset-0 bg-foreground/0 transition-colors duration-300 group-hover:bg-foreground/8" />

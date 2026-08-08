@@ -68,7 +68,7 @@ const HOME = "/images2/products-home";
 const SIGNATURE_PRODUCTS: { label: string; product: Product; images: [string, string] }[] = [
   { label: "Maison", product: findProduct(wineHolders, "Maison"), images: [`${HOME}/winestand1.webp`, `${HOME}/winestand2.webp`] },
   { label: "Cala", product: findProduct(vases, "Cala Vase"), images: [`${HOME}/wine-vase1.webp`, `${HOME}/wine-vase2.webp`] },
-  { label: "Aura", product: findProduct(vases, "Aura Vase (M)"), images: [`${HOME}/3vase1.webp`, `${HOME}/3vase2.webp`] },
+  { label: "Aura", product: findProduct(vases, "Aura Vase"), images: [`${HOME}/3vase1.webp`, `${HOME}/3vase2.webp`] },
   { label: "Genre", product: findProduct(shelves, "Genre"), images: ["/images/genre-signature.png", "/images2/categories/genre shelf- signature product hover.PNG"] },
   { label: "Nest", product: findProduct(organisers, "Nest Organiser"), images: ["/images/nest-signature.png", "/products1_webp/nest-signature image - hover.png"] },
   { label: "Align", product: findProduct(shoeRacks, "Align"), images: [`${HOME}/alighnshoerack-4.png`, `${HOME}/shoerack2.webp`] },
@@ -104,15 +104,14 @@ function SignatureProductCard({ label, product, images }: { label: string; produ
       onMouseLeave={() => setHovered(false)}
     >
       <div className="relative aspect-3/4 overflow-hidden bg-white isolate">
-        {/* Base: white product shot */}
-        <div
-          className="absolute inset-3 transition-opacity duration-700 ease-in-out"
+        {/* Base: white product shot — same fixed rectangle as the hover photo, no padding */}
+        <Image
+          src={images[0]}
+          alt={label}
+          fill
+          className="object-cover transition-opacity duration-700 ease-in-out"
           style={{ opacity: hovered ? 0 : 1 }}
-        >
-          <div className="relative h-full w-full">
-            <Image src={images[0]} alt={label} fill className="object-contain" />
-          </div>
-        </div>
+        />
 
         {/* Crossfade: mood / lifestyle photo */}
         <Image
@@ -173,7 +172,7 @@ export function TechnologySection() {
     <section>
       {/* 1. Video panel */}
       <div className="relative aspect-video overflow-hidden md:aspect-auto md:h-[85vh]">
-        <video autoPlay muted loop playsInline className="absolute inset-0 h-full w-full object-cover">
+        <video autoPlay muted loop playsInline className="absolute inset-0 h-full w-full object-cover object-top">
           <source src="/products1_webp/products1/more_sharp_k_video_focus_sho.mp4" type="video/mp4" />
         </video>
         <div className="absolute inset-0" style={{ background: "rgba(0,0,0,0.4)" }} />

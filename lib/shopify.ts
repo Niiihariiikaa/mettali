@@ -56,22 +56,32 @@ export async function getVariantPrices(variantIds: string[]): Promise<Record<str
  * Overlays live Shopify prices onto a list of products, falling back to the
  * static price for any item without Shopify data or if the fetch fails.
  */
-export async function withLivePrices<T extends { price: number; shopify?: { variantId: string } }>(
-  products: T[]
-): Promise<T[]> {
-  const ids = products.map((p) => p.shopify?.variantId).filter((id): id is string => Boolean(id));
-  if (ids.length === 0) return products;
+export async function withLivePrices<
+  T extends { price: number; shopify?: { variantId: string }; sizes?: { price: number; shopify?: { variantId: string } }[] }
+>(products: T[]): Promise<T[]> {
+  const ids = new Set<string>();
+  for (const p of products) {
+    if (p.shopify?.variantId) ids.add(p.shopify.variantId);
+    for (const s of p.sizes ?? []) {
+      if (s.shopify?.variantId) ids.add(s.shopify.variantId);
+    }
+  }
+  if (ids.size === 0) return products;
 
   let priceMap: Record<string, number> = {};
   try {
-    priceMap = await getVariantPrices(ids);
+    priceMap = await getVariantPrices(Array.from(ids));
   } catch {
     return products;
   }
 
   return products.map((p) => {
     const live = p.shopify?.variantId ? priceMap[p.shopify.variantId] : undefined;
-    return live !== undefined ? { ...p, price: live } : p;
+    const sizes = p.sizes?.map((s) => {
+      const liveSize = s.shopify?.variantId ? priceMap[s.shopify.variantId] : undefined;
+      return liveSize !== undefined ? { ...s, price: liveSize } : s;
+    });
+    return { ...p, ...(live !== undefined ? { price: live } : {}), ...(sizes ? { sizes } : {}) };
   });
 }
 
