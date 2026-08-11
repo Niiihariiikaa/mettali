@@ -15,6 +15,11 @@ interface ProductSizeOption {
   shopify?: { productId: string; variantId: string; handle: string };
 }
 
+interface ProductColor {
+  name: string;
+  hex: string;
+}
+
 interface ProductSliderCardProps {
   name: string;
   category: string;
@@ -26,9 +31,10 @@ interface ProductSliderCardProps {
   href?: string;
   shopify?: { productId: string; variantId: string; handle: string };
   sizes?: ProductSizeOption[];
+  colors?: ProductColor[];
 }
 
-export function ProductSliderCard({ name, category, images, description, price, dimensions, type, href, shopify, sizes }: ProductSliderCardProps) {
+export function ProductSliderCard({ name, category, images, description, price, dimensions, type, href, shopify, sizes, colors }: ProductSliderCardProps) {
   const [current, setCurrent] = useState(0);
   const [added, setAdded] = useState(false);
   const [sizeIndex, setSizeIndex] = useState(0);
@@ -150,6 +156,23 @@ export function ProductSliderCard({ name, category, images, description, price, 
               >
                 {s.label}
               </button>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Colors */}
+      {colors && colors.length > 0 && (
+        <div className="px-4 py-3">
+          <h5 className="mb-1.5 text-[10px] uppercase tracking-widest text-mulled-iron font-space-mono">Colors</h5>
+          <div className="flex flex-wrap gap-1.5">
+            {colors.map((c) => (
+              <span
+                key={c.name}
+                title={c.name}
+                className="h-4 w-4 rounded-full border border-border/60"
+                style={{ backgroundColor: c.hex }}
+              />
             ))}
           </div>
         </div>

@@ -153,6 +153,23 @@ export function ProductDetailView({
             </div>
           )}
 
+          {/* Colors */}
+          {product.colors && product.colors.length > 0 && (
+            <div className="mt-6">
+              <h5 className="mb-2 text-[10px] uppercase tracking-widest text-mulled-iron font-space-mono">Colors</h5>
+              <div className="flex flex-wrap gap-2">
+                {product.colors.map((c) => (
+                  <span
+                    key={c.name}
+                    title={c.name}
+                    className="h-5 w-5 rounded-full border border-border/60"
+                    style={{ backgroundColor: c.hex }}
+                  />
+                ))}
+              </div>
+            </div>
+          )}
+
           {/* Specs */}
           <div className={`mt-8 grid ${effectiveWeight ? "grid-cols-4" : "grid-cols-3"} divide-x divide-border border border-border`}>
             {dimValues.map((d, i) => (
