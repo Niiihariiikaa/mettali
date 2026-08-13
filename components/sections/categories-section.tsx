@@ -19,9 +19,9 @@ export function CategoriesSection({
   heading?: string;
 }) {
   return (
-    <section className="bg-background px-6 py-16 md:px-12 md:py-20 lg:px-20 lg:py-24">
+    <section className="bg-background px-6 py-10 md:px-12 md:py-20 lg:px-20 lg:py-24">
       {/* Header */}
-      <div className="mb-12 flex items-end justify-between">
+      <div className="mb-8 flex items-end justify-between md:mb-12">
         <div>
           <p className="mb-3 text-xs uppercase tracking-widest text-sandcast font-space-mono">
             Shop by Category
@@ -42,7 +42,7 @@ export function CategoriesSection({
       </div>
 
       {/* Grid */}
-      <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-5">
+      <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-5 [&>*:last-child]:col-span-2 [&>*:last-child]:mx-auto [&>*:last-child]:w-[calc(50%-0.5rem)] md:[&>*:last-child]:col-span-1 md:[&>*:last-child]:mx-0 md:[&>*:last-child]:w-auto">
         {categories.map((cat) => (
           <Link key={cat.name} href={cat.href} className="group cursor-pointer">
             <div className="relative mb-3 overflow-hidden rounded-xl" style={{ aspectRatio: "3/4" }}>

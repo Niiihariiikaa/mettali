@@ -206,7 +206,7 @@ export function Hero2Section() {
         </div>
       </div>
 
-      {/* ── SCROLL REVEAL TEXT ───────────────────────── */}
+      {/* ── SCROLL REVEAL TEXT M */}
      
     </>
   );

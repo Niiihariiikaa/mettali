@@ -60,7 +60,7 @@ export function Header({ variant = "light" }: { variant?: "dark" | "light" }) {
       <div className="flex items-center justify-between transition-all duration-300 px-3 pl-6 py-2.5">
         {/* Logo */}
         <Link href="/" className="flex items-center">
-          <div className="relative w-36 h-8 overflow-hidden">
+          <div className="relative h-6 w-28 overflow-hidden md:h-8 md:w-36">
             <Image
               src="/images/logo2.svg"
               alt="Mettali"
