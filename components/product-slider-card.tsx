@@ -80,11 +80,11 @@ export function ProductSliderCard({ name, category, images, description, price, 
   const cardContent = (
     <div className="flex h-full flex-col overflow-hidden border border-border bg-white divide-y divide-border shadow-[0_4px_24px_rgba(0,0,0,0.10)] hover:shadow-[0_8px_40px_rgba(0,0,0,0.18)] transition-shadow duration-300 group">
       {/* Name row */}
-      <div className="px-4 py-3">
-        <p className="mb-1 text-[10px] uppercase tracking-widest text-sandcast font-space-mono">
+      <div className="px-3 py-2 sm:px-4 sm:py-3">
+        <p className="mb-1 text-[9px] uppercase tracking-widest text-sandcast font-space-mono sm:text-[10px]">
           {type ?? category}
         </p>
-        <h3 className="text-smoked-bronze text-sm font-space-mono uppercase tracking-wide">{name}</h3>
+        <h3 className="truncate text-smoked-bronze text-xs font-space-mono uppercase tracking-wide sm:text-sm">{name}</h3>
       </div>
 
       {/* Image area */}
@@ -141,7 +141,7 @@ export function ProductSliderCard({ name, category, images, description, price, 
 
       {/* Size options */}
       {sizes && sizes.length > 0 && (
-        <div className="px-4 py-3">
+        <div className="hidden px-4 py-3 sm:block">
           <h5 className="mb-1.5 text-[10px] uppercase tracking-widest text-mulled-iron font-space-mono">Size</h5>
           <div className="flex flex-wrap gap-1.5">
             {sizes.map((s, i) => (
@@ -163,7 +163,7 @@ export function ProductSliderCard({ name, category, images, description, price, 
 
       {/* Colors */}
       {colors && colors.length > 0 && (
-        <div className="px-4 py-3">
+        <div className="hidden px-4 py-3 sm:block">
           <h5 className="mb-1.5 text-[10px] uppercase tracking-widest text-mulled-iron font-space-mono">Colors</h5>
           <div className="flex flex-wrap gap-1.5">
             {colors.map((c) => (
@@ -179,7 +179,7 @@ export function ProductSliderCard({ name, category, images, description, price, 
       )}
 
       {/* About / Measurements row */}
-      <div className="grid grid-cols-2 divide-x divide-border">
+      <div className="hidden grid-cols-2 divide-x divide-border sm:grid">
         <div className="px-4 py-4">
           <h5 className="mb-1.5 text-[10px] uppercase tracking-widest text-mulled-iron font-space-mono">About</h5>
           {description && (
@@ -205,20 +205,20 @@ export function ProductSliderCard({ name, category, images, description, price, 
 
       {/* Price strip */}
       {effectivePrice !== undefined && (
-        <div className="mt-auto flex items-center justify-between px-4 py-3">
-          <p className="text-base font-semibold text-smoked-bronze font-space-mono">
+        <div className="mt-auto flex items-center justify-between gap-2 px-3 py-2 sm:px-4 sm:py-3">
+          <p className="text-sm font-semibold text-smoked-bronze font-space-mono sm:text-base">
             ₹{effectivePrice.toLocaleString("en-IN")}
           </p>
           <button
             onClick={handleAddToCart}
-            className={`flex items-center gap-1.5 px-3 py-1.5 text-[10px] uppercase tracking-widest font-space-mono transition-colors ${
+            className={`flex shrink-0 items-center gap-1.5 px-2 py-1.5 text-[10px] uppercase tracking-widest font-space-mono transition-colors sm:px-3 ${
               added
                 ? "bg-slate-moss text-white"
                 : "bg-mulled-iron text-white hover:bg-smoked-bronze"
             }`}
           >
             {added ? <Check size={12} /> : <ShoppingBag size={12} />}
-            {added ? "Added" : "Add to Cart"}
+            <span className="hidden sm:inline">{added ? "Added" : "Add to Cart"}</span>
           </button>
         </div>
       )}

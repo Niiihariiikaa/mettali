@@ -49,7 +49,7 @@ export default async function SearchPage({
         <ProductFilterBar
           products={items}
           categoryBasePaths={CATEGORY_BASE_PATHS}
-          className="grid grid-cols-1 gap-6 px-6 pb-28 md:grid-cols-3 md:px-12 lg:grid-cols-4 lg:px-20"
+          className="grid grid-cols-2 gap-3 px-6 pb-28 md:grid-cols-3 md:gap-6 md:px-12 lg:grid-cols-4 lg:px-20"
         />
       ) : query ? (
         <p className="pb-28 text-center text-sm text-muted-foreground font-space-mono">

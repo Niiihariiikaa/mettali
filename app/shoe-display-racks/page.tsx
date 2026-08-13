@@ -17,7 +17,7 @@ export default async function ShoeDisplayRacksPage() {
       <ProductFilterBar
         products={items}
         basePath="/shoe-display-racks"
-        className="grid grid-cols-1 gap-6 px-6 pb-28 md:grid-cols-3 md:px-12 lg:grid-cols-3 lg:px-20"
+        className="grid grid-cols-2 gap-3 px-6 pb-28 md:grid-cols-3 md:gap-6 md:px-12 lg:grid-cols-3 lg:px-20"
       />
       <FooterSection />
     </main>

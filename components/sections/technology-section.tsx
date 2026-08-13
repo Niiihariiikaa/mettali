@@ -109,8 +109,8 @@ function SignatureProductCard({ label, product, images }: { label: string; produ
           src={images[0]}
           alt={label}
           fill
-          className="object-cover transition-opacity duration-700 ease-in-out"
-          style={{ opacity: hovered ? 0 : 1 }}
+          className="object-cover transition-[opacity,transform] duration-[1200ms] ease-[cubic-bezier(0.4,0,0.2,1)] will-change-[opacity,transform]"
+          style={{ opacity: hovered ? 0 : 1, transform: hovered ? "scale(1.06)" : "scale(1)" }}
         />
 
         {/* Crossfade: mood / lifestyle photo */}
@@ -118,14 +118,14 @@ function SignatureProductCard({ label, product, images }: { label: string; produ
           src={images[1]}
           alt={`${label} in a styled room`}
           fill
-          className="object-cover transition-opacity duration-700 ease-in-out"
-          style={{ opacity: hovered ? 1 : 0 }}
+          className="object-cover transition-[opacity,transform] duration-[1200ms] ease-[cubic-bezier(0.4,0,0.2,1)] will-change-[opacity,transform]"
+          style={{ opacity: hovered ? 1 : 0, transform: hovered ? "scale(1)" : "scale(1.06)" }}
         />
 
         {/* Hover actions */}
         <div
-          className="absolute right-3 top-3 flex flex-col gap-2 transition-opacity duration-300 ease-in-out"
-          style={{ opacity: hovered ? 1 : 0 }}
+          className="absolute right-3 top-3 flex flex-col gap-2 transition-[opacity,transform] duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]"
+          style={{ opacity: hovered ? 1 : 0, transform: hovered ? "translateY(0)" : "translateY(-6px)" }}
         >
           <button
             type="button"
@@ -172,7 +172,7 @@ export function TechnologySection() {
     <section>
       {/* 1. Video panel */}
       <div className="relative aspect-video overflow-hidden md:aspect-auto md:h-[85vh]">
-        <video autoPlay muted loop playsInline className="absolute inset-0 h-full w-full object-cover object-top">
+        <video autoPlay muted loop playsInline className="absolute inset-0 h-full w-full origin-top scale-125 object-cover object-top md:scale-100">
           <source src="/products1_webp/products1/more_sharp_k_video_focus_sho.mp4" type="video/mp4" />
         </video>
         <div className="absolute inset-0" style={{ background: "rgba(0,0,0,0.4)" }} />

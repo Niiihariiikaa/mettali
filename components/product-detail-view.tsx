@@ -91,20 +91,18 @@ export function ProductDetailView({
 
           {/* Thumbnails */}
           {effectiveImages.length > 1 && (
-            <div className="mt-4 flex gap-3 overflow-x-auto pb-1">
+            <div className="mt-4 flex gap-2 overflow-x-auto pb-1">
               {effectiveImages.map((src, i) => (
                 <button
                   key={src}
                   onClick={() => setCurrent(i)}
-                  className={`relative h-20 w-20 shrink-0 overflow-hidden border bg-white transition-colors ${
-                    i === current ? "border-mulled-iron" : "border-border hover:border-sandcast"
+                  className={`relative h-16 w-16 shrink-0 overflow-hidden rounded-md bg-white transition-all sm:h-20 sm:w-20 ${
+                    i === current
+                      ? "ring-2 ring-mulled-iron ring-offset-1"
+                      : "ring-1 ring-border hover:ring-sandcast"
                   }`}
                 >
-                  <div className="absolute inset-2">
-                    <div className="relative h-full w-full">
-                      <Image src={src} alt={`${product.name} view ${i + 1}`} fill className="object-contain" />
-                    </div>
-                  </div>
+                  <Image src={src} alt={`${product.name} view ${i + 1}`} fill className="object-cover" />
                 </button>
               ))}
             </div>
@@ -211,7 +209,7 @@ export function ProductDetailView({
           <h2 className="mb-8 text-2xl md:text-3xl text-mulled-iron font-horizon uppercase tracking-wide">
             You May Also Like
           </h2>
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid grid-cols-2 gap-3 sm:gap-6 lg:grid-cols-3">
             {related.map((p) => (
               <ProductSliderCard key={p.name} {...p} href={`${backHref}/${slugify(p.name)}`} />
             ))}

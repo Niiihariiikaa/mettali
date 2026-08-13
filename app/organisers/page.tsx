@@ -17,7 +17,7 @@ export default async function OrganisersPage() {
       <ProductFilterBar
         products={items}
         basePath="/organisers"
-        className="grid grid-cols-1 gap-6 px-6 pb-28 md:grid-cols-3 md:px-12 lg:px-20"
+        className="grid grid-cols-2 gap-3 px-6 pb-28 md:grid-cols-3 md:gap-6 md:px-12 lg:px-20"
       />
       <FooterSection />
     </main>
