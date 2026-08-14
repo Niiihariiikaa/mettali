@@ -52,7 +52,7 @@ export function Header({ variant = "light" }: { variant?: "dark" | "light" }) {
   return (
     <header
       ref={headerRef}
-      className={`fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[94%] max-w-6xl transition-all duration-300 ${isScrolled ? "bg-background/80 backdrop-blur-md rounded-full" : "bg-transparent"}`}
+      className={`fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[94%] max-w-6xl transition-all duration-300 ${isScrolled ? "bg-background backdrop-blur-md rounded-full" : "bg-transparent"}`}
       style={{
         boxShadow: isScrolled ? "rgba(14, 63, 126, 0.04) 0px 0px 0px 1px, rgba(42, 51, 69, 0.04) 0px 1px 1px -0.5px, rgba(42, 51, 70, 0.04) 0px 3px 3px -1.5px, rgba(42, 51, 70, 0.04) 0px 6px 6px -3px, rgba(14, 63, 126, 0.04) 0px 12px 12px -6px, rgba(14, 63, 126, 0.04) 0px 24px 24px -12px" : "none"
       }}
@@ -60,7 +60,7 @@ export function Header({ variant = "light" }: { variant?: "dark" | "light" }) {
       <div className="flex items-center justify-between transition-all duration-300 px-3 pl-6 py-2.5">
         {/* Logo */}
         <Link href="/" className="flex items-center">
-          <div className="relative h-6 w-28 overflow-hidden md:h-8 md:w-36">
+          <div className="relative h-5 w-24 overflow-hidden md:h-8 md:w-36">
             <Image
               src="/images/logo2.svg"
               alt="Mettali"

@@ -102,9 +102,9 @@ export function Hero2Section() {
         }
         .h2s-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.18); }
 
-        /* Zoom in slightly and anchor to the top-left on mobile so the crop comes off the bottom and right */
+        /* Anchor to the top on mobile so any overflow crops off the bottom, not the sides */
         @media (max-width: 767px) {
-          .h2s-video { transform: scale(1.15); transform-origin: top left; }
+          .h2s-video { object-position: top; }
         }
       `}</style>
 

@@ -150,12 +150,12 @@ function SignatureProductCard({ label, product, images }: { label: string; produ
         </div>
       </div>
 
-      <div className="flex items-center justify-between gap-2 px-5 py-5">
+      <div className="flex flex-col gap-2 px-3 py-3 sm:flex-row sm:items-center sm:justify-between sm:px-5 sm:py-5">
         <div className="min-w-0">
-          <p className="mb-1 text-xs uppercase tracking-widest text-sandcast font-space-mono">{product.category}</p>
-          <h3 className="truncate text-smoked-bronze text-sm font-space-mono uppercase tracking-wide">{label}</h3>
+          <p className="mb-1 truncate text-[10px] uppercase tracking-widest text-sandcast font-space-mono sm:text-xs">{product.category}</p>
+          <h3 className="truncate text-smoked-bronze text-xs font-space-mono uppercase tracking-wide sm:text-sm">{label}</h3>
         </div>
-        <p className="shrink-0 text-sm text-mulled-iron font-space-mono">₹{product.price.toLocaleString("en-IN")}</p>
+        <p className="shrink-0 text-xs text-mulled-iron font-space-mono sm:text-sm">₹{product.price.toLocaleString("en-IN")}</p>
       </div>
     </Link>
   );
