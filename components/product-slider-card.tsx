@@ -2,9 +2,10 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
-import { ChevronLeft, ChevronRight, ShoppingBag, Check } from "lucide-react";
+import { useRef, useState } from "react";
+import { ChevronLeft, ChevronRight, ShoppingBag, Check, Heart } from "lucide-react";
 import { useCart } from "@/components/cart-context";
+import { useWishlist } from "@/lib/wishlist";
 
 interface ProductSizeOption {
   label: string;
@@ -38,9 +39,13 @@ export function ProductSliderCard({ name, category, images, description, price, 
   const [current, setCurrent] = useState(0);
   const [added, setAdded] = useState(false);
   const [sizeIndex, setSizeIndex] = useState(0);
+  const [colorIndex, setColorIndex] = useState(0);
   const { addItem } = useCart();
+  const { wishlisted, toggle: toggleWishlist } = useWishlist(name);
+  const touchStartX = useRef<number | null>(null);
 
   const selectedSize = sizes?.[sizeIndex];
+  const selectedColor = colors?.[colorIndex];
   const effectivePrice = selectedSize?.price ?? price;
   const effectiveDimensions = selectedSize?.dimensions ?? dimensions;
   const effectiveShopify = selectedSize?.shopify ?? shopify;
@@ -51,9 +56,23 @@ export function ProductSliderCard({ name, category, images, description, price, 
     e.preventDefault();
     e.stopPropagation();
     if (effectivePrice === undefined) return;
-    addItem({ name: effectiveName, category, price: effectivePrice, image: effectiveImages[0], href, variantId: effectiveShopify?.variantId });
+    addItem({
+      name: effectiveName,
+      category,
+      price: effectivePrice,
+      image: effectiveImages[0],
+      href,
+      variantId: effectiveShopify?.variantId,
+      color: selectedColor?.name,
+    });
     setAdded(true);
     setTimeout(() => setAdded(false), 1600);
+  };
+
+  const handleWishlist = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    toggleWishlist();
   };
 
   const selectSize = (e: React.MouseEvent, i: number) => {
@@ -61,6 +80,12 @@ export function ProductSliderCard({ name, category, images, description, price, 
     e.stopPropagation();
     setSizeIndex(i);
     setCurrent(0);
+  };
+
+  const selectColor = (e: React.MouseEvent, i: number) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setColorIndex(i);
   };
 
   const prev = (e: React.MouseEvent) => {
@@ -72,6 +97,19 @@ export function ProductSliderCard({ name, category, images, description, price, 
     e.preventDefault();
     e.stopPropagation();
     setCurrent((c) => (c + 1) % effectiveImages.length);
+  };
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX.current === null || effectiveImages.length < 2) return;
+    const deltaX = e.changedTouches[0].clientX - touchStartX.current;
+    touchStartX.current = null;
+    if (Math.abs(deltaX) < 40) return;
+    setCurrent((c) =>
+      deltaX < 0 ? (c + 1) % effectiveImages.length : (c - 1 + effectiveImages.length) % effectiveImages.length
+    );
   };
 
   const dimValues = effectiveDimensions?.replace(/\s*cm$/i, "").split("×").map((d) => d.trim());
@@ -89,13 +127,28 @@ export function ProductSliderCard({ name, category, images, description, price, 
 
       {/* Image area */}
       <div className="relative bg-white overflow-hidden pb-4">
-        <div className="relative aspect-4/5 w-full">
+        <div
+          className="relative aspect-4/5 w-full"
+          onTouchStart={handleTouchStart}
+          onTouchEnd={handleTouchEnd}
+        >
           <Image
             src={effectiveImages[current]}
             alt={name}
             fill
             className="object-cover transition-opacity duration-300"
           />
+
+        {/* Wishlist */}
+        <button
+          onClick={handleWishlist}
+          aria-label={wishlisted ? "Remove from wishlist" : "Add to wishlist"}
+          className={`absolute left-3 top-3 flex h-8 w-8 items-center justify-center rounded-full shadow-sm transition-colors duration-200 z-10 ${
+            wishlisted ? "bg-mulled-iron text-white" : "bg-white/90 text-smoked-bronze hover:bg-mulled-iron hover:text-white"
+          }`}
+        >
+          <Heart size={14} fill={wishlisted ? "currentColor" : "none"} />
+        </button>
 
         {/* Counter */}
         {effectiveImages.length > 1 && (
@@ -109,13 +162,13 @@ export function ProductSliderCard({ name, category, images, description, price, 
           <>
             <button
               onClick={prev}
-              className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white rounded-full p-1.5 opacity-0 group-hover:opacity-100 transition-opacity duration-200 shadow-sm z-10"
+              className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white rounded-full p-1.5 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-200 shadow-sm z-10"
             >
               <ChevronLeft size={16} className="text-smoked-bronze" />
             </button>
             <button
               onClick={next}
-              className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white rounded-full p-1.5 opacity-0 group-hover:opacity-100 transition-opacity duration-200 shadow-sm z-10"
+              className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white rounded-full p-1.5 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-200 shadow-sm z-10"
             >
               <ChevronRight size={16} className="text-smoked-bronze" />
             </button>
@@ -141,7 +194,7 @@ export function ProductSliderCard({ name, category, images, description, price, 
 
       {/* Size options */}
       {sizes && sizes.length > 0 && (
-        <div className="hidden px-4 py-3 sm:block">
+        <div className="px-4 py-3">
           <h5 className="mb-1.5 text-[10px] uppercase tracking-widest text-mulled-iron font-space-mono">Size</h5>
           <div className="flex flex-wrap gap-1.5">
             {sizes.map((s, i) => (
@@ -163,14 +216,20 @@ export function ProductSliderCard({ name, category, images, description, price, 
 
       {/* Colors */}
       {colors && colors.length > 0 && (
-        <div className="hidden px-4 py-3 sm:block">
-          <h5 className="mb-1.5 text-[10px] uppercase tracking-widest text-mulled-iron font-space-mono">Colors</h5>
+        <div className="px-4 py-3">
+          <h5 className="mb-1.5 text-[10px] uppercase tracking-widest text-mulled-iron font-space-mono">
+            Color{selectedColor ? `: ${selectedColor.name}` : ""}
+          </h5>
           <div className="flex flex-wrap gap-1.5">
-            {colors.map((c) => (
-              <span
+            {colors.map((c, i) => (
+              <button
                 key={c.name}
                 title={c.name}
-                className="h-4 w-4 rounded-full border border-border/60"
+                aria-label={`Select color ${c.name}`}
+                onClick={(e) => selectColor(e, i)}
+                className={`h-5 w-5 rounded-full border transition-shadow ${
+                  i === colorIndex ? "ring-2 ring-mulled-iron ring-offset-1" : "border-border/60"
+                }`}
                 style={{ backgroundColor: c.hex }}
               />
             ))}

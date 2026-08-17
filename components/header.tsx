@@ -3,17 +3,30 @@
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Menu, X, ShoppingBag, Search } from "lucide-react";
+import { Menu, X, ShoppingBag, Search, Heart, ChevronDown } from "lucide-react";
 import { useCart } from "@/components/cart-context";
 import { CartDrawer } from "@/components/cart-drawer";
 import { SearchBar } from "@/components/search-bar";
+import { useWishlistNames } from "@/lib/wishlist";
+
+const PRODUCT_CATEGORIES = [
+  { label: "Shelves", href: "/shelves" },
+  { label: "Vases", href: "/vases" },
+  { label: "Wine Holders", href: "/wine-holders" },
+  { label: "Organisers", href: "/organisers" },
+  { label: "Shoe Display Racks", href: "/shoe-display-racks" },
+  { label: "All Products", href: "/products" },
+];
 
 export function Header({ variant = "light" }: { variant?: "dark" | "light" }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
+  const [productsOpen, setProductsOpen] = useState(false);
+  const [mobileProductsOpen, setMobileProductsOpen] = useState(false);
   const headerRef = useRef<HTMLElement>(null);
   const { count, openCart } = useCart();
+  const { names: wishlistNames } = useWishlistNames();
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 50);
@@ -60,7 +73,7 @@ export function Header({ variant = "light" }: { variant?: "dark" | "light" }) {
       <div className="flex items-center justify-between transition-all duration-300 px-3 pl-6 py-2.5">
         {/* Logo */}
         <Link href="/" className="flex items-center">
-          <div className="relative h-5 w-24 overflow-hidden md:h-8 md:w-36">
+          <div className="relative h-6 w-28 overflow-hidden md:h-8 md:w-36">
             <Image
               src="/images/logo2.svg"
               alt="Mettali"
@@ -82,7 +95,35 @@ export function Header({ variant = "light" }: { variant?: "dark" | "light" }) {
             <nav className="flex items-center gap-10">
               <Link href="/" className={linkClass}>Home</Link>
               <Link href="/about" className={linkClass}>About Us</Link>
-              <Link href="/products" className={linkClass}>Products</Link>
+              <div
+                className="relative"
+                onMouseEnter={() => setProductsOpen(true)}
+                onMouseLeave={() => setProductsOpen(false)}
+              >
+                <Link href="/products" className={`flex items-center gap-1 ${linkClass}`}>
+                  Products
+                  <ChevronDown size={13} className={`transition-transform duration-200 ${productsOpen ? "rotate-180" : ""}`} />
+                </Link>
+                <div
+                  className={`absolute left-0 top-full pt-3 transition-all duration-200 ease-out ${
+                    productsOpen ? "opacity-100 translate-y-0 pointer-events-auto" : "opacity-0 -translate-y-1 pointer-events-none"
+                  }`}
+                >
+                  <div className="w-48 border border-border bg-background py-2 shadow-lg rounded-xl">
+                    {PRODUCT_CATEGORIES.map((cat, i) => (
+                      <Link
+                        key={cat.href}
+                        href={cat.href}
+                        className={`block px-4 py-2 text-sm text-muted-foreground transition-colors hover:bg-muted hover:text-foreground ${
+                          i === PRODUCT_CATEGORIES.length - 1 ? "mt-1 border-t border-border pt-2.5 font-medium text-foreground" : ""
+                        }`}
+                      >
+                        {cat.label}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              </div>
               <Link href="/customization" className={linkClass}>Customization</Link>
               <Link href="/bulk-order" className={linkClass}>Bulk Order &amp; Gifting</Link>
             </nav>
@@ -96,6 +137,18 @@ export function Header({ variant = "light" }: { variant?: "dark" | "light" }) {
               >
                 <Search size={20} />
               </button>
+              <Link
+                href="/wishlist"
+                aria-label="Wishlist"
+                className={`relative transition-colors ${onDark ? "text-white/80 hover:text-white" : "text-muted-foreground hover:text-foreground"}`}
+              >
+                <Heart size={20} />
+                {wishlistNames.length > 0 && (
+                  <span className="absolute -top-1.5 -right-2 flex h-4 min-w-4 items-center justify-center rounded-full bg-mulled-iron px-1 text-[9px] font-medium text-white font-space-mono">
+                    {wishlistNames.length}
+                  </span>
+                )}
+              </Link>
               <button
                 type="button"
                 onClick={openCart}
@@ -144,6 +197,18 @@ export function Header({ variant = "light" }: { variant?: "dark" | "light" }) {
             >
               <Search size={20} />
             </button>
+            <Link
+              href="/wishlist"
+              aria-label="Wishlist"
+              className={`relative transition-colors ${onDark ? "text-white" : "text-foreground"}`}
+            >
+              <Heart size={20} />
+              {wishlistNames.length > 0 && (
+                <span className="absolute -top-1.5 -right-2 flex h-4 min-w-4 items-center justify-center rounded-full bg-mulled-iron px-1 text-[9px] font-medium text-white font-space-mono">
+                  {wishlistNames.length}
+                </span>
+              )}
+            </Link>
             <button
               type="button"
               onClick={openCart}
@@ -183,9 +248,36 @@ export function Header({ variant = "light" }: { variant?: "dark" | "light" }) {
           <nav className="flex flex-col gap-6">
             <Link href="/" className="text-lg text-foreground" onClick={() => setIsMenuOpen(false)}>Home</Link>
             <Link href="/about" className="text-lg text-foreground" onClick={() => setIsMenuOpen(false)}>About Us</Link>
-            <Link href="/products" className="text-lg text-foreground" onClick={() => setIsMenuOpen(false)}>Products</Link>
+            <div>
+              <button
+                type="button"
+                onClick={() => setMobileProductsOpen((v) => !v)}
+                className="flex w-full items-center justify-between text-lg text-foreground"
+                aria-expanded={mobileProductsOpen}
+              >
+                Products
+                <ChevronDown size={18} className={`transition-transform duration-200 ${mobileProductsOpen ? "rotate-180" : ""}`} />
+              </button>
+              {mobileProductsOpen && (
+                <div className="mt-3 flex flex-col gap-3 pl-4">
+                  {PRODUCT_CATEGORIES.map((cat, i) => (
+                    <Link
+                      key={cat.href}
+                      href={cat.href}
+                      className={`text-sm text-muted-foreground ${i === PRODUCT_CATEGORIES.length - 1 ? "mt-1 border-t border-border pt-3 font-medium text-foreground" : ""}`}
+                      onClick={() => { setIsMenuOpen(false); setMobileProductsOpen(false); }}
+                    >
+                      {cat.label}
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
             <Link href="/customization" className="text-lg text-foreground" onClick={() => setIsMenuOpen(false)}>Customization</Link>
             <Link href="/bulk-order" className="text-lg text-foreground" onClick={() => setIsMenuOpen(false)}>Bulk Order &amp; Gifting</Link>
+            <Link href="/wishlist" className="text-lg text-foreground" onClick={() => setIsMenuOpen(false)}>
+              Wishlist{wishlistNames.length > 0 && ` (${wishlistNames.length})`}
+            </Link>
 
             <button
               type="button"

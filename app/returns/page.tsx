@@ -13,7 +13,7 @@ export default function ReturnsPage() {
           <p>
             If a piece arrives damaged or isn&apos;t what you expected, let us know within{" "}
             <span className="text-smoked-bronze">7 days</span> of delivery and we&apos;ll arrange a
-            replacement or refund.
+            replacement.
           </p>
           <p>
             Because most Mettali pieces are made and finished to order, custom or bespoke

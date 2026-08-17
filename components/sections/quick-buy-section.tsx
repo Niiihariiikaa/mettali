@@ -4,15 +4,26 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { X } from "lucide-react";
+import { vases, wineHolders, organisers, slugify, type Product } from "@/lib/products";
+
+const CATEGORY_BASE_PATHS: Record<string, string> = {
+  Vases: "/vases",
+  "Wine Holders": "/wine-holders",
+  Organisers: "/organisers",
+};
+
+function findProduct(list: Product[], name: string): Product {
+  const p = list.find((x) => x.name === name);
+  if (!p) throw new Error(`Quick-buy product not found in catalog: ${name}`);
+  return p;
+}
 
 type Point = { left: string; top: string };
 
 type Dot = {
-  name: string;
-  price: string;
-  href: string;
+  label: string;
+  product: Product;
   dot: { mobile: Point; desktop: Point };
-  popup: { mobile: Point; desktop: Point };
 };
 
 type Panel = {
@@ -29,18 +40,14 @@ const panels: Panel[] = [
     ratio: "1122 / 1402",
     dots: [
       {
-        name: "LINEA",
-        price: "From ₹2,100",
-        href: "/organisers/linea-organiser",
+        label: "LINEA",
+        product: findProduct(organisers, "Linea Organiser"),
         dot: { mobile: { left: "42%", top: "60%" }, desktop: { left: "30%", top: "50%" } },
-        popup: { mobile: { left: "5%", top: "12%" }, desktop: { left: "5%", top: "22%" } },
       },
       {
-        name: "CALA",
-        price: "From ₹1,300",
-        href: "/vases/cala-vase",
+        label: "CALA",
+        product: findProduct(vases, "Cala Vase"),
         dot: { mobile: { left: "80%", top: "75%" }, desktop: { left: "75%", top: "72%" } },
-        popup: { mobile: { left: "38%", top: "12%" }, desktop: { left: "38%", top: "72%" } },
       },
     ],
   },
@@ -50,11 +57,9 @@ const panels: Panel[] = [
     ratio: "1024 / 1536",
     dots: [
       {
-        name: "MAYA VASE",
-        price: "From ₹1,600",
-        href: "/vases/maya-vase",
+        label: "MAYA VASE",
+        product: findProduct(vases, "Maya Vase"),
         dot: { mobile: { left: "21%", top: "50%" }, desktop: { left: "21%", top: "72%" } },
-        popup: { mobile: { left: "5%", top: "12%" }, desktop: { left: "5%", top: "38%" } },
       },
     ],
   },
@@ -64,11 +69,9 @@ const panels: Panel[] = [
     ratio: "1023 / 1537",
     dots: [
       {
-        name: "CLINK",
-        price: "From ₹3,499",
-        href: "/wine-holders/clink",
+        label: "CLINK",
+        product: findProduct(wineHolders, "Clink"),
         dot: { mobile: { left: "53%", top: "50%" }, desktop: { left: "53%", top: "58%" } },
-        popup: { mobile: { left: "20%", top: "10%" }, desktop: { left: "20%", top: "10%" } },
       },
     ],
   },
@@ -99,6 +102,11 @@ export function QuickBuySection() {
           .qb-pos { left: var(--pos-left-desktop) !important; top: var(--pos-top-desktop) !important; }
           .qb-panel-inner { aspect-ratio: 4 / 5 !important; }
         }
+        @keyframes qb-pulse-ring {
+          0%   { box-shadow: 0 0 0 0 rgba(88, 71, 56, 0.45); }
+          100% { box-shadow: 0 0 0 10px rgba(88, 71, 56, 0); }
+        }
+        .animate-pulse-ring { animation: qb-pulse-ring 1.8s cubic-bezier(0.4,0,0.6,1) infinite; }
       `}</style>
       {panels.map((panel, pi) => (
         <div key={pi} className="rounded-2xl border border-smoked-bronze/15 bg-card p-2 md:flex-1 md:rounded-none md:border-0 md:bg-transparent md:p-0">
@@ -126,18 +134,25 @@ export function QuickBuySection() {
                   <button
                     onClick={() => toggle(key)}
                     style={posStyle(dot.dot)}
-                    className="qb-pos absolute -translate-x-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white/90 flex items-center justify-center shadow-lg hover:scale-110 transition-transform duration-200 z-10"
-                    aria-label={`Quick view ${dot.name}`}
+                    className={`qb-pos absolute -translate-x-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-smoked-bronze flex items-center justify-center shadow-lg transition-transform duration-200 z-10 hover:scale-110 ${
+                      isOpen ? "" : "animate-pulse-ring"
+                    }`}
+                    aria-label={`Quick view ${dot.label}`}
                   >
-                    <div className="w-2.5 h-2.5 rounded-full bg-foreground" />
+                    <div className="flex h-4 w-4 items-center justify-center rounded-full border-2 border-white">
+                      <div className="h-1.5 w-1.5 rounded-full bg-white" />
+                    </div>
                   </button>
 
-                  {/* Popup card */}
+                  {/* Popup card — anchored to the same point as the dot, centered directly above it */}
                   {isOpen && (
                     <div
-                      style={posStyle(dot.popup)}
-                      className="qb-pos absolute bg-white rounded-2xl p-4 shadow-2xl w-56 max-w-[80vw] sm:w-64 z-20 animate-scale-in"
+                      style={posStyle(dot.dot)}
+                      className="qb-pos absolute -translate-x-1/2 -translate-y-[calc(100%+16px)] bg-white rounded-2xl p-4 shadow-2xl w-56 max-w-[80vw] sm:w-64 z-20 animate-scale-in"
                     >
+                      {/* Tail connecting the card down toward the pin */}
+                      <div className="absolute -bottom-1.5 left-1/2 h-3 w-3 -translate-x-1/2 rotate-45 bg-white" />
+
                       <button
                         onClick={() => setActiveKey(null)}
                         className="absolute top-2.5 right-2.5 text-muted-foreground hover:text-foreground transition-colors"
@@ -149,21 +164,21 @@ export function QuickBuySection() {
                       <div className="flex gap-3 items-center">
                         <div className="relative w-16 h-16 rounded-xl overflow-hidden bg-muted shrink-0">
                           <Image
-                            src={panel.image}
-                            alt={dot.name}
+                            src={dot.product.images[0]}
+                            alt={dot.product.name}
                             fill
                             className="object-cover"
                           />
                         </div>
                         <div className="min-w-0">
                           <p className="text-[11px] font-bold uppercase tracking-wide text-smoked-bronze font-space-mono leading-tight">
-                            {dot.name}
+                            {dot.label}
                           </p>
                           <p className="text-[11px] text-sandcast font-space-mono mt-1">
-                            {dot.price}
+                            From ₹{dot.product.price.toLocaleString("en-IN")}
                           </p>
                           <Link
-                            href={dot.href}
+                            href={`${CATEGORY_BASE_PATHS[dot.product.category]}/${slugify(dot.product.name)}`}
                             className="text-[11px] text-smoked-bronze underline underline-offset-2 hover:text-mulled-iron transition-colors mt-1.5 inline-block font-space-mono"
                           >
                             Quickshop

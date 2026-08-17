@@ -88,24 +88,27 @@ export async function withLivePrices<
 export interface CheckoutLine {
   variantId: string;
   quantity: number;
+  /** Custom line-item properties (e.g. selected color) shown on Shopify's cart & checkout pages. */
+  attributes?: { key: string; value: string }[];
 }
 
 /** Creates a Shopify cart from the given lines and returns the hosted checkout URL. */
-export async function createCheckoutUrl(lines: CheckoutLine[]): Promise<string> {
+export async function createCheckoutUrl(lines: CheckoutLine[], discountCode?: string): Promise<string> {
   const data = await storefrontFetch<{
     cartCreate: {
       cart: { checkoutUrl: string } | null;
       userErrors: { field: string[]; message: string }[];
     };
   }>(
-    `mutation CreateCart($lines: [CartLineInput!]!) {
-      cartCreate(input: { lines: $lines }) {
+    `mutation CreateCart($lines: [CartLineInput!]!, $discountCodes: [String!]) {
+      cartCreate(input: { lines: $lines, discountCodes: $discountCodes }) {
         cart { checkoutUrl }
         userErrors { field message }
       }
     }`,
     {
-      lines: lines.map((l) => ({ merchandiseId: l.variantId, quantity: l.quantity })),
+      lines: lines.map((l) => ({ merchandiseId: l.variantId, quantity: l.quantity, attributes: l.attributes })),
+      discountCodes: discountCode ? [discountCode] : undefined,
     }
   );
 

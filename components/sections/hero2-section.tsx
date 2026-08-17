@@ -105,6 +105,10 @@ export function Hero2Section() {
         /* Anchor to the top on mobile so any overflow crops off the bottom, not the sides */
         @media (max-width: 767px) {
           .h2s-video { object-position: top; }
+          /* On desktop the title carries extra inset margin beyond the
+             container's own padding; on mobile that just misaligns it
+             against the label/subtitle above and below, so flush it out. */
+          .h2s-title { margin-left: 0 !important; margin-right: 0 !important; }
         }
       `}</style>
 
@@ -206,7 +210,9 @@ export function Hero2Section() {
         </div>
       </div>
 
-      {/* ── SCROLL REVEAL TEXT M */}
+      {/* ── SCROLL REVEAL TEXT M
+      
+      \*/}
      
     </>
   );

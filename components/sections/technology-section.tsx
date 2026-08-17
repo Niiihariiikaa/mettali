@@ -109,7 +109,7 @@ function SignatureProductCard({ label, product, images }: { label: string; produ
           src={images[0]}
           alt={label}
           fill
-          className="object-cover transition-[opacity,transform] duration-[1200ms] ease-[cubic-bezier(0.4,0,0.2,1)] will-change-[opacity,transform]"
+          className="object-cover transition-[opacity,transform] duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] will-change-[opacity,transform]"
           style={{ opacity: hovered ? 0 : 1, transform: hovered ? "scale(1.06)" : "scale(1)" }}
         />
 
@@ -118,13 +118,13 @@ function SignatureProductCard({ label, product, images }: { label: string; produ
           src={images[1]}
           alt={`${label} in a styled room`}
           fill
-          className="object-cover transition-[opacity,transform] duration-[1200ms] ease-[cubic-bezier(0.4,0,0.2,1)] will-change-[opacity,transform]"
+          className="object-cover transition-[opacity,transform] duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] will-change-[opacity,transform]"
           style={{ opacity: hovered ? 1 : 0, transform: hovered ? "scale(1)" : "scale(1.06)" }}
         />
 
         {/* Hover actions */}
         <div
-          className="absolute right-3 top-3 flex flex-col gap-2 transition-[opacity,transform] duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]"
+          className="absolute right-3 top-3 flex flex-col gap-2 transition-[opacity,transform] duration-200 ease-[cubic-bezier(0.4,0,0.2,1)]"
           style={{ opacity: hovered ? 1 : 0, transform: hovered ? "translateY(0)" : "translateY(-6px)" }}
         >
           <button
@@ -163,8 +163,9 @@ function SignatureProductCard({ label, product, images }: { label: string; produ
 
 // ─── Main section ─────────────────────────────────────────────────────────────
 
+const WELCOME_DISCOUNT_CODE = "WELCOME10";
+
 export function TechnologySection() {
-  const { openCart } = useCart();
   const descriptionText =
     "At Mettali, raw aluminium is the starting point — not the shortcut. Every piece passes through precision forming, expert powder coating, and careful hand-finishing before it earns its place in your home. Durable enough to outlast trends, refined enough to define them.";
 
@@ -172,7 +173,14 @@ export function TechnologySection() {
     <section>
       {/* 1. Video panel */}
       <div className="relative aspect-video overflow-hidden md:aspect-auto md:h-[85vh]">
-        <video autoPlay muted loop playsInline className="absolute inset-0 h-full w-full origin-top scale-125 object-cover object-top md:scale-100">
+        <style>{`
+          @media (max-width: 767px) {
+            /* Zoom in and anchor to the top-left so the extra width spills
+               off the right edge instead of showing the source watermark. */
+            .ts-promo-video { transform: scale(1.4); transform-origin: left top; }
+          }
+        `}</style>
+        <video autoPlay muted loop playsInline className="ts-promo-video absolute inset-0 h-full w-full object-cover object-top-left md:object-top md:transform-none">
           <source src="/products1_webp/products1/more_sharp_k_video_focus_sho.mp4" type="video/mp4" />
         </video>
         <div className="absolute inset-0" style={{ background: "rgba(0,0,0,0.4)" }} />
@@ -181,32 +189,34 @@ export function TechnologySection() {
           <p className="mt-2 text-[10px] uppercase tracking-[0.2em] text-white/75 font-space-mono sm:mt-4 sm:text-sm sm:tracking-[0.25em]">
             On Your First Purchase
           </p>
-          <button
-            type="button"
-            onClick={openCart}
+          <Link
+            href={`/products?discount=${WELCOME_DISCOUNT_CODE}`}
             className="mt-3 border border-white/60 px-5 py-2 text-[10px] uppercase tracking-widest text-white font-space-mono hover:bg-white hover:text-smoked-bronze transition-colors duration-200 sm:mt-10 sm:px-8 sm:py-3 sm:text-xs"
           >
             Shop Now
-          </button>
+          </Link>
         </div>
       </div>
 
       {/* 2. Signature products */}
       <div className="bg-background">
         <div className="px-6 py-16 text-center md:px-12 md:py-20 lg:px-20 lg:py-24 lg:pb-16">
-          <p className="inline-block text-sm md:text-base uppercase tracking-[0.25em] text-smoked-bronze font-space-mono border-b-2 border-smoked-bronze/40 pb-1 mb-6">
+          <p className="inline-block text-sm md:text-base uppercase tracking-[0.25em] text-smoked-bronze font-space-mono border-b-2 border-smoked-bronze/40 pb-1">
             Signature Products
           </p>
-          <h2 className="text-2xl tracking-wide text-mulled-iron md:text-3xl lg:text-4xl font-horizon uppercase">
-            The Mettali Standard.
-            <br />
-            Built for Every Room.
-          </h2>
         </div>
         <div className="grid grid-cols-2 gap-6 px-6 pb-6 sm:grid-cols-3 md:px-12 lg:px-20">
           {SIGNATURE_PRODUCTS.map((sp) => (
             <SignatureProductCard key={sp.label} label={sp.label} product={sp.product} images={sp.images} />
           ))}
+        </div>
+        <div className="flex justify-center pb-16 md:pb-20">
+          <Link
+            href="/products"
+            className="rounded-full border border-smoked-bronze px-8 py-3 text-xs uppercase tracking-widest text-smoked-bronze font-space-mono transition-colors duration-200 hover:bg-smoked-bronze hover:text-white"
+          >
+            All Products
+          </Link>
         </div>
       </div>
 

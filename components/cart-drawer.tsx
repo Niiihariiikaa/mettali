@@ -8,7 +8,7 @@ import { useCart } from "@/components/cart-context";
 import { createCheckoutUrl } from "@/lib/shopify";
 
 export function CartDrawer() {
-  const { items, isOpen, closeCart, removeItem, setQty, subtotal, count } =
+  const { items, isOpen, closeCart, removeItem, setQty, subtotal, count, discountCode } =
     useCart();
   const [mounted, setMounted] = useState(false);
   const [checkingOut, setCheckingOut] = useState(false);
@@ -22,7 +22,12 @@ export function CartDrawer() {
     setCheckingOut(true);
     try {
       const url = await createCheckoutUrl(
-        checkoutItems.map((i) => ({ variantId: i.variantId!, quantity: i.qty }))
+        checkoutItems.map((i) => ({
+          variantId: i.variantId!,
+          quantity: i.qty,
+          attributes: i.color ? [{ key: "Color", value: i.color }] : undefined,
+        })),
+        discountCode ?? undefined
       );
       window.location.href = url;
     } catch (err) {
@@ -82,7 +87,7 @@ export function CartDrawer() {
         ) : (
           <div className="flex-1 overflow-y-auto divide-y divide-border">
             {items.map((item) => (
-              <div key={item.name} className="flex gap-4 px-6 py-5">
+              <div key={`${item.name}-${item.color ?? ""}`} className="flex gap-4 px-6 py-5">
                 <div className="relative h-20 w-20 shrink-0 border border-border bg-white">
                   <Image
                     src={item.image}
@@ -100,9 +105,14 @@ export function CartDrawer() {
                       <h3 className="text-sm uppercase tracking-wide text-smoked-bronze font-space-mono">
                         {item.name}
                       </h3>
+                      {item.color && (
+                        <p className="mt-0.5 text-[10px] text-slate-moss font-space-mono">
+                          Color: {item.color}
+                        </p>
+                      )}
                     </div>
                     <button
-                      onClick={() => removeItem(item.name)}
+                      onClick={() => removeItem(item.name, item.color)}
                       aria-label={`Remove ${item.name}`}
                       className="text-slate-moss/60 transition-colors hover:text-destructive"
                     >
@@ -112,7 +122,7 @@ export function CartDrawer() {
                   <div className="mt-auto flex items-center justify-between pt-2">
                     <div className="flex items-center border border-border">
                       <button
-                        onClick={() => setQty(item.name, item.qty - 1)}
+                        onClick={() => setQty(item.name, item.qty - 1, item.color)}
                         aria-label="Decrease quantity"
                         className="px-2 py-1 text-slate-moss hover:text-foreground"
                       >
@@ -122,7 +132,7 @@ export function CartDrawer() {
                         {item.qty}
                       </span>
                       <button
-                        onClick={() => setQty(item.name, item.qty + 1)}
+                        onClick={() => setQty(item.name, item.qty + 1, item.color)}
                         aria-label="Increase quantity"
                         className="px-2 py-1 text-slate-moss hover:text-foreground"
                       >
@@ -150,6 +160,13 @@ export function CartDrawer() {
                 ₹{subtotal.toLocaleString("en-IN")}
               </span>
             </div>
+            <p className="mb-4 text-center text-[11px] text-slate-moss font-space-mono">
+              {discountCode ? (
+                <>Code <span className="font-semibold text-smoked-bronze">{discountCode}</span> will be applied at checkout.</>
+              ) : (
+                <>Use code <span className="font-semibold text-smoked-bronze">WELCOME10</span> at checkout for 10% off your first order.</>
+              )}
+            </p>
             {checkoutError && (
               <p className="mb-2 text-center text-xs text-destructive font-space-mono">
                 {checkoutError}

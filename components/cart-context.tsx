@@ -16,6 +16,7 @@ export interface CartItem {
   image: string;
   href?: string;
   variantId?: string;
+  color?: string;
   qty: number;
 }
 
@@ -25,21 +26,24 @@ interface CartState {
   openCart: () => void;
   closeCart: () => void;
   addItem: (item: Omit<CartItem, "qty">) => void;
-  removeItem: (name: string) => void;
-  setQty: (name: string, qty: number) => void;
+  removeItem: (name: string, color?: string) => void;
+  setQty: (name: string, qty: number, color?: string) => void;
   clearCart: () => void;
   count: number;
   subtotal: number;
+  discountCode: string | null;
 }
 
 const CartContext = createContext<CartState | null>(null);
 
 const STORAGE_KEY = "mettali-cart";
+const DISCOUNT_STORAGE_KEY = "mettali-discount-code";
 
 export function CartProvider({ children }: { children: ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([]);
   const [isOpen, setIsOpen] = useState(false);
   const [loaded, setLoaded] = useState(false);
+  const [discountCode, setDiscountCode] = useState<string | null>(null);
 
   useEffect(() => {
     try {
@@ -51,6 +55,27 @@ export function CartProvider({ children }: { children: ReactNode }) {
     setLoaded(true);
   }, []);
 
+  // Picks up a ?discount=CODE link (e.g. the homepage "10% Off" promo) and
+  // remembers it in localStorage so it's still applied whenever the visitor
+  // eventually checks out, even after browsing away from that link.
+  useEffect(() => {
+    try {
+      const fromUrl = new URLSearchParams(window.location.search).get("discount");
+      if (fromUrl) {
+        localStorage.setItem(DISCOUNT_STORAGE_KEY, fromUrl);
+        setDiscountCode(fromUrl);
+        const url = new URL(window.location.href);
+        url.searchParams.delete("discount");
+        window.history.replaceState({}, "", url.toString());
+      } else {
+        const stored = localStorage.getItem(DISCOUNT_STORAGE_KEY);
+        if (stored) setDiscountCode(stored);
+      }
+    } catch {
+      // storage/URL unavailable — no discount code carried over
+    }
+  }, []);
+
   useEffect(() => {
     if (!loaded) return;
     try {
@@ -60,12 +85,17 @@ export function CartProvider({ children }: { children: ReactNode }) {
     }
   }, [items, loaded]);
 
+  // Same product in a different color is a distinct line, so lines are
+  // matched on name + color together rather than name alone.
+  const sameLine = (a: { name: string; color?: string }, b: { name: string; color?: string }) =>
+    a.name === b.name && (a.color ?? null) === (b.color ?? null);
+
   const addItem = (item: Omit<CartItem, "qty">) => {
     setItems((prev) => {
-      const existing = prev.find((i) => i.name === item.name);
+      const existing = prev.find((i) => sameLine(i, item));
       if (existing) {
         return prev.map((i) =>
-          i.name === item.name ? { ...i, qty: i.qty + 1 } : i
+          sameLine(i, item) ? { ...i, qty: i.qty + 1 } : i
         );
       }
       return [...prev, { ...item, qty: 1 }];
@@ -73,12 +103,12 @@ export function CartProvider({ children }: { children: ReactNode }) {
     setIsOpen(true);
   };
 
-  const removeItem = (name: string) =>
-    setItems((prev) => prev.filter((i) => i.name !== name));
+  const removeItem = (name: string, color?: string) =>
+    setItems((prev) => prev.filter((i) => !sameLine(i, { name, color })));
 
-  const setQty = (name: string, qty: number) => {
-    if (qty < 1) return removeItem(name);
-    setItems((prev) => prev.map((i) => (i.name === name ? { ...i, qty } : i)));
+  const setQty = (name: string, qty: number, color?: string) => {
+    if (qty < 1) return removeItem(name, color);
+    setItems((prev) => prev.map((i) => (sameLine(i, { name, color }) ? { ...i, qty } : i)));
   };
 
   const clearCart = () => setItems([]);
@@ -104,6 +134,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
         clearCart,
         count,
         subtotal,
+        discountCode,
       }}
     >
       {children}

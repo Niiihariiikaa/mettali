@@ -2,12 +2,13 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
-import { ChevronLeft, ChevronRight, ShoppingBag, Check } from "lucide-react";
+import { useRef, useState } from "react";
+import { ChevronLeft, ChevronRight, ShoppingBag, Check, Heart } from "lucide-react";
 import { Header } from "@/components/header";
 import { FooterSection } from "@/components/sections/footer-section";
 import { ProductSliderCard } from "@/components/product-slider-card";
 import { useCart } from "@/components/cart-context";
+import { useWishlist } from "@/lib/wishlist";
 import { slugify, type Product } from "@/lib/products";
 
 export function ProductDetailView({
@@ -24,9 +25,13 @@ export function ProductDetailView({
   const [current, setCurrent] = useState(0);
   const [added, setAdded] = useState(false);
   const [sizeIndex, setSizeIndex] = useState(0);
+  const [colorIndex, setColorIndex] = useState(0);
   const { addItem } = useCart();
+  const { wishlisted, toggle: toggleWishlist } = useWishlist(product.name);
+  const touchStartX = useRef<number | null>(null);
 
   const selectedSize = product.sizes?.[sizeIndex];
+  const selectedColor = product.colors?.[colorIndex];
   const effectivePrice = selectedSize?.price ?? product.price;
   const effectiveDimensions = selectedSize?.dimensions ?? product.dimensions;
   const effectiveWeight = selectedSize?.weight ?? product.weight;
@@ -38,7 +43,14 @@ export function ProductDetailView({
   const dimLabels = ["Width", "Depth", "Height"];
 
   const handleAddToCart = () => {
-    addItem({ name: effectiveName, category: product.category, price: effectivePrice, image: effectiveImages[0], variantId: effectiveShopify?.variantId });
+    addItem({
+      name: effectiveName,
+      category: product.category,
+      price: effectivePrice,
+      image: effectiveImages[0],
+      variantId: effectiveShopify?.variantId,
+      color: selectedColor?.name,
+    });
     setAdded(true);
     setTimeout(() => setAdded(false), 1600);
   };
@@ -46,6 +58,19 @@ export function ProductDetailView({
   const selectSize = (i: number) => {
     setSizeIndex(i);
     setCurrent(0);
+  };
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX.current === null || effectiveImages.length < 2) return;
+    const deltaX = e.changedTouches[0].clientX - touchStartX.current;
+    touchStartX.current = null;
+    if (Math.abs(deltaX) < 40) return;
+    setCurrent((c) =>
+      deltaX < 0 ? (c + 1) % effectiveImages.length : (c - 1 + effectiveImages.length) % effectiveImages.length
+    );
   };
 
   return (
@@ -64,7 +89,11 @@ export function ProductDetailView({
       <div className="grid grid-cols-1 gap-12 px-6 pb-20 md:grid-cols-2 md:gap-16 md:px-12 lg:px-20">
         {/* Media */}
         <div className="md:sticky md:top-32 md:self-start">
-          <div className="relative aspect-square overflow-hidden border border-border bg-white shadow-[0_4px_32px_rgba(0,0,0,0.08)]">
+          <div
+            className="relative aspect-square overflow-hidden border border-border bg-white shadow-[0_4px_32px_rgba(0,0,0,0.08)]"
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
+          >
             <div className="absolute inset-10">
               <div className="relative h-full w-full">
                 <Image src={effectiveImages[current]} alt={product.name} fill className="object-contain" priority />
@@ -154,13 +183,19 @@ export function ProductDetailView({
           {/* Colors */}
           {product.colors && product.colors.length > 0 && (
             <div className="mt-6">
-              <h5 className="mb-2 text-[10px] uppercase tracking-widest text-mulled-iron font-space-mono">Colors</h5>
+              <h5 className="mb-2 text-[10px] uppercase tracking-widest text-mulled-iron font-space-mono">
+                Color{selectedColor ? `: ${selectedColor.name}` : ""}
+              </h5>
               <div className="flex flex-wrap gap-2">
-                {product.colors.map((c) => (
-                  <span
+                {product.colors.map((c, i) => (
+                  <button
                     key={c.name}
                     title={c.name}
-                    className="h-5 w-5 rounded-full border border-border/60"
+                    aria-label={`Select color ${c.name}`}
+                    onClick={() => setColorIndex(i)}
+                    className={`h-7 w-7 rounded-full border transition-shadow ${
+                      i === colorIndex ? "ring-2 ring-mulled-iron ring-offset-1" : "border-border/60"
+                    }`}
                     style={{ backgroundColor: c.hex }}
                   />
                 ))}
@@ -188,15 +223,28 @@ export function ProductDetailView({
             )}
           </div>
 
-          <button
-            onClick={handleAddToCart}
-            className={`mt-8 inline-flex w-fit items-center gap-2 px-8 py-4 text-center text-xs uppercase tracking-widest text-white font-space-mono transition-opacity duration-200 hover:opacity-85 ${
-              added ? "bg-slate-moss" : "bg-mulled-iron"
-            }`}
-          >
-            {added ? <Check size={14} /> : <ShoppingBag size={14} />}
-            {added ? "Added to Cart" : "Add to Cart"}
-          </button>
+          <div className="mt-8 flex w-fit items-center gap-3">
+            <button
+              onClick={handleAddToCart}
+              className={`inline-flex items-center gap-2 px-8 py-4 text-center text-xs uppercase tracking-widest text-white font-space-mono transition-opacity duration-200 hover:opacity-85 ${
+                added ? "bg-slate-moss" : "bg-mulled-iron"
+              }`}
+            >
+              {added ? <Check size={14} /> : <ShoppingBag size={14} />}
+              {added ? "Added to Cart" : "Add to Cart"}
+            </button>
+            <button
+              onClick={toggleWishlist}
+              aria-label={wishlisted ? "Remove from wishlist" : "Add to wishlist"}
+              className={`flex h-13 w-13 shrink-0 items-center justify-center border transition-colors duration-200 ${
+                wishlisted
+                  ? "border-mulled-iron bg-mulled-iron text-white"
+                  : "border-border text-smoked-bronze hover:border-mulled-iron hover:text-mulled-iron"
+              }`}
+            >
+              <Heart size={16} fill={wishlisted ? "currentColor" : "none"} />
+            </button>
+          </div>
           <p className="mt-4 text-xs text-slate-moss font-space-mono">
             Crafted in-house, from first sketch to final finish.
           </p>

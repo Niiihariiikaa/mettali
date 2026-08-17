@@ -66,10 +66,10 @@ export function ProductFilterBar({
             onChange={(e) => setFilter(e.target.value)}
             className="border border-border bg-background px-3 py-2 text-xs uppercase tracking-widest text-slate-moss font-space-mono focus:outline-none"
           >
-            <option value="all">All {filterKey === "category" ? "Categories" : "Types"}</option>
             {filterOptions.map((v) => (
               <option key={v} value={v}>{v}</option>
             ))}
+            <option value="all">All {filterKey === "category" ? "Categories" : "Types"}</option>
           </select>
 
           <select
