@@ -1,16 +1,10 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import { useState } from "react";
 import { X } from "lucide-react";
-import { vases, wineHolders, organisers, slugify, type Product } from "@/lib/products";
-
-const CATEGORY_BASE_PATHS: Record<string, string> = {
-  Vases: "/vases",
-  "Wine Holders": "/wine-holders",
-  Organisers: "/organisers",
-};
+import { vases, wineHolders, organisers, type Product } from "@/lib/products";
+import { createCheckoutUrl } from "@/lib/shopify";
 
 function findProduct(list: Product[], name: string): Product {
   const p = list.find((x) => x.name === name);
@@ -23,6 +17,7 @@ type Point = { left: string; top: string };
 type Dot = {
   label: string;
   product: Product;
+  color: string;
   dot: { mobile: Point; desktop: Point };
 };
 
@@ -42,11 +37,13 @@ const panels: Panel[] = [
       {
         label: "LINEA",
         product: findProduct(organisers, "Linea Organiser"),
+        color: "Moss Green",
         dot: { mobile: { left: "42%", top: "60%" }, desktop: { left: "30%", top: "50%" } },
       },
       {
         label: "CALA",
         product: findProduct(vases, "Cala Vase"),
+        color: "Moss Green",
         dot: { mobile: { left: "80%", top: "75%" }, desktop: { left: "75%", top: "72%" } },
       },
     ],
@@ -59,6 +56,7 @@ const panels: Panel[] = [
       {
         label: "MAYA VASE",
         product: findProduct(vases, "Maya Vase"),
+        color: "Ash Champagne",
         dot: { mobile: { left: "21%", top: "50%" }, desktop: { left: "21%", top: "72%" } },
       },
     ],
@@ -71,6 +69,7 @@ const panels: Panel[] = [
       {
         label: "CLINK",
         product: findProduct(wineHolders, "Clink"),
+        color: "Black Onyx",
         dot: { mobile: { left: "53%", top: "50%" }, desktop: { left: "53%", top: "58%" } },
       },
     ],
@@ -92,8 +91,29 @@ function posStyle(point: { mobile: Point; desktop: Point }): React.CSSProperties
 export function QuickBuySection() {
   // activeKey = "panelIdx-dotIdx" or null
   const [activeKey, setActiveKey] = useState<string | null>(null);
+  const [checkingOut, setCheckingOut] = useState(false);
+  const [checkoutError, setCheckoutError] = useState("");
 
   const toggle = (key: string) => setActiveKey(prev => prev === key ? null : key);
+
+  const handleQuickshop = async (product: Product, color: string) => {
+    if (!product.shopify?.variantId) return;
+    setCheckoutError("");
+    setCheckingOut(true);
+    try {
+      const url = await createCheckoutUrl([
+        {
+          variantId: product.shopify.variantId,
+          quantity: 1,
+          attributes: [{ key: "Color", value: color }],
+        },
+      ]);
+      window.location.href = url;
+    } catch (err) {
+      setCheckoutError(err instanceof Error ? err.message : "Checkout failed. Please try again.");
+      setCheckingOut(false);
+    }
+  };
 
   return (
     <section id="gallery" className="flex flex-col gap-3 bg-background p-3 md:flex-row md:gap-6 md:p-8">
@@ -177,14 +197,26 @@ export function QuickBuySection() {
                           <p className="text-[11px] text-sandcast font-space-mono mt-1">
                             From ₹{dot.product.price.toLocaleString("en-IN")}
                           </p>
-                          <Link
-                            href={`${CATEGORY_BASE_PATHS[dot.product.category]}/${slugify(dot.product.name)}`}
-                            className="text-[11px] text-smoked-bronze underline underline-offset-2 hover:text-mulled-iron transition-colors mt-1.5 inline-block font-space-mono"
+                          <div className="mt-1 flex items-center gap-1.5">
+                            <span
+                              className="h-3 w-3 shrink-0 rounded-full border border-border/60"
+                              style={{ backgroundColor: dot.product.colors?.find((c) => c.name === dot.color)?.hex }}
+                            />
+                            <span className="text-[10px] text-slate-moss font-space-mono">{dot.color}</span>
+                          </div>
+                          <button
+                            type="button"
+                            onClick={() => handleQuickshop(dot.product, dot.color)}
+                            disabled={checkingOut}
+                            className="text-[11px] text-smoked-bronze underline underline-offset-2 hover:text-mulled-iron transition-colors mt-1.5 inline-block font-space-mono disabled:opacity-60"
                           >
-                            Quickshop
-                          </Link>
+                            {checkingOut ? "Redirecting…" : "Quickshop"}
+                          </button>
                         </div>
                       </div>
+                      {checkoutError && (
+                        <p className="mt-2 text-[10px] text-destructive font-space-mono">{checkoutError}</p>
+                      )}
                     </div>
                   )}
                 </div>

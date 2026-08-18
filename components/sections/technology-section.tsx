@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import { Heart, ShoppingBag, Check } from "lucide-react";
 import { useCart } from "@/components/cart-context";
 import { useWishlist } from "@/lib/wishlist";
+import { AnnouncementBar } from "@/components/announcement-bar";
 import { shelves, vases, wineHolders, organisers, shoeRacks, slugify, type Product } from "@/lib/products";
 
 // ─── Scroll-reveal text ──────────────────────────────────────────────────────
@@ -109,6 +110,7 @@ function SignatureProductCard({ label, product, images }: { label: string; produ
           src={images[0]}
           alt={label}
           fill
+          sizes="(max-width: 639px) 50vw, (max-width: 1023px) 33vw, 300px"
           className="object-cover transition-[opacity,transform] duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] will-change-[opacity,transform]"
           style={{ opacity: hovered ? 0 : 1, transform: hovered ? "scale(1.06)" : "scale(1)" }}
         />
@@ -118,6 +120,7 @@ function SignatureProductCard({ label, product, images }: { label: string; produ
           src={images[1]}
           alt={`${label} in a styled room`}
           fill
+          sizes="(max-width: 639px) 50vw, (max-width: 1023px) 33vw, 300px"
           className="object-cover transition-[opacity,transform] duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] will-change-[opacity,transform]"
           style={{ opacity: hovered ? 1 : 0, transform: hovered ? "scale(1)" : "scale(1.06)" }}
         />
@@ -171,6 +174,8 @@ export function TechnologySection() {
 
   return (
     <section>
+      <AnnouncementBar />
+
       {/* 1. Video panel */}
       <div className="relative aspect-video overflow-hidden md:aspect-auto md:h-[85vh]">
         <style>{`
@@ -201,9 +206,12 @@ export function TechnologySection() {
       {/* 2. Signature products */}
       <div className="bg-background">
         <div className="px-6 py-16 text-center md:px-12 md:py-20 lg:px-20 lg:py-24 lg:pb-16">
-          <p className="inline-block text-sm md:text-base uppercase tracking-[0.25em] text-smoked-bronze font-space-mono border-b-2 border-smoked-bronze/40 pb-1">
+          <p className="inline-block text-sm md:text-base uppercase tracking-[0.25em] text-smoked-bronze font-space-mono border-b-2 border-smoked-bronze/40 pb-1 mb-6">
             Signature Products
           </p>
+          <h2 className="text-2xl tracking-wide text-mulled-iron md:text-3xl lg:text-4xl font-horizon uppercase">
+            Built for Every Room.
+          </h2>
         </div>
         <div className="grid grid-cols-2 gap-6 px-6 pb-6 sm:grid-cols-3 md:px-12 lg:px-20">
           {SIGNATURE_PRODUCTS.map((sp) => (

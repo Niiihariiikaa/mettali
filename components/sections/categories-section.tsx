@@ -52,7 +52,7 @@ export function CategoriesSection({
                 fill
                 className={`object-cover transition-transform duration-500 ${
                   cat.zoom
-                    ? "scale-125 -translate-y-8 group-hover:scale-[1.31]"
+                    ? "scale-110 -translate-y-4 md:scale-125 md:-translate-y-8 md:group-hover:scale-[1.31]"
                     : "group-hover:scale-[1.05]"
                 }`}
               />

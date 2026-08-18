@@ -73,12 +73,13 @@ export function Header({ variant = "light" }: { variant?: "dark" | "light" }) {
       <div className="flex items-center justify-between transition-all duration-300 px-3 pl-6 py-2.5">
         {/* Logo */}
         <Link href="/" className="flex items-center">
-          <div className="relative h-6 w-28 overflow-hidden md:h-8 md:w-36">
+          <div className="relative h-10 w-40 overflow-hidden md:h-14 md:w-56">
             <Image
-              src="/images/logo2.svg"
+              src="/images/logo2.png"
               alt="Mettali"
               fill
-              style={{ objectFit: "cover", objectPosition: "center 40%" }}
+              sizes="224px"
+              style={{ objectFit: "contain" }}
               className={`transition-all duration-300 ${onDark ? "brightness-0 invert" : ""}`}
             />
           </div>

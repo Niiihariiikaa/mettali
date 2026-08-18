@@ -177,7 +177,7 @@ export function Hero2Section() {
                 lineHeight: 0.98,
                 letterSpacing: "0.02em",
                 color: RL,
-                margin: "0 clamp(16px, 5vw, 50px) 28px clamp(8px, 3vw, 32px)",
+                margin: "0 clamp(16px, 5vw, 50px) 28px 0",
                 fontWeight: 400,
               }}>
                 Metal<br />

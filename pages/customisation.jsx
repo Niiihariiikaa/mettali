@@ -23,86 +23,6 @@ const CUSTOMIZE_OPTIONS = [
 ];
 
 /* ══════════════════════════════════════════════════════
-   Splash — intro animation shown once per session when the
-   customisation page loads, built from sketch renders in
-   /public/mettali products.
-   ══════════════════════════════════════════════════════ */
-const SPLASH_IMAGES = [
-  "/mettali%20products/volume-1-freestanding-bookshelf-2.svg",
-  "/mettali%20products/quill-wallmounted-bookshelf-2.svg",
-  "/mettali%20products/preface-300-freestanding-bookshelf-1.svg",
-  "/mettali%20products/narrative-freestanding-bookshelf.svg",
-  "/mettali%20products/index-wallmounted%20bookshelf-1.svg",
-];
-
-function CustomiseSplash() {
-  const [visible, setVisible] = useState(true);
-  const [leaving, setLeaving] = useState(false);
-
-  useEffect(() => {
-    const leaveTimer = setTimeout(() => setLeaving(true), 2000);
-    const hideTimer = setTimeout(() => setVisible(false), 2700);
-    return () => { clearTimeout(leaveTimer); clearTimeout(hideTimer); };
-  }, []);
-
-  if (!visible) return null;
-
-  return (
-    <div style={{
-      position: "fixed", inset: 0, zIndex: 9999,
-      background: RL,
-      display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
-      opacity: leaving ? 0 : 1,
-      transition: "opacity 0.7s ease",
-      pointerEvents: leaving ? "none" : "auto",
-    }}>
-      <style>{`
-        @keyframes cs-item { from { opacity:0; transform: translateY(28px) scale(0.88); } to { opacity:1; transform:none; } }
-        @keyframes cs-word { from { opacity:0; letter-spacing:0.6em; } to { opacity:1; letter-spacing:0.42em; } }
-      `}</style>
-
-      <div style={{
-        display: "flex", flexWrap: "wrap", justifyContent: "center",
-        gap: "clamp(6px, 2.4vw, 26px)", marginBottom: 34, padding: "0 16px",
-      }}>
-        {SPLASH_IMAGES.map((src, i) => (
-          <div
-            key={src}
-            style={{
-              position: "relative",
-              width: "clamp(34px, 9vw, 92px)",
-              height: "clamp(34px, 9vw, 92px)",
-              overflow: "hidden",
-              opacity: 0,
-              animation: `cs-item 0.7s cubic-bezier(0.16,1,0.3,1) ${0.18 * i + 0.1}s forwards`,
-            }}
-          >
-            <img
-              src={src}
-              alt=""
-              style={{
-                position: "absolute", inset: 0,
-                width: "100%", height: "100%",
-                objectFit: "contain",
-                transform: "scale(2.4)",
-              }}
-            />
-          </div>
-        ))}
-      </div>
-
-      <p style={{
-        fontFamily: SPACE, fontSize: 11, letterSpacing: "0.42em",
-        textTransform: "uppercase", color: SB, margin: 0,
-        opacity: 0, animation: "cs-word 0.9s ease 1s forwards",
-      }}>
-        Customize Your Piece
-      </p>
-    </div>
-  );
-}
-
-/* ══════════════════════════════════════════════════════
    Burst — one-shot particle explosion (on submit)
    ══════════════════════════════════════════════════════ */
 function Burst({ trigger }) {
@@ -785,7 +705,6 @@ export function CustomisationContent() {
 export default function CustomisationPage() {
   return (
     <main style={{ background: TP, minHeight: "100vh" }}>
-      <CustomiseSplash />
       <Header />
       <CustomisationContent />
       <FooterSection />

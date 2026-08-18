@@ -97,7 +97,7 @@ export const shelves: Product[] = [
     dimensions: "32×14×76 cm",
     weight: "1.5 kg",
     description: "A clever fusion of form and function, featuring a two-way design with invisible folds.",
-    images: [`${B}/index-1.webp`, `${B}/index-2.webp`],
+    images: ["/images/index1.jpeg", `${B}/index-1.webp`, `${B}/index-2.webp`],
     colors: colors("Crimson Red", "Black Onyx", "Pearl White", "Ash Champagne"),
   },
   {
@@ -107,7 +107,7 @@ export const shelves: Product[] = [
     dimensions: "30×25×133 cm",
     weight: "10 kg",
     description: "Grid-like sections designed to display books and decorative pieces. A striking, complex bend at the top adds architectural drama.",
-    images: ["/mettali%20products/preface-bookshelf-0.svg", `${B}/preface-big-1.webp`, "/images/lifestyle%20images/preface.png"],
+    images: ["/mettali%20products/preface-bookshelf-0-transparent.png", `${B}/preface-big-1.webp`, "/images/lifestyle%20images/preface.png"],
     colors: colors("Black Onyx", "Pearl White", "Ash Champagne"),
   },
   {
@@ -232,7 +232,7 @@ export const shelves: Product[] = [
     dimensions: "40×15.5×70 cm",
     weight: "7 kg",
     description: "Four unique shelves that come together in a harmonious display with complex bends and fluid lines.",
-    images: ["/mettali%20products/ballad-0.svg", `${B}/ballad-1.webp`, "/images/lifestyle%20images/ballad.png"],
+    images: ["/mettali%20products/ballad-0-transparent.png", `${B}/ballad-1.webp`, "/images/lifestyle%20images/ballad.png"],
     colors: colors("Black Onyx", "Pearl White", "Ash Champagne"),
   },
   {
@@ -270,7 +270,7 @@ export const shelves: Product[] = [
     dimensions: "62×21×200 cm",
     weight: "10 kg",
     description: "Sleek, modern design with a long pipe that elegantly connects three triangles on opposite sides.",
-    images: ["/mettali%20products/binding-freestanding-bookshelf-0.svg", `${B}/binding-1.webp`, "/images/lifestyle%20images/binding.png"],
+    images: ["/mettali%20products/binding-freestanding-bookshelf-0-transparent.png", `${B}/binding-1.webp`, "/images/lifestyle%20images/binding.png"],
     colors: colors("Black Onyx"),
   },
   {
@@ -463,7 +463,7 @@ export const organisers: Product[] = [
     price: 5500,
     dimensions: "60×15×60 cm",
     description: "Bold cylindrical form with a sculptural silhouette. A statement display for mugs, bottles, or curated collectibles.",
-    images: ["/images2/products/brew1.jpeg"],
+    images: ["/images2/products/brew1.jpeg", "/images/lifestyle%20images/brew.jpeg"],
     colors: colors("Copper Flame", "Black Onyx", "Sunset Gold", "Sage", "Moss Green"),
   },
 ];
