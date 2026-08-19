@@ -80,6 +80,7 @@ function SignatureProductCard({ label, product, images }: { label: string; produ
   const [added, setAdded] = useState(false);
   const { addItem } = useCart();
   const { wishlisted, toggle } = useWishlist(product.name);
+  const touchArmedRef = useRef(false);
 
   const href = `${CATEGORY_BASE_PATHS[product.category]}/${slugify(product.name)}`;
 
@@ -97,20 +98,38 @@ function SignatureProductCard({ label, product, images }: { label: string; produ
     toggle();
   };
 
+  // On touch devices, the first tap only reveals the hover preview (image
+  // crossfade + quick-add bar); a second tap on the card follows the link.
+  const handleTouchStart = () => {
+    if (!hovered) {
+      touchArmedRef.current = true;
+      setHovered(true);
+    }
+  };
+
+  const handleClick = (e: React.MouseEvent) => {
+    if (touchArmedRef.current) {
+      e.preventDefault();
+      touchArmedRef.current = false;
+    }
+  };
+
   return (
     <Link
       href={href}
-      className="group block cursor-pointer overflow-hidden bg-card"
+      className="group block cursor-pointer overflow-hidden rounded-2xl bg-card"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
+      onTouchStart={handleTouchStart}
+      onClick={handleClick}
     >
-      <div className="relative aspect-3/4 overflow-hidden bg-white isolate">
+      <div className="relative aspect-3/4 overflow-hidden rounded-2xl bg-white isolate">
         {/* Base: white product shot — same fixed rectangle as the hover photo, no padding */}
         <Image
           src={images[0]}
           alt={label}
           fill
-          sizes="(max-width: 639px) 50vw, (max-width: 1023px) 33vw, 300px"
+          sizes="(max-width: 639px) 50vw, 33vw"
           className="object-cover transition-[opacity,transform] duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] will-change-[opacity,transform]"
           style={{ opacity: hovered ? 0 : 1, transform: hovered ? "scale(1.06)" : "scale(1)" }}
         />
@@ -120,14 +139,14 @@ function SignatureProductCard({ label, product, images }: { label: string; produ
           src={images[1]}
           alt={`${label} in a styled room`}
           fill
-          sizes="(max-width: 639px) 50vw, (max-width: 1023px) 33vw, 300px"
+          sizes="(max-width: 639px) 50vw, 33vw"
           className="object-cover transition-[opacity,transform] duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] will-change-[opacity,transform]"
           style={{ opacity: hovered ? 1 : 0, transform: hovered ? "scale(1)" : "scale(1.06)" }}
         />
 
-        {/* Hover actions */}
+        {/* Wishlist */}
         <div
-          className="absolute right-3 top-3 flex flex-col gap-2 transition-[opacity,transform] duration-200 ease-[cubic-bezier(0.4,0,0.2,1)]"
+          className="absolute right-3 top-3 transition-[opacity,transform] duration-200 ease-[cubic-bezier(0.4,0,0.2,1)]"
           style={{ opacity: hovered ? 1 : 0, transform: hovered ? "translateY(0)" : "translateY(-6px)" }}
         >
           <button
@@ -140,15 +159,22 @@ function SignatureProductCard({ label, product, images }: { label: string; produ
           >
             <Heart size={15} fill={wishlisted ? "currentColor" : "none"} />
           </button>
+        </div>
+
+        {/* Quick-add: slides up from the bottom on hover / tap */}
+        <div
+          className="absolute inset-x-0 bottom-0 transition-transform duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]"
+          style={{ transform: hovered ? "translateY(0)" : "translateY(100%)" }}
+        >
           <button
             type="button"
             onClick={handleAddToCart}
-            aria-label="Add to cart"
-            className={`flex h-9 w-9 items-center justify-center rounded-full shadow-md transition-colors duration-200 ${
-              added ? "bg-slate-moss text-white" : "bg-white text-smoked-bronze hover:bg-mulled-iron hover:text-white"
+            className={`flex w-full items-center justify-center gap-2 py-3 text-[11px] uppercase tracking-widest font-space-mono transition-colors duration-200 ${
+              added ? "bg-slate-moss text-white" : "bg-smoked-bronze text-white hover:bg-mulled-iron"
             }`}
           >
-            {added ? <Check size={15} /> : <ShoppingBag size={15} />}
+            {added ? <Check size={14} /> : <ShoppingBag size={14} />}
+            {added ? "Added" : "Add to Cart"}
           </button>
         </div>
       </div>

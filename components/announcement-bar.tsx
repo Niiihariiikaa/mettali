@@ -1,9 +1,7 @@
 import Link from "next/link";
 
 const MESSAGES = [
-  "10% OFF YOUR FIRST ORDER — CODE WELCOME10",
-  "FLASH SALE — LIMITED TIME ONLY",
-  "FREE SHIPPING ON PREPAID ORDERS",
+  "USE WELCOME10 ON YOUR FIRST ORDER OR GET 10% OFF",
 ];
 
 export function AnnouncementBar() {
@@ -18,12 +16,12 @@ export function AnnouncementBar() {
       `}</style>
       <Link
         href="/products?discount=WELCOME10"
-        className="ann-track flex h-full w-max items-center gap-10 whitespace-nowrap px-5"
+        className="ann-track flex h-full w-max items-center whitespace-nowrap"
       >
         {track.map((msg, i) => (
           <span
             key={i}
-            className="flex items-center gap-10 text-[11px] uppercase tracking-[0.2em] text-raw-linen font-space-mono"
+            className="flex shrink-0 items-center gap-10 pl-10 text-[11px] uppercase tracking-[0.2em] text-raw-linen font-space-mono"
           >
             {msg}
             <span className="text-sandcast">✦</span>

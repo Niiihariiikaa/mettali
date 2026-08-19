@@ -2,9 +2,9 @@
 
 import Image from "next/image";
 import { useState } from "react";
-import { X } from "lucide-react";
+import { X, ShoppingBag, Check } from "lucide-react";
 import { vases, wineHolders, organisers, type Product } from "@/lib/products";
-import { createCheckoutUrl } from "@/lib/shopify";
+import { useCart } from "@/components/cart-context";
 
 function findProduct(list: Product[], name: string): Product {
   const p = list.find((x) => x.name === name);
@@ -91,28 +91,22 @@ function posStyle(point: { mobile: Point; desktop: Point }): React.CSSProperties
 export function QuickBuySection() {
   // activeKey = "panelIdx-dotIdx" or null
   const [activeKey, setActiveKey] = useState<string | null>(null);
-  const [checkingOut, setCheckingOut] = useState(false);
-  const [checkoutError, setCheckoutError] = useState("");
+  const [addedKey, setAddedKey] = useState<string | null>(null);
+  const { addItem } = useCart();
 
   const toggle = (key: string) => setActiveKey(prev => prev === key ? null : key);
 
-  const handleQuickshop = async (product: Product, color: string) => {
-    if (!product.shopify?.variantId) return;
-    setCheckoutError("");
-    setCheckingOut(true);
-    try {
-      const url = await createCheckoutUrl([
-        {
-          variantId: product.shopify.variantId,
-          quantity: 1,
-          attributes: [{ key: "Color", value: color }],
-        },
-      ]);
-      window.location.href = url;
-    } catch (err) {
-      setCheckoutError(err instanceof Error ? err.message : "Checkout failed. Please try again.");
-      setCheckingOut(false);
-    }
+  const handleAddToCart = (key: string, product: Product, color: string) => {
+    addItem({
+      name: product.name,
+      category: product.category,
+      price: product.price,
+      image: product.images[0],
+      variantId: product.shopify?.variantId,
+      color,
+    });
+    setAddedKey(key);
+    setTimeout(() => setAddedKey(null), 1600);
   };
 
   return (
@@ -206,17 +200,18 @@ export function QuickBuySection() {
                           </div>
                           <button
                             type="button"
-                            onClick={() => handleQuickshop(dot.product, dot.color)}
-                            disabled={checkingOut}
-                            className="text-[11px] text-smoked-bronze underline underline-offset-2 hover:text-mulled-iron transition-colors mt-1.5 inline-block font-space-mono disabled:opacity-60"
+                            onClick={() => handleAddToCart(key, dot.product, dot.color)}
+                            className={`mt-2 flex items-center gap-1.5 px-3 py-1.5 text-[10px] uppercase tracking-widest font-space-mono transition-colors ${
+                              addedKey === key
+                                ? "bg-slate-moss text-white"
+                                : "bg-mulled-iron text-white hover:bg-smoked-bronze"
+                            }`}
                           >
-                            {checkingOut ? "Redirecting…" : "Quickshop"}
+                            {addedKey === key ? <Check size={12} /> : <ShoppingBag size={12} />}
+                            {addedKey === key ? "Added" : "Add to Cart"}
                           </button>
                         </div>
                       </div>
-                      {checkoutError && (
-                        <p className="mt-2 text-[10px] text-destructive font-space-mono">{checkoutError}</p>
-                      )}
                     </div>
                   )}
                 </div>

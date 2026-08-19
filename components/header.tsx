@@ -10,11 +10,11 @@ import { SearchBar } from "@/components/search-bar";
 import { useWishlistNames } from "@/lib/wishlist";
 
 const PRODUCT_CATEGORIES = [
-  { label: "Shelves", href: "/shelves" },
   { label: "Vases", href: "/vases" },
   { label: "Wine Holders", href: "/wine-holders" },
   { label: "Organisers", href: "/organisers" },
   { label: "Shoe Display Racks", href: "/shoe-display-racks" },
+  { label: "Shelves", href: "/shelves" },
   { label: "All Products", href: "/products" },
 ];
 
@@ -70,7 +70,7 @@ export function Header({ variant = "light" }: { variant?: "dark" | "light" }) {
         boxShadow: isScrolled ? "rgba(14, 63, 126, 0.04) 0px 0px 0px 1px, rgba(42, 51, 69, 0.04) 0px 1px 1px -0.5px, rgba(42, 51, 70, 0.04) 0px 3px 3px -1.5px, rgba(42, 51, 70, 0.04) 0px 6px 6px -3px, rgba(14, 63, 126, 0.04) 0px 12px 12px -6px, rgba(14, 63, 126, 0.04) 0px 24px 24px -12px" : "none"
       }}
     >
-      <div className="flex items-center justify-between transition-all duration-300 px-3 pl-6 py-2.5">
+      <div className="flex items-center justify-between transition-all duration-300 px-3 pl-[calc(clamp(20px,6vw,60px)-3vw)] py-2.5 md:pl-6">
         {/* Logo */}
         <Link href="/" className="flex items-center">
           <div className="relative h-10 w-40 overflow-hidden md:h-14 md:w-56">
@@ -79,7 +79,7 @@ export function Header({ variant = "light" }: { variant?: "dark" | "light" }) {
               alt="Mettali"
               fill
               sizes="224px"
-              style={{ objectFit: "contain" }}
+              style={{ objectFit: "contain", objectPosition: "left center" }}
               className={`transition-all duration-300 ${onDark ? "brightness-0 invert" : ""}`}
             />
           </div>
@@ -95,7 +95,6 @@ export function Header({ variant = "light" }: { variant?: "dark" | "light" }) {
           >
             <nav className="flex items-center gap-10">
               <Link href="/" className={linkClass}>Home</Link>
-              <Link href="/about" className={linkClass}>About Us</Link>
               <div
                 className="relative"
                 onMouseEnter={() => setProductsOpen(true)}
@@ -126,6 +125,7 @@ export function Header({ variant = "light" }: { variant?: "dark" | "light" }) {
                 </div>
               </div>
               <Link href="/customization" className={linkClass}>Customization</Link>
+              <Link href="/about" className={linkClass}>About Us</Link>
               <Link href="/bulk-order" className={linkClass}>Bulk Order &amp; Gifting</Link>
             </nav>
 
@@ -248,7 +248,6 @@ export function Header({ variant = "light" }: { variant?: "dark" | "light" }) {
         <div className="border-t border-border bg-background px-6 py-8 md:hidden rounded-b-2xl">
           <nav className="flex flex-col gap-6">
             <Link href="/" className="text-lg text-foreground" onClick={() => setIsMenuOpen(false)}>Home</Link>
-            <Link href="/about" className="text-lg text-foreground" onClick={() => setIsMenuOpen(false)}>About Us</Link>
             <div>
               <button
                 type="button"
@@ -275,6 +274,7 @@ export function Header({ variant = "light" }: { variant?: "dark" | "light" }) {
               )}
             </div>
             <Link href="/customization" className="text-lg text-foreground" onClick={() => setIsMenuOpen(false)}>Customization</Link>
+            <Link href="/about" className="text-lg text-foreground" onClick={() => setIsMenuOpen(false)}>About Us</Link>
             <Link href="/bulk-order" className="text-lg text-foreground" onClick={() => setIsMenuOpen(false)}>Bulk Order &amp; Gifting</Link>
             <Link href="/wishlist" className="text-lg text-foreground" onClick={() => setIsMenuOpen(false)}>
               Wishlist{wishlistNames.length > 0 && ` (${wishlistNames.length})`}

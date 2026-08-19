@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 import { Space_Mono } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import { CartProvider } from '@/components/cart-context'
+import { ScrollToTop } from '@/components/scroll-to-top'
 import './globals.css'
 
 const spaceMono = Space_Mono({ subsets: ["latin"], weight: ["400", "700"], variable: '--font-space-mono' });
@@ -25,6 +26,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="bg-background">
       <body className={`${spaceMono.variable} font-sans antialiased`}>
+        <ScrollToTop />
         <CartProvider>{children}</CartProvider>
         <Analytics />
       </body>

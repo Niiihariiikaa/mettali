@@ -168,7 +168,7 @@ export function Hero2Section() {
                 fontSize: 10, textTransform: "uppercase", letterSpacing: "0.38em",
                 color: SC, marginBottom: 18, fontFamily: SPACE_MONO,
               }}>
-                — Premium Aluminium
+                Premium Aluminium
               </p>
 
               <h1 className="h2s-title" style={{

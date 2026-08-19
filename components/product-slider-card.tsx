@@ -2,8 +2,8 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useRef, useState } from "react";
-import { ChevronLeft, ChevronRight, ShoppingBag, Check, Heart } from "lucide-react";
+import { useState } from "react";
+import { ShoppingBag, Check, Heart } from "lucide-react";
 import { useCart } from "@/components/cart-context";
 import { useWishlist } from "@/lib/wishlist";
 
@@ -36,13 +36,11 @@ interface ProductSliderCardProps {
 }
 
 export function ProductSliderCard({ name, category, images, description, price, dimensions, type, href, shopify, sizes, colors }: ProductSliderCardProps) {
-  const [current, setCurrent] = useState(0);
   const [added, setAdded] = useState(false);
   const [sizeIndex, setSizeIndex] = useState(0);
   const [colorIndex, setColorIndex] = useState(0);
   const { addItem } = useCart();
   const { wishlisted, toggle: toggleWishlist } = useWishlist(name);
-  const touchStartX = useRef<number | null>(null);
 
   const selectedSize = sizes?.[sizeIndex];
   const selectedColor = colors?.[colorIndex];
@@ -79,7 +77,6 @@ export function ProductSliderCard({ name, category, images, description, price, 
     e.preventDefault();
     e.stopPropagation();
     setSizeIndex(i);
-    setCurrent(0);
   };
 
   const selectColor = (e: React.MouseEvent, i: number) => {
@@ -88,35 +85,11 @@ export function ProductSliderCard({ name, category, images, description, price, 
     setColorIndex(i);
   };
 
-  const prev = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setCurrent((c) => (c - 1 + effectiveImages.length) % effectiveImages.length);
-  };
-  const next = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setCurrent((c) => (c + 1) % effectiveImages.length);
-  };
-
-  const handleTouchStart = (e: React.TouchEvent) => {
-    touchStartX.current = e.touches[0].clientX;
-  };
-  const handleTouchEnd = (e: React.TouchEvent) => {
-    if (touchStartX.current === null || effectiveImages.length < 2) return;
-    const deltaX = e.changedTouches[0].clientX - touchStartX.current;
-    touchStartX.current = null;
-    if (Math.abs(deltaX) < 40) return;
-    setCurrent((c) =>
-      deltaX < 0 ? (c + 1) % effectiveImages.length : (c - 1 + effectiveImages.length) % effectiveImages.length
-    );
-  };
-
   const dimValues = effectiveDimensions?.replace(/\s*cm$/i, "").split("×").map((d) => d.trim());
   const dimLabels = ["W", "D", "H"];
 
   const cardContent = (
-    <div className="flex h-full flex-col overflow-hidden border border-border bg-white divide-y divide-border shadow-[0_4px_24px_rgba(0,0,0,0.10)] hover:shadow-[0_8px_40px_rgba(0,0,0,0.18)] transition-shadow duration-300 group">
+    <div className="flex h-full flex-col overflow-hidden border border-border bg-white divide-y divide-border group">
       {/* Name row */}
       <div className="px-3 py-2 sm:px-4 sm:py-3">
         <p className="mb-1 text-[9px] uppercase tracking-widest text-sandcast font-space-mono sm:text-[10px]">
@@ -125,70 +98,36 @@ export function ProductSliderCard({ name, category, images, description, price, 
         <h3 className="truncate text-smoked-bronze text-xs font-space-mono uppercase tracking-wide sm:text-sm">{name}</h3>
       </div>
 
-      {/* Image area */}
+      {/* Image area — base photo crossfades to the lifestyle shot on hover */}
       <div className="relative bg-white overflow-hidden pb-4">
-        <div
-          className="relative aspect-4/5 w-full"
-          onTouchStart={handleTouchStart}
-          onTouchEnd={handleTouchEnd}
-        >
+        <div className="relative aspect-4/5 w-full overflow-hidden">
           <Image
-            src={effectiveImages[current]}
+            src={effectiveImages[0]}
             alt={name}
             fill
-            className="object-cover transition-opacity duration-300"
+            className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
           />
+          {effectiveImages[1] && (
+            <Image
+              src={effectiveImages[1]}
+              alt={`${name} in a styled room`}
+              fill
+              className="object-cover opacity-0 transition-[opacity,transform] duration-500 ease-out group-hover:scale-105 group-hover:opacity-100"
+            />
+          )}
 
-        {/* Wishlist */}
-        <button
-          onClick={handleWishlist}
-          aria-label={wishlisted ? "Remove from wishlist" : "Add to wishlist"}
-          className={`absolute left-3 top-3 flex h-8 w-8 items-center justify-center rounded-full shadow-sm transition-colors duration-200 z-10 ${
-            wishlisted ? "bg-mulled-iron text-white" : "bg-white/90 text-smoked-bronze hover:bg-mulled-iron hover:text-white"
-          }`}
-        >
-          <Heart size={14} fill={wishlisted ? "currentColor" : "none"} />
-        </button>
-
-        {/* Counter */}
-        {effectiveImages.length > 1 && (
-          <div className="absolute top-3 right-3 bg-white/80 rounded-full px-2 py-0.5 text-[10px] text-slate-moss font-space-mono">
-            {current + 1}/{effectiveImages.length}
-          </div>
-        )}
-
-        {/* Arrows */}
-        {effectiveImages.length > 1 && (
-          <>
+          {/* Wishlist — bottom-center overlay, hover-revealed on desktop */}
+          <div className="absolute inset-x-0 bottom-3 z-10 flex justify-center opacity-100 transition-opacity duration-200 md:opacity-0 md:group-hover:opacity-100">
             <button
-              onClick={prev}
-              className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white rounded-full p-1.5 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-200 shadow-sm z-10"
+              onClick={handleWishlist}
+              aria-label={wishlisted ? "Remove from wishlist" : "Add to wishlist"}
+              className={`flex h-9 w-9 items-center justify-center rounded-full shadow-md transition-colors duration-200 ${
+                wishlisted ? "bg-mulled-iron text-white" : "bg-white text-smoked-bronze hover:bg-mulled-iron hover:text-white"
+              }`}
             >
-              <ChevronLeft size={16} className="text-smoked-bronze" />
+              <Heart size={14} fill={wishlisted ? "currentColor" : "none"} />
             </button>
-            <button
-              onClick={next}
-              className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white rounded-full p-1.5 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-200 shadow-sm z-10"
-            >
-              <ChevronRight size={16} className="text-smoked-bronze" />
-            </button>
-          </>
-        )}
-
-        {/* Dot indicators */}
-        {effectiveImages.length > 1 && (
-          <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5 z-10">
-            {effectiveImages.map((_, i) => (
-              <button
-                key={i}
-                onClick={(e) => { e.preventDefault(); e.stopPropagation(); setCurrent(i); }}
-                className={`h-1.5 rounded-full transition-all duration-200 ${
-                  i === current ? "w-4 bg-smoked-bronze" : "w-1.5 bg-smoked-bronze/30"
-                }`}
-              />
-            ))}
           </div>
-        )}
         </div>
       </div>
 

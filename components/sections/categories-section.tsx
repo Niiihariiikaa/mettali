@@ -2,13 +2,15 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { ArrowRight } from "lucide-react";
+import { shelves, vases, wineHolders, organisers, shoeRacks } from "@/lib/products";
 
 const categories = [
-  { name: "Organizers",   src: "/images2/categories/organisers.webp", href: "/organisers" },
-  { name: "Flower Vases", src: "/images2/categories/vases.webp",      href: "/vases",      zoom: true },
-  { name: "Wine Holders", src: "/images2/categories/wine-racks.webp", href: "/wine-holders" },
-  { name: "Shoe Display Racks",   src: "/images2/categories/shoe-racks.webp", href: "/shoe-display-racks" },
-  { name: "Bookshelves",  src: "/images2/categories/shelves.webp",    href: "/shelves"    },
+  { name: "Organizers",   src: "/images2/categories/organisers.webp", href: "/organisers",       count: organisers.length },
+  { name: "Flower Vases", src: "/images2/categories/vases.webp",      href: "/vases",             count: vases.length,     zoom: true },
+  { name: "Wine Holders", src: "/images2/categories/wine-racks.webp", href: "/wine-holders",      count: wineHolders.length },
+  { name: "Shoe Display Racks",   src: "/images2/categories/shoe-racks.webp", href: "/shoe-display-racks", count: shoeRacks.length },
+  { name: "Bookshelves",  src: "/images2/categories/shelves.webp",    href: "/shelves",           count: shelves.length },
 ];
 
 export function CategoriesSection({
@@ -41,26 +43,63 @@ export function CategoriesSection({
         )}
       </div>
 
-      {/* Grid */}
-      <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-5 [&>*:last-child]:col-span-2 [&>*:last-child]:mx-auto [&>*:last-child]:w-[calc(50%-0.5rem)] md:[&>*:last-child]:col-span-1 md:[&>*:last-child]:mx-0 md:[&>*:last-child]:w-auto">
+      {/* Mobile: swipeable horizontal slider */}
+      <div className="-mx-6 flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-smooth px-6 pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:hidden">
         {categories.map((cat) => (
-          <Link key={cat.name} href={cat.href} className="group cursor-pointer">
-            <div className="relative mb-3 overflow-hidden rounded-xl" style={{ aspectRatio: "3/4" }}>
+          <Link
+            key={cat.name}
+            href={cat.href}
+            className="group w-[42vw] shrink-0 snap-start cursor-pointer"
+          >
+            <div className="relative mb-3 overflow-hidden rounded-2xl shadow-sm transition-shadow duration-300 active:shadow-md" style={{ aspectRatio: "3/4" }}>
               <Image
                 src={cat.src}
                 alt={cat.name}
                 fill
-                className={`object-cover transition-transform duration-500 ${
+                className={`object-cover transition-transform duration-500 ease-out ${
+                  cat.zoom ? "scale-110 -translate-y-4" : ""
+                }`}
+              />
+              <div className="absolute inset-0 bg-foreground/0 transition-colors duration-300 active:bg-foreground/8" />
+            </div>
+            <p className="text-center text-sm font-medium text-smoked-bronze" style={{ letterSpacing: "0.04em" }}>
+              {cat.name}
+            </p>
+          </Link>
+        ))}
+      </div>
+
+      {/* Desktop: grid */}
+      <div className="hidden md:grid md:grid-cols-3 md:gap-5 lg:grid-cols-5">
+        {categories.map((cat) => (
+          <Link key={cat.name} href={cat.href} className="group cursor-pointer">
+            <div className="relative mb-3 overflow-hidden rounded-2xl shadow-sm transition-shadow duration-300 group-hover:shadow-lg" style={{ aspectRatio: "3/4" }}>
+              <Image
+                src={cat.src}
+                alt={cat.name}
+                fill
+                className={`object-cover transition-transform duration-500 ease-out ${
                   cat.zoom
-                    ? "scale-110 -translate-y-4 md:scale-125 md:-translate-y-8 md:group-hover:scale-[1.31]"
+                    ? "scale-125 -translate-y-8 group-hover:scale-[1.31]"
                     : "group-hover:scale-[1.05]"
                 }`}
               />
               {/* subtle hover veil */}
               <div className="absolute inset-0 bg-foreground/0 transition-colors duration-300 group-hover:bg-foreground/8" />
+
+              {/* Laptop-only: name/count overlaid on the image, like a card */}
+              <div className="absolute inset-x-0 bottom-0 hidden bg-gradient-to-t from-black/75 via-black/15 to-transparent px-5 pb-5 pt-16 lg:block">
+                <div className="flex items-end justify-between gap-2">
+                  <span className="text-lg font-semibold uppercase tracking-wide text-white">
+                    {cat.name}
+                  </span>
+                  <ArrowRight size={18} className="mb-0.5 shrink-0 text-white transition-transform duration-300 group-hover:translate-x-1" />
+                </div>
+                <p className="mt-1 text-xs text-white/70 font-space-mono">{cat.count} Items</p>
+              </div>
             </div>
             <p
-              className="text-center text-sm font-medium text-smoked-bronze"
+              className="text-center text-sm font-medium text-smoked-bronze lg:hidden"
               style={{ letterSpacing: "0.04em" }}
             >
               {cat.name}
