@@ -25,7 +25,7 @@ interface CartState {
   isOpen: boolean;
   openCart: () => void;
   closeCart: () => void;
-  addItem: (item: Omit<CartItem, "qty">) => void;
+  addItem: (item: Omit<CartItem, "qty">, qty?: number) => void;
   removeItem: (name: string, color?: string) => void;
   setQty: (name: string, qty: number, color?: string) => void;
   clearCart: () => void;
@@ -90,15 +90,15 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const sameLine = (a: { name: string; color?: string }, b: { name: string; color?: string }) =>
     a.name === b.name && (a.color ?? null) === (b.color ?? null);
 
-  const addItem = (item: Omit<CartItem, "qty">) => {
+  const addItem = (item: Omit<CartItem, "qty">, qty = 1) => {
     setItems((prev) => {
       const existing = prev.find((i) => sameLine(i, item));
       if (existing) {
         return prev.map((i) =>
-          sameLine(i, item) ? { ...i, qty: i.qty + 1 } : i
+          sameLine(i, item) ? { ...i, qty: i.qty + qty } : i
         );
       }
-      return [...prev, { ...item, qty: 1 }];
+      return [...prev, { ...item, qty }];
     });
     setIsOpen(true);
   };

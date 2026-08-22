@@ -35,7 +35,7 @@ interface ProductSliderCardProps {
   colors?: ProductColor[];
 }
 
-export function ProductSliderCard({ name, category, images, description, price, dimensions, type, href, shopify, sizes, colors }: ProductSliderCardProps) {
+export function ProductSliderCard({ name, category, images, price, type, href, shopify, sizes, colors }: ProductSliderCardProps) {
   const [added, setAdded] = useState(false);
   const [sizeIndex, setSizeIndex] = useState(0);
   const [colorIndex, setColorIndex] = useState(0);
@@ -45,7 +45,6 @@ export function ProductSliderCard({ name, category, images, description, price, 
   const selectedSize = sizes?.[sizeIndex];
   const selectedColor = colors?.[colorIndex];
   const effectivePrice = selectedSize?.price ?? price;
-  const effectiveDimensions = selectedSize?.dimensions ?? dimensions;
   const effectiveShopify = selectedSize?.shopify ?? shopify;
   const effectiveImages = selectedSize?.images ?? images;
   const effectiveName = selectedSize ? `${name} (${selectedSize.label})` : name;
@@ -85,57 +84,85 @@ export function ProductSliderCard({ name, category, images, description, price, 
     setColorIndex(i);
   };
 
-  const dimValues = effectiveDimensions?.replace(/\s*cm$/i, "").split("×").map((d) => d.trim());
-  const dimLabels = ["W", "D", "H"];
-
   const cardContent = (
-    <div className="flex h-full flex-col overflow-hidden border border-border bg-white divide-y divide-border group">
-      {/* Name row */}
-      <div className="px-3 py-2 sm:px-4 sm:py-3">
-        <p className="mb-1 text-[9px] uppercase tracking-widest text-sandcast font-space-mono sm:text-[10px]">
-          {type ?? category}
-        </p>
-        <h3 className="truncate text-smoked-bronze text-xs font-space-mono uppercase tracking-wide sm:text-sm">{name}</h3>
-      </div>
-
-      {/* Image area — base photo crossfades to the lifestyle shot on hover */}
-      <div className="relative bg-white overflow-hidden pb-4">
-        <div className="relative aspect-4/5 w-full overflow-hidden">
-          <Image
-            src={effectiveImages[0]}
-            alt={name}
-            fill
-            className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
-          />
-          {effectiveImages[1] && (
+    <div className="flex h-full flex-col group">
+      {/* Image area — base photo fills the frame, crossfading to a full-bleed lifestyle shot on hover */}
+      <div className="relative aspect-4/5 w-full overflow-hidden rounded-2xl border border-border/60 bg-white">
+        <Image
+          src={effectiveImages[0]}
+          alt={name}
+          fill
+          className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+        />
+        {effectiveImages.length > 1 && (
+          <div className="absolute inset-0 opacity-0 transition-opacity duration-500 ease-out group-hover:opacity-100">
             <Image
-              src={effectiveImages[1]}
+              src={effectiveImages[effectiveImages.length - 1]}
               alt={`${name} in a styled room`}
               fill
-              className="object-cover opacity-0 transition-[opacity,transform] duration-500 ease-out group-hover:scale-105 group-hover:opacity-100"
+              className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
             />
-          )}
-
-          {/* Wishlist — bottom-center overlay, hover-revealed on desktop */}
-          <div className="absolute inset-x-0 bottom-3 z-10 flex justify-center opacity-100 transition-opacity duration-200 md:opacity-0 md:group-hover:opacity-100">
-            <button
-              onClick={handleWishlist}
-              aria-label={wishlisted ? "Remove from wishlist" : "Add to wishlist"}
-              className={`flex h-9 w-9 items-center justify-center rounded-full shadow-md transition-colors duration-200 ${
-                wishlisted ? "bg-mulled-iron text-white" : "bg-white text-smoked-bronze hover:bg-mulled-iron hover:text-white"
-              }`}
-            >
-              <Heart size={14} fill={wishlisted ? "currentColor" : "none"} />
-            </button>
           </div>
+        )}
+
+        {/* Wishlist — top-right overlay, hover-revealed on desktop */}
+        <div className="absolute right-3 top-3 z-10 opacity-100 transition-opacity duration-200 md:opacity-0 md:group-hover:opacity-100">
+          <button
+            onClick={handleWishlist}
+            aria-label={wishlisted ? "Remove from wishlist" : "Add to wishlist"}
+            className={`flex h-9 w-9 items-center justify-center rounded-full shadow-md transition-colors duration-200 ${
+              wishlisted ? "bg-mulled-iron text-white" : "bg-white text-smoked-bronze hover:bg-mulled-iron hover:text-white"
+            }`}
+          >
+            <Heart size={14} fill={wishlisted ? "currentColor" : "none"} />
+          </button>
         </div>
       </div>
 
-      {/* Size options */}
-      {sizes && sizes.length > 0 && (
-        <div className="px-4 py-3">
-          <h5 className="mb-1.5 text-[10px] uppercase tracking-widest text-mulled-iron font-space-mono">Size</h5>
-          <div className="flex flex-wrap gap-1.5">
+      {/* Info — left-aligned, below the image */}
+      <div className="flex flex-1 flex-col items-start gap-1 px-3 pb-3 pt-3.5 text-left">
+        <p className="text-[9px] uppercase tracking-widest text-sandcast font-space-mono sm:text-[10px]">
+          {type ?? category}
+        </p>
+        <h3 className="text-smoked-bronze text-xs font-space-mono uppercase tracking-wide sm:text-sm">{name}</h3>
+        {effectivePrice !== undefined && (
+          <div className="mt-0.5 flex w-full items-center justify-between gap-2">
+            <p className="text-sm font-semibold text-mulled-iron font-space-mono sm:text-base">
+              ₹{effectivePrice.toLocaleString("en-IN")}
+            </p>
+            <button
+              onClick={handleAddToCart}
+              aria-label={added ? "Added to cart" : "Add to cart"}
+              className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full transition-colors ${
+                added
+                  ? "bg-slate-moss text-white"
+                  : "bg-mulled-iron text-white hover:bg-smoked-bronze"
+              }`}
+            >
+              {added ? <Check size={13} /> : <ShoppingBag size={13} />}
+            </button>
+          </div>
+        )}
+
+        {colors && colors.length > 0 && (
+          <div className="mt-1.5 flex flex-wrap gap-1.5">
+            {colors.map((c, i) => (
+              <button
+                key={c.name}
+                title={c.name}
+                aria-label={`Select color ${c.name}`}
+                onClick={(e) => selectColor(e, i)}
+                className={`h-5 w-5 rounded-full border transition-shadow ${
+                  i === colorIndex ? "ring-2 ring-mulled-iron ring-offset-1" : "border-border/60"
+                }`}
+                style={{ backgroundColor: c.hex }}
+              />
+            ))}
+          </div>
+        )}
+
+        {sizes && sizes.length > 0 && (
+          <div className="mt-2 flex flex-wrap gap-1.5">
             {sizes.map((s, i) => (
               <button
                 key={s.label}
@@ -150,76 +177,8 @@ export function ProductSliderCard({ name, category, images, description, price, 
               </button>
             ))}
           </div>
-        </div>
-      )}
-
-      {/* Colors */}
-      {colors && colors.length > 0 && (
-        <div className="px-4 py-3">
-          <h5 className="mb-1.5 text-[10px] uppercase tracking-widest text-mulled-iron font-space-mono">
-            Color{selectedColor ? `: ${selectedColor.name}` : ""}
-          </h5>
-          <div className="flex flex-wrap gap-1.5">
-            {colors.map((c, i) => (
-              <button
-                key={c.name}
-                title={c.name}
-                aria-label={`Select color ${c.name}`}
-                onClick={(e) => selectColor(e, i)}
-                className={`h-5 w-5 rounded-full border transition-shadow ${
-                  i === colorIndex ? "ring-2 ring-mulled-iron ring-offset-1" : "border-border/60"
-                }`}
-                style={{ backgroundColor: c.hex }}
-              />
-            ))}
-          </div>
-        </div>
-      )}
-
-      {/* About / Measurements row */}
-      <div className="hidden grid-cols-2 divide-x divide-border sm:grid">
-        <div className="px-4 py-4">
-          <h5 className="mb-1.5 text-[10px] uppercase tracking-widest text-mulled-iron font-space-mono">About</h5>
-          {description && (
-            <p className="text-[11px] leading-relaxed text-slate-moss font-space-mono line-clamp-3">
-              {description}
-            </p>
-          )}
-        </div>
-        <div className="px-4 py-4">
-          <h5 className="mb-1.5 text-[10px] uppercase tracking-widest text-mulled-iron font-space-mono">Measurements</h5>
-          {dimValues && (
-            <div className="space-y-0.5">
-              {dimValues.map((d, i) => (
-                <p key={i} className="flex max-w-[100px] justify-between text-[11px] text-slate-moss font-space-mono">
-                  <span>{dimLabels[i] ?? ""}</span>
-                  <span>{d} cm</span>
-                </p>
-              ))}
-            </div>
-          )}
-        </div>
+        )}
       </div>
-
-      {/* Price strip */}
-      {effectivePrice !== undefined && (
-        <div className="mt-auto flex items-center justify-between gap-2 px-3 py-2 sm:px-4 sm:py-3">
-          <p className="text-sm font-semibold text-smoked-bronze font-space-mono sm:text-base">
-            ₹{effectivePrice.toLocaleString("en-IN")}
-          </p>
-          <button
-            onClick={handleAddToCart}
-            className={`flex shrink-0 items-center gap-1.5 px-2 py-1.5 text-[10px] uppercase tracking-widest font-space-mono transition-colors sm:px-3 ${
-              added
-                ? "bg-slate-moss text-white"
-                : "bg-mulled-iron text-white hover:bg-smoked-bronze"
-            }`}
-          >
-            {added ? <Check size={12} /> : <ShoppingBag size={12} />}
-            <span className="hidden sm:inline">{added ? "Added" : "Add to Cart"}</span>
-          </button>
-        </div>
-      )}
     </div>
   );
 

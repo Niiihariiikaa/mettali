@@ -26,11 +26,7 @@ export default async function AllProductsPage() {
         <p className="mt-4 text-sm text-slate-moss font-space-mono max-w-sm mx-auto">Every Mettali piece, in one place — precision-formed aluminium for every room.</p>
       </div>
       <CategoriesSection showViewAll={false} heading="Explore Categories" />
-      <ProductFilterBar
-        products={items}
-        categoryBasePaths={CATEGORY_BASE_PATHS}
-        className="grid grid-cols-2 gap-3 px-6 pb-28 md:grid-cols-3 md:gap-6 md:px-12 lg:grid-cols-4 lg:px-20"
-      />
+      <ProductFilterBar products={items} categoryBasePaths={CATEGORY_BASE_PATHS} />
       <FooterSection />
     </main>
   );

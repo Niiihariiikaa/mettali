@@ -16,11 +16,7 @@ export default async function ShelvesPage() {
           Wall-mounted and freestanding aluminium shelves — precision formed, built to last.
         </p>
       </div>
-      <ProductFilterBar
-        products={items}
-        basePath="/shelves"
-        className="grid grid-cols-2 gap-3 px-6 pb-28 md:grid-cols-3 md:gap-6 md:px-12 lg:grid-cols-4 lg:px-20"
-      />
+      <ProductFilterBar products={items} basePath="/shelves" />
       <FooterSection />
     </main>
   );

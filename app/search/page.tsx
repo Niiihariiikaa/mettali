@@ -46,11 +46,7 @@ export default async function SearchPage({
         </p>
       </div>
       {items.length > 0 ? (
-        <ProductFilterBar
-          products={items}
-          categoryBasePaths={CATEGORY_BASE_PATHS}
-          className="grid grid-cols-2 gap-3 px-6 pb-28 md:grid-cols-3 md:gap-6 md:px-12 lg:grid-cols-4 lg:px-20"
-        />
+        <ProductFilterBar products={items} categoryBasePaths={CATEGORY_BASE_PATHS} />
       ) : query ? (
         <p className="pb-28 text-center text-sm text-muted-foreground font-space-mono">
           No products matched your search. Try a different term or browse{" "}

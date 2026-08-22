@@ -14,11 +14,7 @@ export default async function OrganisersPage() {
         <h1 className="text-3xl sm:text-4xl md:text-5xl text-mulled-iron font-horizon uppercase tracking-wide">Organisers</h1>
         <p className="mt-4 text-sm text-slate-moss font-space-mono max-w-sm mx-auto">Functional organisers crafted from powder-coated aluminium — where storage meets design.</p>
       </div>
-      <ProductFilterBar
-        products={items}
-        basePath="/organisers"
-        className="grid grid-cols-2 gap-3 px-6 pb-28 md:grid-cols-3 md:gap-6 md:px-12 lg:px-20"
-      />
+      <ProductFilterBar products={items} basePath="/organisers" />
       <FooterSection />
     </main>
   );
