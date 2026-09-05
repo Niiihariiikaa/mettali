@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
 import { shelves, vases, wineHolders, organisers, shoeRacks } from "@/lib/products";
 
 const categories = [
@@ -86,20 +85,9 @@ export function CategoriesSection({
               />
               {/* subtle hover veil */}
               <div className="absolute inset-0 bg-foreground/0 transition-colors duration-300 group-hover:bg-foreground/8" />
-
-              {/* Laptop-only: name/count overlaid on the image, like a card */}
-              <div className="absolute inset-x-0 bottom-0 hidden bg-gradient-to-t from-black/75 via-black/15 to-transparent px-5 pb-5 pt-16 lg:block">
-                <div className="flex items-end justify-between gap-2">
-                  <span className="text-lg font-semibold uppercase tracking-wide text-white">
-                    {cat.name}
-                  </span>
-                  <ArrowRight size={18} className="mb-0.5 shrink-0 text-white transition-transform duration-300 group-hover:translate-x-1" />
-                </div>
-                <p className="mt-1 text-xs text-white/70 font-space-mono">{cat.count} Items</p>
-              </div>
             </div>
             <p
-              className="text-center text-sm font-medium text-smoked-bronze lg:hidden"
+              className="text-center text-sm font-medium text-smoked-bronze"
               style={{ letterSpacing: "0.04em" }}
             >
               {cat.name}
