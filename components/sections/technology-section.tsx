@@ -198,13 +198,29 @@ export function TechnologySection() {
   const descriptionText =
     "At Mettali, raw aluminium is the starting point — not the shortcut. Every piece passes through precision forming, expert powder coating, and careful hand-finishing before it earns its place in your home. Durable enough to outlast trends, refined enough to define them.";
 
+  // Matches the panel's height to the video's own proportions so it spans
+  // the full screen width with zero cropping and zero letterboxing — a
+  // fixed height would leave black bars unless it happened to match this
+  // exact video's aspect ratio.
+  const [videoRatio, setVideoRatio] = useState(16 / 9);
+
   return (
     <section>
       <AnnouncementBar />
 
-      {/* 1. Video panel — full screen, video shown in full with no cropping */}
-      <div className="relative h-screen overflow-hidden bg-black">
-        <video autoPlay muted loop playsInline className="absolute inset-0 h-full w-full object-contain">
+      {/* 1. Video panel — full screen width, video shown in full with no cropping */}
+      <div className="relative w-full overflow-hidden bg-black" style={{ aspectRatio: videoRatio }}>
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="absolute inset-0 h-full w-full object-cover"
+          onLoadedMetadata={(e) => {
+            const { videoWidth, videoHeight } = e.currentTarget;
+            if (videoWidth && videoHeight) setVideoRatio(videoWidth / videoHeight);
+          }}
+        >
           <source src="/images/strengthmeetsbeauty.mp4" type="video/mp4" />
         </video>
         <div className="absolute inset-0" style={{ background: "rgba(0,0,0,0.4)" }} />
