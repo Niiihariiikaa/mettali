@@ -202,17 +202,10 @@ export function TechnologySection() {
     <section>
       <AnnouncementBar />
 
-      {/* 1. Video panel */}
-      <div className="relative aspect-video overflow-hidden md:aspect-auto md:h-[85vh]">
-        <style>{`
-          @media (max-width: 767px) {
-            /* Zoom in and anchor to the top-left so the extra width spills
-               off the right edge instead of showing the source watermark. */
-            .ts-promo-video { transform: scale(1.4); transform-origin: left top; }
-          }
-        `}</style>
-        <video autoPlay muted loop playsInline className="ts-promo-video absolute inset-0 h-full w-full object-cover object-top-left md:object-top md:transform-none">
-          <source src="/products1_webp/products1/more_sharp_k_video_focus_sho.mp4" type="video/mp4" />
+      {/* 1. Video panel — full screen, video shown in full with no cropping */}
+      <div className="relative h-screen overflow-hidden bg-black">
+        <video autoPlay muted loop playsInline className="absolute inset-0 h-full w-full object-contain">
+          <source src="/images/strengthmeetsbeauty.mp4" type="video/mp4" />
         </video>
         <div className="absolute inset-0" style={{ background: "rgba(0,0,0,0.4)" }} />
         <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center">

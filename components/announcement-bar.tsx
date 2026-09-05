@@ -5,14 +5,18 @@ const MESSAGES = [
 ];
 
 export function AnnouncementBar() {
-  // Repeated twice back-to-back so the marquee can loop seamlessly at -50%.
-  const track = [...MESSAGES, ...MESSAGES];
+  // A single message repeated just twice is narrower than most viewports, so
+  // the -50% loop would show a blank gap before the seamless jump. Repeating
+  // it enough times first guarantees the track is always wider than the
+  // screen, so the loop is gapless at any viewport size.
+  const repeated = Array(10).fill(MESSAGES).flat();
+  const track = [...repeated, ...repeated];
 
   return (
     <div className="relative h-9 overflow-hidden bg-smoked-bronze">
       <style>{`
         @keyframes ann-marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-        .ann-track { animation: ann-marquee 26s linear infinite; }
+        .ann-track { animation: ann-marquee 260s linear infinite; }
       `}</style>
       <Link
         href="/products?discount=WELCOME10"
