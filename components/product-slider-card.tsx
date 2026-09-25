@@ -46,7 +46,8 @@ export function ProductSliderCard({ name, category, images, price, type, href, s
   const selectedColor = colors?.[colorIndex];
   const effectivePrice = selectedSize?.price ?? price;
   const effectiveShopify = selectedSize?.shopify ?? shopify;
-  const effectiveImages = selectedSize?.images ?? images;
+  // A swatch with its own photos wins, so picking a finish swaps the card art.
+  const effectiveImages = selectedColor?.images ?? selectedSize?.images ?? images;
   const effectiveName = selectedSize ? `${name} (${selectedSize.label})` : name;
 
   const handleAddToCart = (e: React.MouseEvent) => {

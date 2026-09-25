@@ -45,7 +45,8 @@ export function ProductDetailView({
   const effectiveDimensions = selectedSize?.dimensions ?? product.dimensions;
   const effectiveWeight = selectedSize?.weight ?? product.weight;
   const effectiveShopify = selectedSize?.shopify ?? product.shopify;
-  const effectiveImages = selectedSize?.images ?? product.images;
+  // A swatch with its own photos wins, so picking a finish swaps the gallery.
+  const effectiveImages = selectedColor?.images ?? selectedSize?.images ?? product.images;
   const effectiveName = selectedSize ? `${product.name} (${selectedSize.label})` : product.name;
 
   const dimValues = effectiveDimensions.replace(/\s*cm$/i, "").split("×").map((d) => d.trim());
@@ -88,6 +89,12 @@ export function ProductDetailView({
 
   const selectSize = (i: number) => {
     setSizeIndex(i);
+    setCurrent(0);
+  };
+
+  // Finishes can carry different numbers of photos, so restart the gallery.
+  const selectColor = (i: number) => {
+    setColorIndex(i);
     setCurrent(0);
   };
 
@@ -196,10 +203,10 @@ export function ProductDetailView({
             {product.description}
           </p>
 
-          {/* Size options */}
+          {/* Size options — or another axis, e.g. finish, when the product names one */}
           {product.sizes && product.sizes.length > 0 && (
             <div className="mt-6">
-              <h5 className="mb-2 text-[10px] uppercase tracking-widest text-mulled-iron font-space-mono">Size</h5>
+              <h5 className="mb-2 text-[10px] uppercase tracking-widest text-mulled-iron font-space-mono">{product.optionLabel ?? "Size"}</h5>
               <div className="flex flex-wrap gap-2">
                 {product.sizes.map((s, i) => (
                   <button
@@ -230,7 +237,7 @@ export function ProductDetailView({
                     key={c.name}
                     title={c.name}
                     aria-label={`Select color ${c.name}`}
-                    onClick={() => setColorIndex(i)}
+                    onClick={() => selectColor(i)}
                     className={`h-7 w-7 rounded-full border transition-shadow ${
                       i === colorIndex ? "ring-2 ring-mulled-iron ring-offset-1" : "border-border/60"
                     }`}

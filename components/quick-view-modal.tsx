@@ -68,7 +68,8 @@ export function QuickViewModal({
   const selectedColor = product.colors?.[colorIndex];
   const effectivePrice = selectedSize?.price ?? product.price;
   const effectiveShopify = selectedSize?.shopify ?? product.shopify;
-  const effectiveImages = selectedSize?.images ?? product.images;
+  // A swatch with its own photos wins, so picking a finish swaps the gallery.
+  const effectiveImages = selectedColor?.images ?? selectedSize?.images ?? product.images;
   const effectiveName = selectedSize ? `${product.name} (${selectedSize.label})` : product.name;
   const href = `${CATEGORY_BASE_PATHS[product.category] ?? ""}/${slugify(product.name)}`;
 
@@ -220,7 +221,10 @@ export function QuickViewModal({
                         key={c.name}
                         title={c.name}
                         aria-label={`Select color ${c.name}`}
-                        onClick={() => setColorIndex(i)}
+                        onClick={() => {
+                          setColorIndex(i);
+                          setCurrent(0);
+                        }}
                         className={`h-6 w-6 rounded-full border transition-shadow ${
                           i === colorIndex ? "ring-2 ring-mulled-iron ring-offset-1" : "border-border/60"
                         }`}
