@@ -75,7 +75,9 @@ export function Header({ variant = "light" }: { variant?: "dark" | "light" }) {
       <div className="flex items-center justify-between transition-all duration-300 px-3 pl-[calc(clamp(20px,6vw,60px)-3vw)] py-2.5 md:pl-6">
         {/* Logo */}
         <Link href="/" className="flex items-center">
-          <div className="relative h-10 w-40 overflow-hidden md:h-14 md:w-56">
+          {/* Full-size logo only at xl — below that the row needs the width
+              for the nav links and the icon cluster. */}
+          <div className="relative h-10 w-40 overflow-hidden xl:h-14 xl:w-56">
             <Image
               src="/images/logo2.png"
               alt="Mettali"
@@ -87,8 +89,9 @@ export function Header({ variant = "light" }: { variant?: "dark" | "light" }) {
           </div>
         </Link>
 
-        {/* Desktop: nav/CTA <-> search toggle area */}
-        <div className="relative hidden h-9 flex-1 items-center md:flex ml-12">
+        {/* Desktop: nav/CTA <-> search toggle area. Needs ~1150px for the
+            links plus the icon cluster, so it starts at lg, not md. */}
+        <div className="relative hidden h-9 flex-1 items-center lg:flex ml-6 xl:ml-12">
           {/* Nav + CTA layer */}
           <div
             className={`absolute inset-0 flex items-center justify-between gap-6 transition-all duration-300 ease-out ${
@@ -170,7 +173,7 @@ export function Header({ variant = "light" }: { variant?: "dark" | "light" }) {
               <button
                 type="button"
                 onClick={openCart}
-                className={`px-4 py-2 text-sm font-medium transition-all rounded-full ${onDark ? "bg-white text-foreground hover:bg-white/90" : "bg-foreground text-background hover:opacity-80"}`}
+                className={`hidden whitespace-nowrap px-4 py-2 text-sm font-medium transition-all rounded-full xl:block ${onDark ? "bg-white text-foreground hover:bg-white/90" : "bg-foreground text-background hover:opacity-80"}`}
               >
                 Shop Now
               </button>
@@ -188,7 +191,7 @@ export function Header({ variant = "light" }: { variant?: "dark" | "light" }) {
         </div>
 
         {/* Mobile: icons <-> search toggle area */}
-        <div className="relative flex h-8 flex-1 items-center justify-end md:hidden">
+        <div className="relative flex h-8 flex-1 items-center justify-end lg:hidden">
           <div
             className={`absolute inset-y-0 right-0 flex items-center gap-4 transition-all duration-300 ease-out ${
               searchOpen ? hiddenLayerClass : visibleLayerClass
@@ -249,7 +252,7 @@ export function Header({ variant = "light" }: { variant?: "dark" | "light" }) {
 
       {/* Mobile Menu */}
       {isMenuOpen && (
-        <div className="border-t border-border bg-background px-6 py-8 md:hidden rounded-b-2xl">
+        <div className="border-t border-border bg-background px-6 py-8 lg:hidden rounded-b-2xl">
           <nav className="flex flex-col gap-6">
             <Link href="/" className="text-lg text-foreground" onClick={() => setIsMenuOpen(false)}>Home</Link>
             <div>
