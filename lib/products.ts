@@ -271,7 +271,7 @@ export const shelves: Product[] = [
     dimensions: "30×30×150 cm",
     weight: "5.5 kg",
     description: "Long, floor-mounted design featuring simple, precise folds.",
-    images: [`${B}/chronicle-1.webp`, "/images/Chronicle.jpeg", "/images/lifestyle%20images/chronicle.png"],
+    images: [`${B}/chronicle-1.webp`, "/images/Chronicle.jpeg", `${B2}/chronicle-2.webp`, "/images/lifestyle%20images/chronicle.png"],
     colors: colors("Black Onyx", "Pearl White", "Sage", "Crimson Red"),
   },
   {
