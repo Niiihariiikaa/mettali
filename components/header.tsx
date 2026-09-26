@@ -55,7 +55,9 @@ export function Header({ variant = "light" }: { variant?: "dark" | "light" }) {
   // on light pages the text is always dark so the navbar never disappears.
   const onDark = variant === "dark" && !isScrolled;
 
-  const linkClass = `text-sm transition-colors ${onDark ? "text-white/70 hover:text-white" : "text-muted-foreground hover:text-foreground"}`;
+  // whitespace-nowrap: the nav sits in a fixed h-9 row, so a two-word label
+  // like "About Us" wrapping would break the line up.
+  const linkClass = `whitespace-nowrap text-sm transition-colors ${onDark ? "text-white/70 hover:text-white" : "text-muted-foreground hover:text-foreground"}`;
 
   // Nav/CTA and the search bar are stacked in the same box and cross-fade +
   // slide between each other, instead of the search bar covering the nav.
