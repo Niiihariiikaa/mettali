@@ -82,7 +82,7 @@ export const shelves: Product[] = [
     dimensions: "72×22×150 cm",
     weight: "14 kg",
     description: "Embodies the intricate journey of storytelling, with a design that blends bold straight lines and graceful curves.",
-    images: [`${B}/Narrative-bookshelf1.webp`, `${B}/Narrative-bookshelf2.webp`, "/images/lifestyle%20images/narrative.png"],
+    images: [`${B}/Narrative-bookshelf1.webp`, `${B}/Narrative-bookshelf2.webp`, `${B}/Narrative-bookshelf3.webp`, "/images/lifestyle%20images/narrative.png"],
     colors: colors("Black Onyx", "Sage", "Moss Green"),
     sizes: [
       {
