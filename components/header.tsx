@@ -91,11 +91,13 @@ export function Header({ variant = "light" }: { variant?: "dark" | "light" }) {
         <div className="relative hidden h-9 flex-1 items-center md:flex ml-12">
           {/* Nav + CTA layer */}
           <div
-            className={`absolute inset-0 flex items-center justify-between transition-all duration-300 ease-out ${
+            className={`absolute inset-0 flex items-center justify-between gap-6 transition-all duration-300 ease-out ${
               searchOpen ? hiddenLayerClass : visibleLayerClass
             }`}
           >
-            <nav className="flex items-center gap-10">
+            {/* Tighter gaps below xl: the nav shares one row with the icons
+                from md up, and "Bulk Order & Gifting" is the first to collide. */}
+            <nav className="flex items-center gap-5 lg:gap-8 xl:gap-10">
               <Link href="/" className={linkClass}>Home</Link>
               <div
                 className="relative"
@@ -131,7 +133,7 @@ export function Header({ variant = "light" }: { variant?: "dark" | "light" }) {
               <Link href="/bulk-order" className={linkClass}>Bulk Order &amp; Gifting</Link>
             </nav>
 
-            <div className="flex items-center gap-6">
+            <div className="flex shrink-0 items-center gap-4 lg:gap-6">
               <button
                 type="button"
                 onClick={() => setSearchOpen(true)}
