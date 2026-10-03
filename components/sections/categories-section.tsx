@@ -43,7 +43,7 @@ export function CategoriesSection({
       </div>
 
       {/* Mobile: swipeable horizontal slider */}
-      <div className="-mx-6 flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-smooth px-6 pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:hidden">
+      <div className="-mx-6 flex snap-x snap-mandatory scroll-px-6 gap-4 overflow-x-auto scroll-smooth px-6 pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:hidden">
         {categories.map((cat) => (
           <Link
             key={cat.name}

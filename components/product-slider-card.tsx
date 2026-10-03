@@ -25,6 +25,7 @@ interface ProductSliderCardProps {
   name: string;
   category: string;
   images: string[];
+  hoverIndex?: number;
   description?: string;
   price?: number;
   dimensions?: string;
@@ -35,7 +36,7 @@ interface ProductSliderCardProps {
   colors?: ProductColor[];
 }
 
-export function ProductSliderCard({ name, category, images, price, type, href, shopify, sizes, colors }: ProductSliderCardProps) {
+export function ProductSliderCard({ name, category, images, hoverIndex, price, type, href, shopify, sizes, colors }: ProductSliderCardProps) {
   const [added, setAdded] = useState(false);
   const [sizeIndex, setSizeIndex] = useState(0);
   const [colorIndex, setColorIndex] = useState(0);
@@ -48,6 +49,8 @@ export function ProductSliderCard({ name, category, images, price, type, href, s
   const effectiveShopify = selectedSize?.shopify ?? shopify;
   // A swatch with its own photos wins, so picking a finish swaps the card art.
   const effectiveImages = selectedColor?.images ?? selectedSize?.images ?? images;
+  // Fall back to the last photo when unset, or when a swatch's gallery is shorter.
+  const hoverImage = effectiveImages[Math.min(hoverIndex ?? Infinity, effectiveImages.length - 1)];
   const effectiveName = selectedSize ? `${name} (${selectedSize.label})` : name;
 
   const handleAddToCart = (e: React.MouseEvent) => {
@@ -87,7 +90,7 @@ export function ProductSliderCard({ name, category, images, price, type, href, s
 
   const cardContent = (
     <div className="flex h-full flex-col group">
-      {/* Image area — base photo fills the frame, crossfading to a full-bleed lifestyle shot on hover */}
+      {/* Image area — base photo fills the frame, crossfading to the hover photo */}
       <div className="relative aspect-4/5 w-full overflow-hidden rounded-2xl border border-border/60 bg-white">
         <Image
           src={effectiveImages[0]}
@@ -98,8 +101,8 @@ export function ProductSliderCard({ name, category, images, price, type, href, s
         {effectiveImages.length > 1 && (
           <div className="absolute inset-0 opacity-0 transition-opacity duration-500 ease-out group-hover:opacity-100">
             <Image
-              src={effectiveImages[effectiveImages.length - 1]}
-              alt={`${name} in a styled room`}
+              src={hoverImage}
+              alt={`${name}, alternate view`}
               fill
               className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
             />
