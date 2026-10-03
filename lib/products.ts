@@ -315,9 +315,9 @@ export const vases: Product[] = [
     dimensions: "13×10×31 cm",
     weight: "1 kg",
     description: "Modern rectangular frame with a built-in metal vase. Perfect for single stems, dried flowers, or minimal arrangements.",
-    images: [`${B}/Lunavase1.webp`, `${B}/Lunavase2.webp`, "/images/lifestyle%20images/luna.png"],
+    images: [`${B2}/luna-copper-0.webp`, `${B2}/luna-copper-1.webp`, `${B2}/luna-copper-2.webp`, `${B2}/luna-copper-3.webp`, `${B2}/luna-copper-4.webp`, `${B2}/luna-copper-5.webp`, `${B2}/luna-copper-6.webp`],
     colors: colors(
-      { name: "Copper Flame", images: [`${B}/Lunavase1.webp`, `${B}/Lunavase2.webp`, "/images/lifestyle%20images/luna.png"] },
+      { name: "Copper Flame", images: [`${B2}/luna-copper-0.webp`, `${B2}/luna-copper-1.webp`, `${B2}/luna-copper-2.webp`, `${B2}/luna-copper-3.webp`, `${B2}/luna-copper-4.webp`, `${B2}/luna-copper-5.webp`, `${B2}/luna-copper-6.webp`] },
       // TODO: no Shopify variant for the gold finish yet — it checks out as the base variant.
       { name: "Sunset Gold", images: [`${B2}/luna-vase-gold-0.webp`, "/images/lifestyle%20images/luna-gold.png"] },
       "Shadow Silver",
@@ -331,10 +331,10 @@ export const vases: Product[] = [
     dimensions: "20×20×24 cm",
     weight: "1 kg",
     description: "A minimalist sculptural vase that doubles as a work of art. Ideal for single stems or delicate arrangements.",
-    images: [`${B2}/maya-champagne-0.webp`, `${B2}/maya-champagne-1.webp`, "/images/lifestyle%20images/maya-champagne.png"],
+    images: [`${B2}/maya-champagne-0.webp`, `${B2}/maya-champagne-1.webp`, "/images/lifestyle%20images/maya-champagne.png", `${B}/mayavasec1.webp`, "/images/lifestyle%20images/Maya.png", `${B}/mayavasec2.webp`],
     // Champagne leads so the opening swatch matches the default photos.
     colors: colors(
-      { name: "Ash Champagne", images: [`${B2}/maya-champagne-0.webp`, `${B2}/maya-champagne-1.webp`, "/images/lifestyle%20images/maya-champagne.png"] },
+      { name: "Ash Champagne", images: [`${B2}/maya-champagne-0.webp`, `${B2}/maya-champagne-1.webp`, "/images/lifestyle%20images/maya-champagne.png", `${B}/mayavasec1.webp`, "/images/lifestyle%20images/Maya.png", `${B}/mayavasec2.webp`] },
       { name: "Shadow Silver", images: [`${B}/mayavasec1.webp`, `${B}/mayavasec2.webp`, "/images/lifestyle%20images/Maya.png"] },
       "Copper Flame",
       "Sunset Gold"
@@ -347,9 +347,9 @@ export const vases: Product[] = [
     dimensions: "11×11×30 cm",
     weight: "1 kg",
     description: "Striking hexagonal silhouette with clean, precise lines. A sophisticated statement piece that stands alone or holds botanicals.",
-    images: [`${B2}/Terra-vase-0.webp`, "/images/lifestyle%20images/terra.png"],
+    images: [`${B2}/Terra-vase-0.webp`, "/images/lifestyle%20images/terra.png", `${B2}/terra-vase-2.webp`, `${B2}/Terra-vase-silver-0.webp`, "/images/lifestyle%20images/terra-silver.png", `${B2}/terra-vase-5.webp`, `${B2}/terra-vase-6.webp`],
     colors: colors(
-      { name: "Crimson Red", images: [`${B2}/Terra-vase-0.webp`, "/images/lifestyle%20images/terra.png"] },
+      { name: "Crimson Red", images: [`${B2}/Terra-vase-0.webp`, "/images/lifestyle%20images/terra.png", `${B2}/terra-vase-2.webp`, `${B2}/Terra-vase-silver-0.webp`, "/images/lifestyle%20images/terra-silver.png", `${B2}/terra-vase-5.webp`, `${B2}/terra-vase-6.webp`] },
       "Copper Flame",
       "Sunset Gold",
       // TODO: no Shopify variant for the silver finish yet — it checks out as the base variant.
@@ -364,7 +364,7 @@ export const vases: Product[] = [
     dimensions: "10.5×10.5×20 cm",
     weight: "0.5 kg",
     description: "Flowing form with elegant curved panels and a soft, scalloped rim. A versatile accent for any shelf, desk, or tabletop.",
-    images: [`${B}/Cala-vase-black0.webp`, `${B}/Cala-vase-black1.webp`, "/images/lifestyle%20images/cala.png"],
+    images: [`${B2}/cala-vase-0.webp`, `${B2}/cala-vase-1.webp`, `${B2}/cala-vase-2.webp`, `${B2}/cala-vase-3.webp`, `${B2}/cala-vase-4.webp`],
     colors: colors("Moss Green", "Crimson Red", "Black Onyx"),
   },
 ];
@@ -377,7 +377,7 @@ export const wineHolders: Product[] = [
     dimensions: "41.5×41.5×14 cm",
     weight: "1.5 kg",
     description: "Architectural wave design holding up to 4 bottles. A sculptural countertop centrepiece that transforms wine storage into functional art.",
-    images: [`${B}/Riva.webp`, `${B}/Riva2.webp`, "/images/lifestyle%20images/RIVA.png"],
+    images: [`${B}/Riva.webp`, "/images/lifestyle%20images/RIVA.png", `${B}/Riva2.webp`, `${B2}/riva-3.webp`],
     colors: colors("Black Onyx", "Sunset Gold", "Shadow Silver", "Ash Champagne"),
   },
   {
@@ -387,9 +387,9 @@ export const wineHolders: Product[] = [
     dimensions: "40×22×25 cm",
     weight: "2 kg",
     description: "Striking honeycomb structure holding 6 bottles. Contemporary geometric precision meets premium freestanding wine storage.",
-    images: [`${B2}/Shelf%20art-2570.webp`, `${B2}/Shelf%20art-2573.webp`, "/images/lifestyle%20images/maison.png"],
+    images: [`${B2}/Shelf%20art-2570.webp`, `${B2}/maison-onyx-1.webp`, `${B2}/Shelf%20art-2573.webp`, `${B2}/Shelf%20art-2568.webp`, "/images/lifestyle%20images/maison.png", `${B2}/Shelf%20art-2567.webp`],
     colors: colors(
-      { name: "Black Onyx", images: [`${B2}/Shelf%20art-2570.webp`, `${B2}/Shelf%20art-2573.webp`, "/images/lifestyle%20images/maison.png"] },
+      { name: "Black Onyx", images: [`${B2}/Shelf%20art-2570.webp`, `${B2}/maison-onyx-1.webp`, `${B2}/Shelf%20art-2573.webp`, `${B2}/Shelf%20art-2568.webp`, "/images/lifestyle%20images/maison.png", `${B2}/Shelf%20art-2567.webp`] },
       // TODO: no Shopify variant for the gold finish yet — it checks out as the base variant.
       { name: "Sunset Gold", images: [`${B2}/Shelf%20art-2568.webp`, `${B2}/Shelf%20art-2567.webp`, "/images/lifestyle%20images/maison.png"] },
       "Shadow Silver",
@@ -403,7 +403,7 @@ export const wineHolders: Product[] = [
     dimensions: "19×14.5×60 cm",
     weight: "2 kg",
     description: "Sleek vertical wall-mounted rack presenting your collection as a floating display. Modular — install one unit or build an entire wine wall.",
-    images: [`${B}/clink0.webp`, `${B}/clink1.webp`, "/images/lifestyle%20images/clink.png"],
+    images: [`${B}/clink0.webp`, "/images/lifestyle%20images/clink.png", `${B}/clink1.webp`, `${B2}/clink-3.webp`],
     colors: colors("Black Onyx", "Sunset Gold", "Shadow Silver", "Ash Champagne"),
   },
   {
@@ -413,7 +413,7 @@ export const wineHolders: Product[] = [
     dimensions: "40×14.5×39 cm",
     weight: "1.5 kg",
     description: "Wheel-shaped design with artistic cut-outs holding 6 bottles. A dramatic countertop centrepiece inspired by grand performance.",
-    images: [`${B2}/Shelf%20art-2559.webp`, `${B2}/Shelf%20art-2560.webp`, "/images/lifestyle%20images/opera.png"],
+    images: [`${B2}/Shelf%20art-2559.webp`, "/images/lifestyle%20images/opera.png", `${B2}/Shelf%20art-2560.webp`],
     colors: colors("Black Onyx", "Sunset Gold", "Shadow Silver", "Ash Champagne"),
   },
 ];
@@ -426,7 +426,7 @@ export const organisers: Product[] = [
     dimensions: "15.5×10×45 cm",
     weight: "1 kg",
     description: "Minimalist tabletop organiser with a stunning continuous silhouette. Ideal as a vanity tray, desk accessory, or countertop shelf.",
-    images: [`${B2}/Shelf%20art-2534.webp`, `${B}/Linea%20organiser-green2.webp`, `${B}/Linea-organiser-green.webp`, "/images/lifestyle%20images/linea.png"],
+    images: [`${B2}/Shelf%20art-2534.webp`, "/images/lifestyle%20images/linea.png", `${B}/Linea%20organiser-green2.webp`, `${B}/Linea-organiser-green.webp`, `${B2}/linea-4.webp`],
     colors: colors("Copper Flame", "Black Onyx", "Sunset Gold", "Sage", "Moss Green"),
   },
   {
@@ -436,10 +436,10 @@ export const organisers: Product[] = [
     dimensions: "73×15×40 cm",
     weight: "7 kg",
     description: "Multi-faceted organiser with staggered compartments. Works freestanding or wall-mounted — perfect for mugs, perfumes, or collectibles.",
-    images: ["/images/perch-organisser.png", `${B}/Perchwineholder0.webp`, "/images/lifestyle%20images/perch.png"],
+    images: ["/images/perch-organisser.png", "/images/lifestyle%20images/perch.png", `${B2}/perch-silver-2.webp`, `${B2}/perch-silver-3.webp`, `${B2}/perch-silver-4.webp`],
     // Silver leads so the opening swatch matches the default photos.
     colors: colors(
-      { name: "Shadow Silver", images: ["/images/perch-organisser.png", `${B}/Perchwineholder0.webp`, "/images/lifestyle%20images/perch.png"] },
+      { name: "Shadow Silver", images: ["/images/perch-organisser.png", "/images/lifestyle%20images/perch.png", `${B2}/perch-silver-2.webp`, `${B2}/perch-silver-3.webp`, `${B2}/perch-silver-4.webp`] },
       // TODO: black has only the one studio shot so far, and no Shopify variant.
       { name: "Black Onyx", images: [`${B2}/perch-onyx-0.webp`] },
       "Ash Champagne"
@@ -452,10 +452,10 @@ export const organisers: Product[] = [
     dimensions: "61×13×61 cm",
     weight: "3 kg",
     description: "Clean geometric grid with unique nesting cradles. A versatile display for coffee mugs, perfumes, or small decorative pieces.",
-    images: ["/images/nest-organiser-1.png", `${B}/Nestwineholder3.webp`, "/images/lifestyle%20images/nest.png"],
+    images: ["/images/nest-organiser-1.png", "/images/lifestyle%20images/nest.png", `${B2}/nest-champagne-2.webp`, `${B2}/nest-champagne-3.webp`, `${B2}/nest-champagne-4.webp`],
     // Champagne leads so the opening swatch matches the default photos.
     colors: colors(
-      { name: "Ash Champagne", images: ["/images/nest-organiser-1.png", `${B}/Nestwineholder3.webp`, "/images/lifestyle%20images/nest.png"] },
+      { name: "Ash Champagne", images: ["/images/nest-organiser-1.png", "/images/lifestyle%20images/nest.png", `${B2}/nest-champagne-2.webp`, `${B2}/nest-champagne-3.webp`, `${B2}/nest-champagne-4.webp`] },
       // TODO: no Shopify variant for the black finish yet — it checks out as the base variant.
       { name: "Black Onyx", images: [`${B2}/nest-onyx-0.webp`, `${B2}/nest-onyx-1.webp`, "/images/lifestyle%20images/nest-onyx.png"] },
       "Espresso"
@@ -480,7 +480,7 @@ export const shoeRacks: Product[] = [
     dimensions: "28×10×24 cm",
     weight: "0.5 kg",
     description: "Wall-mounted cantilevered shelves presenting each shoe as a gallery object. Fully modular — arrange units into any creative configuration.",
-    images: [`${B2}/step-shoerack1.webp`, `${B2}/step-shoerack2.webp`, "/images/lifestyle%20images/step.png"],
+    images: [`${B2}/step-shoerack1.webp`, "/images/lifestyle%20images/step.png", `${B2}/step-shoerack2.webp`],
     colors: colors("Shadow Silver", "Black Onyx"),
   },
   {
@@ -490,7 +490,7 @@ export const shoeRacks: Product[] = [
     dimensions: "31×27×61 cm",
     weight: "6 kg",
     description: "Space-saving design with a hidden front profile. Wall-mounted or freestanding, with customisable layers of 4, 6, or 8.",
-    images: [`${B2}/Vaultshoerack0.webp`, `${B2}/Vaultshoerack1.webp`, "/images/lifestyle%20images/vault.png"],
+    images: [`${B2}/Vaultshoerack0.webp`, "/images/lifestyle%20images/vault.png", `${B2}/Vaultshoerack1.webp`],
     colors: colors("Black Onyx", "Shadow Silver", "Ash Champagne"),
   },
   {
@@ -500,7 +500,7 @@ export const shoeRacks: Product[] = [
     dimensions: "44×37.5×84 cm",
     weight: "4 kg",
     description: "Circular pods create a gallery-style wall showcase for your collection. Turns any wall into a striking piece of contemporary design.",
-    images: [`${B}/Orbitshoerack0.webp`, `${B}/Orbit-shoerack1.webp`, "/images/lifestyle%20images/orbit.png"],
+    images: [`${B}/Orbitshoerack0.webp`, "/images/lifestyle%20images/orbit.png", `${B}/Orbit-shoerack1.webp`, `${B2}/orbit-3.webp`],
     colors: colors("Black Onyx", "Shadow Silver", "Crimson Red", "Moss Green"),
   },
   {
@@ -510,17 +510,7 @@ export const shoeRacks: Product[] = [
     dimensions: "82.5×26×271 cm",
     weight: "3.5 kg",
     description: "A continuous zig-zag form forged from a single piece of premium aluminium. Bold graphic wall art that doubles as a sophisticated shoe display.",
-    images: [`${B}/Alignshoerack0.webp`, `${B}/Alignshoerack.webp`, "/images/lifestyle%20images/align.png"],
+    images: [`${B}/Alignshoerack0.webp`, "/images/lifestyle%20images/align.png", `${B}/Alignshoerack.webp`],
     colors: colors("Black Onyx", "Pearl White"),
-  },
-  {
-    name: "Penta", shopify: { productId: "gid://shopify/Product/8824411259033", variantId: "gid://shopify/ProductVariant/48361785819289", handle: "penta" },
-    category: "Shoe Display Racks",
-    price: 3800,
-    dimensions: "106.5×26×33 cm",
-    weight: "3 kg",
-    description: "Uniquely versatile floating wall shelf with five planes — holds shoes, books, small plants, and décor. A dynamic all-in-one display solution.",
-    images: [`${B}/pentashoerack0.webp`, `${B}/pentashoerack.webp`, "/images/lifestyle%20images/penta.png"],
-    colors: colors("Black Onyx", "Ash Champagne"),
   },
 ];
