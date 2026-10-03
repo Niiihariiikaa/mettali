@@ -69,7 +69,6 @@ const HOME = "/images2/products-home";
 const SIGNATURE_PRODUCTS: { label: string; product: Product; images: [string, string] }[] = [
   { label: "Maison", product: findProduct(wineHolders, "Maison"), images: [`${HOME}/winestand1.webp`, `${HOME}/winestand2.webp`] },
   { label: "Cala", product: findProduct(vases, "Cala Vase"), images: [`${HOME}/wine-vase1.webp`, `${HOME}/wine-vase2.webp`] },
-  { label: "Aura", product: findProduct(vases, "Aura Vase"), images: [`${HOME}/3vase1.webp`, `${HOME}/3vase2.webp`] },
   { label: "Genre", product: findProduct(shelves, "Genre"), images: ["/images/genre-signature.png", "/images2/categories/genre shelf- signature product hover.PNG"] },
   { label: "Nest", product: findProduct(organisers, "Nest Organiser"), images: ["/images/nest-signature.png", "/products1_webp/nest-signature image - hover.png"] },
   { label: "Align", product: findProduct(shoeRacks, "Align"), images: [`${HOME}/alighnshoerack-4.png`, `${HOME}/shoerack2.webp`] },

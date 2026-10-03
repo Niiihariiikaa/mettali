@@ -331,11 +331,10 @@ export const vases: Product[] = [
     dimensions: "20×20×24 cm",
     weight: "1 kg",
     description: "A minimalist sculptural vase that doubles as a work of art. Ideal for single stems or delicate arrangements.",
-    // Champagne has no detail shot of its own yet, so it borrows the silver one.
-    images: [`${B2}/maya-champagne-0.webp`, `${B}/mayavasec2.webp`, "/images/lifestyle%20images/maya-champagne.png"],
+    images: [`${B2}/maya-champagne-0.webp`, `${B2}/maya-champagne-1.webp`, "/images/lifestyle%20images/maya-champagne.png"],
     // Champagne leads so the opening swatch matches the default photos.
     colors: colors(
-      { name: "Ash Champagne", images: [`${B2}/maya-champagne-0.webp`, `${B}/mayavasec2.webp`, "/images/lifestyle%20images/maya-champagne.png"] },
+      { name: "Ash Champagne", images: [`${B2}/maya-champagne-0.webp`, `${B2}/maya-champagne-1.webp`, "/images/lifestyle%20images/maya-champagne.png"] },
       { name: "Shadow Silver", images: [`${B}/mayavasec1.webp`, `${B}/mayavasec2.webp`, "/images/lifestyle%20images/Maya.png"] },
       "Copper Flame",
       "Sunset Gold"
@@ -348,13 +347,13 @@ export const vases: Product[] = [
     dimensions: "11×11×30 cm",
     weight: "1 kg",
     description: "Striking hexagonal silhouette with clean, precise lines. A sophisticated statement piece that stands alone or holds botanicals.",
-    images: [`${B2}/Terra-vase-0.webp`, `${B2}/Terra-vase-1.webp`, "/images/lifestyle%20images/terra.png"],
+    images: [`${B2}/Terra-vase-0.webp`, "/images/lifestyle%20images/terra.png"],
     colors: colors(
-      { name: "Crimson Red", images: [`${B2}/Terra-vase-0.webp`, `${B2}/Terra-vase-1.webp`, "/images/lifestyle%20images/terra.png"] },
+      { name: "Crimson Red", images: [`${B2}/Terra-vase-0.webp`, "/images/lifestyle%20images/terra.png"] },
       "Copper Flame",
       "Sunset Gold",
       // TODO: no Shopify variant for the silver finish yet — it checks out as the base variant.
-      { name: "Shadow Silver", images: [`${B2}/Terra-vase-silver-0.webp`, `${B2}/Terra-vase-silver-1.webp`, "/images/lifestyle%20images/terra-silver.png"] },
+      { name: "Shadow Silver", images: [`${B2}/Terra-vase-silver-0.webp`, "/images/lifestyle%20images/terra-silver.png"] },
       "Black Onyx"
     ),
   },
@@ -367,50 +366,6 @@ export const vases: Product[] = [
     description: "Flowing form with elegant curved panels and a soft, scalloped rim. A versatile accent for any shelf, desk, or tabletop.",
     images: [`${B}/Cala-vase-black0.webp`, `${B}/Cala-vase-black1.webp`, "/images/lifestyle%20images/cala.png"],
     colors: colors("Moss Green", "Crimson Red", "Black Onyx"),
-  },
-  {
-    name: "Aura Vase", shopify: { productId: "gid://shopify/Product/8824409292953", variantId: "gid://shopify/ProductVariant/48361782902937", handle: "aura-vase-set-of-3" },
-    category: "Vases",
-    price: 4500,
-    dimensions: "14×14×30 cm",
-    weight: "3.5 kg",
-    description: "Innovative 3-in-1 modular set with playful wavy rims. Use together as a layered centrepiece or separately as individual accents.",
-    images: [`${B}/Aura-vase-1.webp`, `${B}/Aura-vase-2.webp`, "/images/lifestyle%20images/aura.png"],
-    colors: colors("Espresso", "Sunset Gold", "Pearl White", "Crimson Red"),
-    sizes: [
-      {
-        label: "Set of 3",
-        price: 4500,
-        dimensions: "14×14×30 cm",
-        weight: "3.5 kg",
-        shopify: { productId: "gid://shopify/Product/8824409292953", variantId: "gid://shopify/ProductVariant/48361782902937", handle: "aura-vase-set-of-3" },
-        images: [`${B}/Aura-vase-1.webp`, `${B}/Aura-vase-2.webp`, "/images/lifestyle%20images/aura.png"],
-      },
-      {
-        label: "S",
-        price: 1500,
-        dimensions: "16×16×15 cm",
-        weight: "1 kg",
-        shopify: { productId: "gid://shopify/Product/8824409129113", variantId: "gid://shopify/ProductVariant/48361782673561", handle: "aura-vase-s" },
-        images: [`${B}/Aura-vase-8.webp`, `${B}/Aura-vase-1.webp`, "/images/lifestyle%20images/aura.png"],
-      },
-      {
-        label: "M",
-        price: 1700,
-        dimensions: "15×15×22 cm",
-        weight: "1 kg",
-        shopify: { productId: "gid://shopify/Product/8824409227417", variantId: "gid://shopify/ProductVariant/48361782771865", handle: "aura-vase-m" },
-        images: [`${B}/Aura-vase-7.webp`, `${B}/Aura-vase-1.webp`, "/images/lifestyle%20images/aura.png"],
-      },
-      {
-        label: "L",
-        price: 1900,
-        dimensions: "14×14×30 cm",
-        weight: "1.5 kg",
-        shopify: { productId: "gid://shopify/Product/8824409260185", variantId: "gid://shopify/ProductVariant/48361782870169", handle: "aura-vase-l" },
-        images: [`${B}/Aura-vase-6.webp`, `${B}/Aura-vase-1.webp`, "/images/lifestyle%20images/aura.png"],
-      },
-    ],
   },
 ];
 
